@@ -1,71 +1,75 @@
 import React, { useState } from "react";
-import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
+import { Form, Button, Container, Row, Col, Alert, Spinner } from "react-bootstrap";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
 import "../../index.css";
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-  const [errors, setErrors] = useState({});
-  const [submitted, setSubmitted] = useState(false);
+  const navigate = useNavigate();
 
-  // Handle input change
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [serverError, setServerError] = useState("");
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Validate form
   const validate = () => {
-    let newErrors = {};
+    const newErrors = {};
     if (!formData.email) newErrors.email = "Email is required";
     if (!formData.password) newErrors.password = "Password is required";
     return newErrors;
   };
 
-  // Handle submit
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = validate();
-    if (Object.keys(newErrors).length === 0) {
-      setSubmitted(true);
-      setErrors({});
-      console.log("Login Data:", formData);
-    } else {
+    if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      setSubmitted(false);
+      return;
     }
+
+    setErrors({});
+    setLoading(true);
+    setServerError("");
+
+    try {
+      const res = await axios.post("http://localhost:8000/user/login", formData); // adjust base URL if needed
+      const { token, role, userId } = res.data;
+      // store token and user info in localStorage
+      localStorage.setItem("token", token);
+      localStorage.setItem("role", role);
+      localStorage.setItem("userId", userId);
+      navigate("/afterlogin"); // redirect after login
+    } catch (err) {
+      setServerError(err.response?.data?.message || "Server error. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = () => {
+    window.location.href = "/auth/google"; // redirect to backend Google auth
   };
 
   return (
     <div>
-      {/* Header Section */}
       <Header />
 
-      {/* Login Form Section */}
-      <Container
-        fluid
-        className="d-flex align-items-center justify-content-center min-vh-100 "
-      >
+      <Container fluid className="d-flex align-items-center justify-content-center min-vh-100">
         <Row className="w-100">
-          <Col xs={12} md={6} lg={4} className="mx-auto p-4  rounded bg-white">
-            <h2
-              className="text-center mb-4 Login-font"
-              style={{ color: "#a18146", fontWeight: "600" }}
-            >
+          <Col xs={12} md={6} lg={4} className="mx-auto p-4 rounded bg-white">
+            <h2 className="text-center mb-4 Login-font" style={{ color: "#a18146", fontWeight: 600 }}>
               Login
             </h2>
 
-            {submitted && (
-              <Alert variant="success" className="text-center">
-                Login Successful 🎉
-              </Alert>
-            )}
+            {serverError && <Alert variant="danger" className="text-center">{serverError}</Alert>}
 
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="formEmail" className="mb-3">
@@ -79,9 +83,7 @@ const Login = () => {
                   onChange={handleChange}
                   isInvalid={!!errors.email}
                 />
-                <Form.Control.Feedback type="invalid">
-                  {errors.email}
-                </Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
               </Form.Group>
 
               <Form.Group controlId="formPassword" className="mb-4">
@@ -95,20 +97,15 @@ const Login = () => {
                   onChange={handleChange}
                   isInvalid={!!errors.password}
                 />
-                <Form.Control.Feedback type="invalid">
-                  {errors.password}
-                </Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
               </Form.Group>
+
               <Button
-                as={Link}
-                to="/afterlogin" // <-- set your route here
+                type="submit"
                 className="w-100 mb-3"
-                style={{
-                  background: "linear-gradient(to right, #b68a4b, #94723b)",
-                  border: "none",
-                }}
+                style={{ background: "linear-gradient(to right, #b68a4b, #94723b)", border: "none" }}
               >
-                Continue
+                {loading ? <Spinner animation="border" size="sm" /> : "Continue"}
               </Button>
             </Form>
 
@@ -119,24 +116,18 @@ const Login = () => {
             <Button
               variant="outline-secondary"
               className="w-100 mb-2 d-flex align-items-center justify-content-center"
+              onClick={handleGoogleLogin}
             >
               <FcGoogle className="me-2" /> Continue with Google
             </Button>
 
-            <Button
-              variant="outline-secondary"
-              className="w-100 mb-3 d-flex align-items-center justify-content-center"
-            >
+            <Button variant="outline-secondary" className="w-100 mb-3 d-flex align-items-center justify-content-center">
               <FaApple className="me-2" /> Continue with Apple
             </Button>
 
             <p className="text-center mt-3">
               Don’t have an account?{" "}
-              <a
-                href="/signup"
-                className="text-decoration-none"
-                style={{ color: "#a18146" }}
-              >
+              <a href="/signup" className="text-decoration-none" style={{ color: "#a18146" }}>
                 Create one
               </a>
             </p>
@@ -144,7 +135,6 @@ const Login = () => {
         </Row>
       </Container>
 
-      {/* Footer Section */}
       <Footer />
     </div>
   );

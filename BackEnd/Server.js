@@ -455,10 +455,11 @@ app.get("/products/:productId/reviews", async (req, res) => {
 /* ------------------ Google Auth (passport) ------------------ */
 app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 app.get("/auth/google/callback", passport.authenticate("google", { failureRedirect: "/login" }), (req, res) => {
-  // create JWT for frontend to use
   const token = jwt.sign({ id: req.user._id, role: req.user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
-  res.json({ message: "Google login successful", token, userId: req.user._id });
+  const frontendURL = process.env.FRONTEND_URL || "http://localhost:3000"; // your React app URL
+  res.redirect(`${frontendURL}/google-success?token=${token}&userId=${req.user._id}`);
 });
+
 /* ------------------ Global error handler & process handlers ------------------ */
 app.use((err, req, res, next) => {
   console.error("Unhandled error:", err);
