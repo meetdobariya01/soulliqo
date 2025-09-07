@@ -1,8 +1,7 @@
-// src/pages/GoogleSuccess.jsx
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const GoogleSuccess = () => {
+const AfterLogin = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -10,16 +9,14 @@ const GoogleSuccess = () => {
     const token = params.get("token");
     const userId = params.get("userId");
 
-    if (token && userId) {
+    if (token) {
       localStorage.setItem("token", token);
       localStorage.setItem("userId", userId);
-      navigate("/afterlogin"); // your dashboard route
-    } else {
-      navigate("/login"); // fallback
+      navigate("/dashboard"); // or wherever you want
     }
   }, [navigate]);
 
-  return <div>Logging you in...</div>;
+  return <h2>Loading...</h2>;
 };
 
-export default GoogleSuccess;
+export default AfterLogin;

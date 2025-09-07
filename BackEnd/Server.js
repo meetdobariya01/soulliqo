@@ -454,12 +454,18 @@ app.get("/products/:productId/reviews", async (req, res) => {
 });
 /* ------------------ Google Auth (passport) ------------------ */
 app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
-app.get("/auth/google/callback", passport.authenticate("google", { failureRedirect: "/login" }), (req, res) => {
-  const token = jwt.sign({ id: req.user._id, role: req.user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
-  const frontendURL = process.env.FRONTEND_URL || "http://localhost:3000"; // your React app URL
-  res.redirect(`${frontendURL}/google-success?token=${token}&userId=${req.user._id}`);
-});
 
+// Google Callback
+app.get(
+  "/google/callback",
+  passport.authenticate("google", { failureRedirect: "/login" }),
+  (req, res) => {
+    const token = jwt.sign({ id: req.user._id }, "jwt_secret", { expiresIn: "1d" });
+
+    // Redirect back to frontend with token + userId
+    res.redirect(`http://localhost:3000/afterlogin?token=${token}&userId=${req.user._id}`);
+  }
+);
 /* ------------------ Global error handler & process handlers ------------------ */
 app.use((err, req, res, next) => {
   console.error("Unhandled error:", err);

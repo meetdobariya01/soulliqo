@@ -53,10 +53,9 @@ const Login = () => {
       setLoading(false);
     }
   };
-
-  const handleGoogleLogin = () => {
-    window.location.href = "/auth/google"; // redirect to backend Google auth
-  };
+const handleGoogleLogin = () => {
+  window.location.href = "http://localhost:8000/auth/google"; 
+};
 
   return (
     <div>
