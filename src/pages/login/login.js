@@ -46,7 +46,7 @@ const Login = () => {
       localStorage.setItem("token", token);
       localStorage.setItem("role", role);
       localStorage.setItem("userId", userId);
-      navigate("/afterlogin"); // redirect after login
+      navigate("/"); // redirect after login
     } catch (err) {
       setServerError(err.response?.data?.message || "Server error. Please try again.");
     } finally {

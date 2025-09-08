@@ -8,9 +8,9 @@ const nodemailer = require("nodemailer");
 const connectDB = require("./Config/db");
 // Models (make sure filenames match your filesystem)
 const User = require("./Models/User");
+const Contact = require("./Models/Contact")    // keep spelling as in your project
 const Product = require("./Models/Product");              // fixed: Product (was Food)
-const Order = require("./Models/Order.Traking");         // keep your filename if that's what exists
-const ContactUs = require("./Models/ContectUs");         // keep spelling as in your project
+const Order = require("./Models/Order.Traking");         // keep your filename if that's what exists       // keep spelling as in your project
 const Cart = require("./Models/Cart");
 const session = require("express-session");
 const passport = require("./Config/passport");
@@ -391,33 +391,6 @@ app.post("/place-order/:cartId", authenticate, async (req, res) => {
   }
 });
 /* ------------------ Contact Us ------------------ */
-app.post("/user/contactus", async (req, res) => {
-  const { YourName, YourEmail, PhoneNumber, Message } = req.body;
-  if (!YourName || !YourEmail || !PhoneNumber || !Message) return res.status(400).json({ message: "All fields are required." });
-  try {
-    const contact = new ContactUs({ YourName, YourEmail, PhoneNumber, Message });
-    await contact.save();
-    const mailOptions = {
-      from: `"Gourmet Bazar" <${process.env.MAIL_USER}>`,
-      to: YourEmail,
-      subject: `Thank you for contacting us, ${YourName}`,
-      html: `
-        <h3>Hello, ${YourName}</h3>
-        <p>We received your message:</p>
-        <blockquote>${Message}</blockquote>
-        <p>We'll get back to you shortly.</p>
-        <hr />
-        <p><strong>Email:</strong> ${YourEmail}</p>
-        <p><strong>Phone Number:</strong> ${PhoneNumber}</p>
-     `
-    };
-    await mailer.sendMail(mailOptions);
-    res.json({ message: `Email sent to ${YourEmail}` });
-  } catch (err) {
-    console.error("Contact error:", err);
-    res.status(500).json({ message: "Server error during contact submission.", details: err.message });
-  }
-});
 /* ------------------ Ratings & Reviews ------------------ */
 app.post("/products/:productId/rating", authenticate, async (req, res) => {
   try {
@@ -477,53 +450,6 @@ process.on("unhandledRejection", (reason) => {
 process.on("uncaughtException", (err) => {
   console.error("Uncaught Exception:", err);
   // optionally gracefully shutdown here
-});
-app.post('/user/contactus', async (req, res) => {
-  const { YourName, YourEmail, PhoneNumber, Message } = req.body;
-  if (!YourName || !YourEmail || !PhoneNumber || !Message) {
-    return res.status(400).json({ message: "All fields are required." });
-  }
-  try {
-    const contact = new ContactUs({
-      YourName,
-      YourEmail,
-      PhoneNumber,
-      Message,
-    });
-    await contact.save();
-    // Set up the transporter
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.MAIL_USER,     // your Gmail address from .env
-        pass: process.env.MAIL_PASS,     // app-specific password or real password
-      },
-    });
-    // Define the email options
-    const mailOptions = {
-      from: `"Gourmet Bazar" <${process.env.MAIL_USER}>`,
-      to: YourEmail,  // sending to user or your admin email
-      subject: `Thank you for contacting us, ${YourName}`,
-      html: `
-        <h3>Hello, ${YourName}</h3>
-        <p>We received your message:</p>
-        <blockquote>${Message}</blockquote>
-        <p>We'll get back to you shortly.</p>
-        <hr />
-        <p><strong>Email:</strong> ${YourEmail}</p>
-        <p><strong>Phone Number:</strong> ${PhoneNumber}</p>
-      `,
-    };
-    // Send the email
-    await transporter.sendMail(mailOptions);
-    return res.status(200).json({ message: `Email sent to ${YourEmail}` });
-  } catch (error) {
-    console.error("Contact form error:", error);
-    return res.status(500).json({
-      error: "Server error during contact submission.",
-      details: error.message,
-    });
-  }
 });
 async function sendOrderEmail(to, orderId, items = []) {
   const itemLines = items.map(
@@ -701,6 +627,50 @@ app.get("/full", async (req, res) => {
     res.json(data);
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+
+app.post("/api/contact", async (req, res) => {
+  try {
+    const { name, email, phone, message } = req.body;
+
+    if (!name || !email || !message) {
+      return res.status(400).json({ error: "Name, Email, and Message are required." });
+    }
+
+    // 1️⃣ Save to MongoDB
+    const newContact = new Contact({ name, email, phone, message });
+    await newContact.save();
+
+    // 2️⃣ Define transporter
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.MAIL_USER || "yourgmail@gmail.com",
+        pass: process.env.MAIL_PASS || "your-app-password",
+      },
+    });
+
+    const mailOptions = {
+      from: `"Soulliqo Contact Form" <${process.env.MAIL_USER}>`,
+      to: process.env.MAIL_TO || "yourgmail@gmail.com",
+      subject: "New Contact Form Submission",
+      html: `
+        <h2>New Contact Form Submission</h2>
+        <p><b>Name:</b> ${name}</p>
+        <p><b>Email:</b> ${email}</p>
+        <p><b>Phone:</b> ${phone || "N/A"}</p>
+        <p><b>Message:</b><br/>${message}</p>
+      `,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    res.status(200).json({ success: "Message saved & email sent successfully!" });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Server error, please try again later." });
   }
 });
 /* ------------------ Start server ------------------ */
