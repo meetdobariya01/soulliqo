@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const boxSizeSchema = new mongoose.Schema({
   label: String,   // e.g. "Box of 12"
@@ -20,4 +20,5 @@ const chocolateSchema = new mongoose.Schema({
   categories: [categorySchema]
 });
 
-export default mongoose.model("Chocolate", chocolateSchema);
+// If model already exists, reuse it (important for hot reloads / PM2 restarts)
+module.exports = mongoose.models.Chocolate || mongoose.model("Chocolate", chocolateSchema);
