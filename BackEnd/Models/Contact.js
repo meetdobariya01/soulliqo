@@ -1,13 +1,12 @@
 const mongoose = require("mongoose");
 
-const contactSchema = new mongoose.Schema(
-  {
-    name: { type: String, required: true },
-    email: { type: String, required: true },
-    phone: { type: String },
-    message: { type: String, required: true },
-  },
-  { timestamps: true }
-);
+const contactSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true },
+  phone: { type: String },
+  message: { type: String, required: true ,matchMediach: [/^[\s\S]{10,}$/, 'Message must be at least 10 characters long']},
+  createdAt: { type: Date, default: Date.now }
+});
 
 module.exports = mongoose.model("Contact", contactSchema);
+

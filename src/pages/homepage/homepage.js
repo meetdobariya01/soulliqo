@@ -6,13 +6,11 @@ import Collection from "../../components/collection/collection";
 import Discover from "../../components/discover/discover";
 import Custmerlove from "../../components/custmerlove/custmerlove";
 import Footer from "../../components/footer/footer";
-
 const Homepage = () => {
   return (
     <div>
       {/* Header */}
       <Header />
-
       {/* Desktop View Section */}
       <div className="d-none d-md-block choco-banner">
         <Container>
@@ -27,7 +25,6 @@ const Homepage = () => {
           </Row>
         </Container>
       </div>
-
       {/* Mobile View Section */}
       <div className="d-block d-md-none choco-location text-center">
         <Container>
@@ -61,10 +58,8 @@ const Homepage = () => {
           </Row>
         </Container>
       </div>
-
       {/* collection component */}
       <Collection />
-
       {/* Video Section */}
       <section className="our-story py-5">
         <div className="container text-center">
@@ -91,10 +86,8 @@ const Homepage = () => {
           </div>
         </div>
       </section>
-
       {/* Discover Component */}
       <Discover />
-
       {/* Make your own Box */}
       <Container fluid className="makebox-section py-5 container">
         <Row className="align-items-center">
@@ -115,7 +108,6 @@ const Homepage = () => {
               <Button className="makebox-btn ">Shop Now</Button>
             </div>
           </Col>
-
           {/* Right Image */}
           <Col lg={6} md={12} className="text-center">
             <img
@@ -126,7 +118,6 @@ const Homepage = () => {
           </Col>
         </Row>
       </Container>
-
       {/* Customer Love Component */}
       <Custmerlove />
 
@@ -135,5 +126,4 @@ const Homepage = () => {
     </div>
   );
 };
-
 export default Homepage;

@@ -1,4 +1,3 @@
-// server.js (cleaned & fixed)
 require("dotenv").config(".env");
 const express = require("express");
 const http = require("http");
@@ -8,7 +7,9 @@ const nodemailer = require("nodemailer");
 const connectDB = require("./Config/db");
 // Models (make sure filenames match your filesystem)
 const User = require("./Models/User");
-const Contact = require("./Models/Contact")    // keep spelling as in your project
+const Contact = require("./Models/Contact");
+const Chocolate = require("./Models/Chocolate");
+   // keep spelling as in your project
 const Product = require("./Models/Product");              // fixed: Product (was Food)
 const Order = require("./Models/Order.Traking");         // keep your filename if that's what exists       // keep spelling as in your project
 const Cart = require("./Models/Cart");
@@ -332,7 +333,6 @@ app.post("/place-order/:cartId", authenticate, async (req, res) => {
     if (!city || !pincode || !houseNumber) return res.status(400).json({ message: "Missing essential delivery address details." });
     const cart = await Cart.findById(cartId).populate("items.foodId");
     if (!cart || !cart.items || cart.items.length === 0) return res.status(404).json({ message: "Cart not found or empty." });
-    // calculate subtotal
     const subtotal = cart.items.reduce((sum, item) => sum + ((item.foodId?.FoodPrice || 0) * (item.quantity || 1)), 0);
     const cgst = subtotal * 0.025;
     const sgst = subtotal * 0.025;
@@ -350,14 +350,12 @@ app.post("/place-order/:cartId", authenticate, async (req, res) => {
       status: "Pending",
     });
     await order.save();
-    // Prepare email using order.items (not the cleared cart)
     const orderItemsForEmail = order.items.map(i => ({
       name: i.foodId?.FoodName || "Unknown Food",
       price: i.foodId?.FoodPrice || 0,
       quantity: i.quantity || 1
     }));
     const itemLines = orderItemsForEmail.map(it => `<li>${it.name} x ${it.quantity} = ₹${(it.price * it.quantity).toFixed(2)}</li>`).join("");
-    // Clear cart AFTER building order
     cart.items = [];
     await cart.save();
     const user = await User.findById(req.user.id);
@@ -427,14 +425,12 @@ app.get("/products/:productId/reviews", async (req, res) => {
 });
 /* ------------------ Google Auth (passport) ------------------ */
 app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
-
 // Google Callback
 app.get(
   "/google/callback",
   passport.authenticate("google", { failureRedirect: "/login" }),
   (req, res) => {
     const token = jwt.sign({ id: req.user._id }, "jwt_secret", { expiresIn: "1d" });
-
     // Redirect back to frontend with token + userId
     res.redirect(`http://localhost:3000/afterlogin?token=${token}&userId=${req.user._id}`);
   }
@@ -576,15 +572,6 @@ app.get("/categories", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-// app.get("/categories", async (req, res) => {
-//   try {
-//     const categories = await Product.distinct("Category");
-//     res.json(categories);
-//   } catch (err) {
-//     console.error("Categories error:", err);
-//     res.status(500).json({ message: "Server error fetching categories." });
-//   }
-// });
 // 2) Get collections for a category
 app.get("/categories/:categoryId/collections", async (req, res) => {
   try {
@@ -629,8 +616,6 @@ app.get("/full", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
-
 app.post("/api/contact", async (req, res) => {
   try {
     const { name, email, phone, message } = req.body;
@@ -639,22 +624,14 @@ app.post("/api/contact", async (req, res) => {
       return res.status(400).json({ error: "Name, Email, and Message are required." });
     }
 
-    // 1️⃣ Save to MongoDB
+    // Save to Mongo
     const newContact = new Contact({ name, email, phone, message });
     await newContact.save();
 
-    // 2️⃣ Define transporter
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.MAIL_USER || "yourgmail@gmail.com",
-        pass: process.env.MAIL_PASS || "your-app-password",
-      },
-    });
-
-    const mailOptions = {
+    // Send mail using global mailer
+    await mailer.sendMail({
       from: `"Soulliqo Contact Form" <${process.env.MAIL_USER}>`,
-      to: process.env.MAIL_TO || "yourgmail@gmail.com",
+      to: process.env.MAIL_TO || process.env.MAIL_USER,
       subject: "New Contact Form Submission",
       html: `
         <h2>New Contact Form Submission</h2>
@@ -663,13 +640,11 @@ app.post("/api/contact", async (req, res) => {
         <p><b>Phone:</b> ${phone || "N/A"}</p>
         <p><b>Message:</b><br/>${message}</p>
       `,
-    };
+    });
 
-    await transporter.sendMail(mailOptions);
-
-    res.status(200).json({ success: "Message saved & email sent successfully!" });
+    res.status(200).json({ success: "Thank You for contacting us!" });
   } catch (error) {
-    console.error("Error:", error);
+    console.error("Error in /api/contact:", error);
     res.status(500).json({ error: "Server error, please try again later." });
   }
 });

@@ -11,7 +11,6 @@ import {
 } from "react-icons/fa";
 import { Link } from "react-router-dom";  
 import "../../index.css";
-
 const Footer = () => {
   return (
     <div>
@@ -64,7 +63,6 @@ const Footer = () => {
                 </div>
               </motion.div>
             </Col>
-
             {/* Quick Links */}
             <Col md={4} sm={6}>
               <motion.div
@@ -84,7 +82,6 @@ const Footer = () => {
                 </ul>
               </motion.div>
             </Col>
-
             {/* Contact Info */}
             <Col md={4} sm={6}>
               <motion.div
@@ -106,7 +103,6 @@ const Footer = () => {
               </motion.div>
             </Col>
           </Row>
-
           {/* Bottom Line */}
           <Row className="mt-4">
             <Col className="text-center">
@@ -125,5 +121,4 @@ const Footer = () => {
     </div>
   );
 };
-
 export default Footer;
