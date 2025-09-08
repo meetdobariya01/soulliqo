@@ -16,7 +16,6 @@ const foodSchema = new mongoose.Schema({
       createdAt: { type: Date, default: Date.now }
     }
   ],
-
   averageRating: { type: Number, default: 0 },
 });
 module.exports = mongoose.model('Foods', foodSchema);

@@ -23,7 +23,7 @@ const rateLimit = require("express-rate-limit");
 const app = express();
 connectDB();
 const server = http.createServer(app);
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 5000;
 /* ---------- Basic security & parsing middleware ---------- */
 app.set("trust proxy", 1);
 app.use(helmet({ contentSecurityPolicy: false }));
@@ -110,6 +110,9 @@ app.post("/user/signup", async (req, res) => {
     console.error("Signup error:", err);
     res.status(500).json({ message: "Server error during signup." });
   }
+});
+app.get("/ping", (req, res) => {
+  res.json({ message: "Pong" });
 });
 // Login
 app.post("/user/login", async (req, res) => {

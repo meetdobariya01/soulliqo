@@ -11,7 +11,7 @@ const Collection = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/categories"); 
+        const res = await axios.get("http://localhost:5000/categories"); 
         setCollections(res.data);
       } catch (err) {
         console.error("Error fetching categories:", err);

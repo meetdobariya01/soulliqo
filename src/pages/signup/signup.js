@@ -53,7 +53,7 @@ const Signup = () => {
     setServerError("");
 
     try {
-      const res = await axios.post("http://localhost:8000/user/signup", formData); // adjust base URL
+      const res = await axios.post("http://localhost:5000/user/signup", formData); // adjust base URL
       if (res.status === 201) {
         // Redirect to Login page after successful signup
         navigate("/login");
