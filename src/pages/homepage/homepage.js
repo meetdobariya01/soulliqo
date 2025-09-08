@@ -76,7 +76,6 @@ const Homepage = () => {
             expressing the true flavours of Indian Cacao in endless
             interpretations of chocolate, like never before.
           </p>
-
           <div className="video-container">
             <video
               className="story-video"

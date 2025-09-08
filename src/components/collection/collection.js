@@ -1,36 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Carousel from "react-bootstrap/Carousel";
 import { Card } from "react-bootstrap";
+import axios from "axios";
 
-const collections = [
-  {
-    id: 1,
-    title: "Bon Bon",
-    img: "./images/our-collection1.jpg",
-    link: "/collection/bonbon",
-  },
-  {
-    id: 2,
-    title: "Chocolate Block",
-    img: "./images/our-collection2.jpg",
-    link: "/collection/chocolate-block",
-  },
-  {
-    id: 3,
-    title: "Melt In Mouth",
-    img: "./images/our-collection3.jpg",
-    link: "/collection/melt",
-  },
-  {
-    id: 4,
-    title: "Dragees Collection",
-    img: "./images/our-collection4.jpg",
-    link: "/collection/dragees",
-  },
-];
 const Collection = () => {
+  const [collections, setCollections] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/categories"); // adjust backend URL
+        setCollections(res.data);
+      } catch (err) {
+        console.error("Error fetching categories:", err);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   // split items into chunks of 4 for desktop view
   const chunkSize = 4;
@@ -42,7 +30,7 @@ const Collection = () => {
   return (
     <div>
       <div className="my-5 container">
-        <h2 className="font-collection  mb-4">OUR COLLECTION</h2>
+        <h2 className="font-collection mb-4">OUR COLLECTION</h2>
 
         <Carousel indicators={false} interval={4000}>
           {slides.map((group, idx) => (
@@ -72,5 +60,4 @@ const Collection = () => {
     </div>
   );
 };
-
 export default Collection;

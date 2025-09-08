@@ -9,7 +9,6 @@ const Ourmission = () => {
     <div>
       {/* Header */}
       <Header />
-
       {/* Our Mission Section */}
       <section className="our-mission-section py-5">
         <Container>
@@ -22,7 +21,6 @@ const Ourmission = () => {
                 className="img-fluid rounded shadow"
               />
             </Col>
-
             {/* Right side content */}
             <Col md={6} className="position-relative">
               <div className="floral-bg-right"></div>
