@@ -11,7 +11,7 @@ const Contact = require("./Models/Contact");
 const Chocolate = require("./Models/Chocolate");
    // keep spelling as in your project
 const Product = require("./Models/Product");              // fixed: Product (was Food)
-const Order = require("./Models/Order.Traking");         // keep your filename if that's what exists       // keep spelling as in your project
+const Order = require("./Models/Order.Traking");         // keep your filename if that's what exists        // keep spelling as in your project
 const Cart = require("./Models/Cart");
 const session = require("express-session");
 const passport = require("./Config/passport");
@@ -363,7 +363,7 @@ app.post("/place-order/:cartId", authenticate, async (req, res) => {
     await cart.save();
     const user = await User.findById(req.user.id);
     if (user && user.email) {
-      const emailHtml = `
+      const emailHtml = ` 
         <p>Hello ${user.firstName || "Customer"},</p>
         <p>Thank you for your order! Here's a summary:</p>
         <h3>🧾 Order Summary (Order ID: ${order._id})</h3>
