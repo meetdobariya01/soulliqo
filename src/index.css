@@ -1,13 +1,985 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Tenor+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=The+Nautigal:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+/* Global Styles */
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding-top: 90px;
+}
+.custom-navbar {
+  background: #000;
+  padding: 10px 20px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.logo {
+  height: 70px;
+}
+
+.logo-text {
+  font-size: 14px;
+  color: #c9a25f;
+  margin-left: 5px;
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+
+.nav-link {
+  color: #c9a25f !important;
+  margin: 0 15px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #fff !important;
+}
+
+.icon-btn {
+  font-size: 18px;
+  color: #c9a25f;
+  cursor: pointer;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.icon-btn:hover {
+  transform: scale(1.1);
+  color: #fff;
+}
+
+.cart-count {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background: #c9a25f;
+  color: #000;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 50%;
+  padding: 2px 6px;
+}
+
+/* Mobile Menu */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  height: 100vh;
+  width: 70%;
+  background: #000;
+  transition: left 0.4s ease-in-out;
+  z-index: 999;
+  padding-top: 100px;
+}
+
+.mobile-menu.open {
+  left: 0;
+}
+
+.mobile-menu .nav-link {
+  padding: 15px;
+  font-size: 18px;
+  color: #c9a25f !important;
+  border-bottom: 1px solid #222;
+}
+
+/* Search Overlay */
+.search-overlay {
+  position: fixed;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: top 0.4s ease-in-out;
+  z-index: 1000;
+}
+
+.search-overlay.open {
+  top: 0;
+}
+
+.search-box {
+  width: 80%;
+  max-width: 600px;
+  position: relative;
+}
+
+.search-input {
+  padding: 15px;
+  font-size: 18px;
+  border-radius: 50px;
+  border: none;
+  outline: none;
+}
+
+.btn-search {
+  position: absolute;
+  right: 50px;
+  top: 5px;
+  padding: 10px 20px;
+  background: #c9a25f;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.close-search {
+  position: absolute;
+  right: 10px;
+  top: 12px;
+  font-size: 22px;
+  color: #c9a25f;
+  cursor: pointer;
+}
+.navbar-font {
+  font-family: "Poppins", sans-serif;
+  letter-spacing: 1px;
+}
+/* Dropdown style */
+.custom-dropdown .dropdown-toggle {
+  color: #c9a25f !important;
+  font-weight: 500;
+  letter-spacing: 1px;
+  transition: color 0.3s ease;
+}
+
+.custom-dropdown .dropdown-toggle:hover,
+.custom-dropdown .dropdown-toggle:focus,
+.custom-dropdown .show > .dropdown-toggle {
+  color: #fff !important; /* Active/Hover effect */
+}
+
+/* Dropdown menu */
+.custom-dropdown .dropdown-menu {
+  background: #000; /* Match header */
+  border: none;
+  border-radius: 0;
+  margin-top: 10px;
+}
+
+.custom-dropdown .dropdown-item {
+  color: #c9a25f !important;
+  font-weight: 500;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.custom-dropdown .dropdown-item:hover,
+.custom-dropdown .dropdown-item:focus {
+  background: #c9a25f;
+  color: #000 !important;
+}
+
+/* Home Page Specific Styles */
+
+/* Desktop Banner */
+.choco-banner {
+  background: url("../public/images/main-banner.jpg") no-repeat center center;
+  background-size: cover;
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2c2c2c;
+  position: relative;
+}
+
+.choco-text .title {
+  font-size: 2.5rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+
+.choco-text .brand {
+  font-size: 1.8rem;
+}
+
+.choco-text .highlight {
+  background: black;
+  color: #fff;
+  padding: 5px 15px;
+  font-weight: 600;
+  margin-right: 10px;
+}
+
+.choco-text .script {
+  font-family: "Dancing Script", cursive;
+  font-size: 1.5rem;
+  color: #6b4226;
+}
+
+/* Mobile View */
+.choco-location {
+  background: url("../public/images/mobile-banner.jpg") no-repeat center center;
+  background-size: cover;
+  height: 60vh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 20px;
+}
+
+.choco-mobile-box {
+  background: #b88a4a;
+  padding: 20px;
+  border-radius: 8px;
+  color: white;
+  width: 100%;
+  margin-top: 114%;
+}
+
+.choco-location .loc-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.choco-location .loc-sub {
+  font-size: 1rem;
+  margin: 0;
+}
+.choco-text-section {
+  background: #fdfdfd;
+  padding: 50px 20px;
+  position: relative;
+}
+
+.choco-title {
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: #2c2c2c;
+  margin-bottom: 1rem;
+}
+
+.choco-brand {
+  font-size: 1.8rem;
+  margin-left: 18%;
+}
+
+.highlight {
+  background: black;
+  color: #fff;
+  padding: 6px 15px;
+  font-weight: 600;
+  margin-right: 10px;
+  letter-spacing: 2px;
+}
+
+.script {
+  font-family: "Dancing Script", cursive;
+  font-size: 1.5rem;
+  color: #6b4226;
+}
+
+/* Flower image on the right */
+.flower-col {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.flower-img {
+  background: url("../public/images/flower.png") no-repeat right center;
+  background-size: contain;
+  width: 300px;
+  height: 300px;
+}
+.slice-of-heaven {
+  font-family: "Tenor Sans", sans-serif;
+  font-weight: 400;
+  font-size: 65px;
+}
+.the-nautigal-bold {
+  font-family: "The Nautigal", cursive;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 60px;
+}
+
+/* Hide section on mobile */
+@media (max-width: 767px) {
+  .choco-text-section {
+    display: none;
+  }
+}
+/* Collection Component Styles */
+.font-collection {
+  font-family: "Tenor Sans", sans-serif;
+}
+/* src/components/CollectionCarousel.css */
+.collection-card {
+  cursor: pointer;
+  border: none;
+  flex: 1 0 22%; /* 4 items in a row on desktop */
+  max-width: 22%;
+}
+
+.collection-img {
+  object-fit: cover;
+  height: 220px;
+  border-radius: 6px;
+}
+
+/* Responsive for tablets */
+@media (max-width: 992px) {
+  .collection-card {
+    flex: 1 0 45%;
+    max-width: 45%;
+  }
+}
+
+/* Responsive for mobile - single item */
+@media (max-width: 576px) {
+  .collection-card {
+    flex: 1 0 90%;
+    max-width: 90%;
+  }
+  .collection-img {
+    height: 180px;
+  }
+}
+
+/* Video Section Styles */
+/* src/components/OurStory.css */
+.our-story {
+  position: relative;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.our-story h2 {
+  font-size: 60px;
+  font-weight: bold;
+}
+
+.story-text {
+  max-width: 750px;
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+.video-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+.story-font {
+  font-family: "Tenor Sans", sans-serif;
+}
+.story-video {
+  width: 100%;
+  max-width: 800px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .story-text {
+    font-size: 1rem;
+    padding: 0 15px;
+  }
+  .story-video {
+    max-width: 100%;
+  }
+}
+/* Discover More Section */
+.discover-section {
+  background: #fff;
+}
+
+.discover-title {
+  font-weight: 400;
+  letter-spacing: 2px;
+  font-family: "Tenor Sans", sans-serif;
+  font-size: 60px;
+  color: #312625;
+}
+
+.discover-subtitle {
+  margin-top: 10px;
+  font-weight: 500;
+  color: #312625;
+  font-size: 28px;
+  font-family: Tenor Sans, sans-serif;
+}
+
+.discover-text {
+  margin: 20px 0;
+  font-size: 22px;
+  line-height: 1.6;
+  color: #444;
+  font-family: Tenor Sans, sans-serif;
+}
+
+.discover-link {
+  color: #7b5b54;
+  font-weight: 500;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.discover-link:hover {
+  text-decoration: underline;
+}
+
+.discover-card {
+  display: block;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.image-box {
+  position: relative;
+}
+
+.image-box img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+.badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #f0e0ca;
+  color: #3d2b1f;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.swiper-pagination-bullet {
+  background: #3d2b1f;
+  opacity: 0.5;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1;
+}
+.discover-title-1 {
+  font-family: poppins, sans-serif;
+  color: #7b5b54;
+}
+
+/* Make your own Box */
+.makebox-section {
+  background: #fdfcfb;
+  position: relative;
+  overflow: hidden;
+}
+
+.makebox-title {
+  font-size: 60px;
+  font-weight: 400;
+  color: #3d2b1f;
+  margin-bottom: 20px;
+  font-family: Tenor Sans, sans-serif;
+}
+
+.makebox-text {
+  font-size: 22px;
+  line-height: 1.6;
+  color: #444;
+  margin-bottom: 25px;
+  font-family: Tenor Sans, sans-serif;
+}
+
+.makebox-btn button {
+  background-color: #6b4a3a;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.makebox-btn:hover {
+  background-color: #523628;
+}
+
+/* Right image */
+.makebox-image {
+  max-width: 90%;
+  border-radius: 10px;
+}
+
+/* Flower background */
+.flower-bg {
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+}
+
+.flower-bg::before {
+  content: "";
+  background: url("../public/images/flover-opp.png") no-repeat center center;
+  background-size: contain;
+  position: absolute;
+  top: -40px;
+  left: -60px;
+  width: 150px;
+  height: 150px;
+  opacity: 0.2;
+  z-index: -1;
+}
+
+/* custmer love section */
+.customerlove-section {
+  background: #fdfcfb;
+  position: relative;
+}
+
+.customerlove-section::after {
+  content: "";
+  background: url("../public/images/flover-opp.png") no-repeat center center;
+  background-size: 180px;
+  position: absolute;
+  top: 20%;
+  right: 5%;
+  width: 200px;
+  height: 200px;
+  opacity: 0.15;
+  z-index: 0;
+}
+
+.customerlove-title {
+  font-size: 2.2rem;
+  font-weight: 400;
+  color: #3d2b1f;
+  font-family: Tenor Sans;
+  font-size: 60px;
+}
+
+.review-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s;
+  z-index: 1;
+  position: relative;
+}
+
+.review-card:hover {
+  transform: translateY(-5px);
+}
+
+.review-product {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.review-body {
+  padding: 15px;
+}
+
+.review-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover;
+}
+
+.stars {
+  font-size: 0.9rem;
+  color: #f5a623;
+}
+
+.review-text {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #444;
+  margin-top: 10px;
+  font-family: Poppins, sans-serif;
+  font-weight: 400;
+}
+
+/* Swiper Pagination */
+.swiper-pagination-bullet {
+  background: #3d2b1f;
+  opacity: 0.5;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1;
+}
+
+/* Footer style */
+.footer {
+  background: #f2efea;
+  padding: 50px 20px 20px;
+  color: #3d2b1f;
+  position: relative;
+  overflow: hidden;
+  font-family: Poppins, sans-serif;
+}
+
+.footer-logo {
+  width: 120px;
+  margin-bottom: 15px;
+}
+
+.footer-text {
+  font-family: Poppins;
+  font-size: 16px;
+  margin-bottom: 20px;
+  font-weight: 400;
+  color: #010101;
+}
+
+.footer-social a {
+  font-size: 1.3rem;
+  color: #3d2b1f;
+  margin-right: 15px;
+  transition: all 0.3s ease;
+}
+
+.footer-social a:hover {
+  color: #a15e3f;
+  transform: scale(1.2);
+}
+
+.footer-links h5,
+.footer-contact h5 {
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links ul li {
+  margin-bottom: 8px;
+}
+
+.footer-links ul li a {
+  color: #3d2b1f;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links ul li a:hover {
+  color: #a15e3f;
+}
+
+.footer-contact p {
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+.footer-bottom {
+  font-size: 0.9rem;
+  margin-top: 20px;
+  color: #555;
+}
+
+/* Login Page Specific Styles */
+.Login-font {
+  font-family: "Tenor Sans", sans-serif;
+  font-weight: 400;
+  font-size: 65px;
+}
+.form-font {
+  font-family: "Raleway", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+}
+/* Minimal underline style */
+.underline-input {
+  border: none !important;
+  border-bottom: 1px solid #ccc !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding-left: 0 !important;
+}
+
+.underline-input:focus {
+  border-bottom: 2px solid #a18146 !important; /* golden underline on focus */
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.form-font {
+  font-weight: 500;
+  color: #333;
+}
+
+/* Signup Page Specific Styles */
+/* Underline style for input */
+.underline-input {
+  border: none !important;
+  border-bottom: 1px solid #ccc !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding-left: 0 !important;
+}
+
+.underline-input:focus {
+  border-bottom: 2px solid #a18146 !important; /* golden underline on focus */
+  outline: none !important;
+  box-shadow: none !important;
+}
+.create-account {
+  color: #a18146;
+  font-weight: "600";
+  font-size: "40px";
+  font-family: Tenor Sans;
+}
+
+/* Brand journey page specific styles */
+.who-we-are-section {
+  background: url("../public/images/flover-opp.png") no-repeat left center;
+  background-size: 150px;
+  padding: 60px 0;
+}
+.who-section {
+  background: #fff;
+  color: #333;
+  font-family: "Poppins", sans-serif;
+}
+.who-title {
+  font-family: "Tenor Sans", sans-serif;
+  font-weight: 400;
+  font-size: 60px;
+}
+.who-subtitle,
+.who-text {
+  font-family: Tenor Sans;
+  font-weight: 400;
+  font-size: 22px;
+}
+.title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #2b2b2b;
+}
+
+.sub-title {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  font-style: italic;
+  color: #555;
+}
+
+.content {
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-bottom: 15px;
+}
+
+.image-section img {
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.image-section img:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.3);
+}
+/*Our Mission section*/
+.our-mission-section {
+  background: #fff;
+  font-family: "Poppins", sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.mission-title {
+  font-family: Tenor Sans;
+  font-size: 60px;
+  font-weight: 400;
+  margin-bottom: 15px;
+  color: #312625;
+}
+
+.mission-quote,
+.mission-text {
+  font-family: Tenor Sans;
+  font-size: 22px;
+  color: #312625;
+  margin-bottom: 20px;
+  font-weight: 400;
+}
+
+/* .mission-text {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #555;
+} */
+
+/* Floral background on right */
+.floral-bg-right {
+  background: url("../public/images/flover-opp.png") no-repeat right center;
+  background-size: contain;
+  position: absolute;
+  top: 0;
+  right: -40px;
+  width: 150px;
+  height: 100%;
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.img-fluid {
+  border-radius: 12px;
+}
+/* Aboutus page specific styles */
+.about-us-section {
+  font-family: "Poppins", sans-serif;
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Floral decoration */
+.floral-bg-left {
+  background: url("../public/images/flower.png") no-repeat left center;
+  background-size: contain;
+  position: absolute;
+  top: 0;
+  left: -30px;
+  width: 150px;
+  height: 100%;
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+/* Content Box */
+.about-box {
+  background: #f9f5ef; /* Light parchment background */
+  padding: 40px;
+  border-radius: 8px;
+}
+
+.about-title {
+  font-family: Tenor Sans;
+  font-size: 60px;
+  font-weight: 400;
+  margin-bottom: 20px;
+  color: #000000;
+}
+
+.about-text {
+  font-family: Tenor Sans;
+  font-size: 22px;
+  font-weight: 400;
+  color: #000000;
+}
+
+/* Image style */
+.object-cover {
+  object-fit: cover;
+  height: 100%;
+}
+
+/* Our Values section */
+.values-section {
+  font-family: "Poppins", sans-serif;
+}
+
+.values-img-col {
+  height: 100%;
+}
+
+.values-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* keeps image proportional and fills height */
+}
+
+/* Text Box */
+.values-box {
+  background: #f9f5ef;
+  padding: 60px;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.values-title {
+  font-family: Tenor Sans;
+  font-size: 60px;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+.values-text {
+  font-family: Tenor Sans;
+  font-size: 22px;
+  line-height: 1.8;
+}
+
+/* Responsive Fixes */
+@media (max-width: 768px) {
+  .values-box {
+    padding: 30px 20px;
+  }
+
+  .values-title {
+    font-size: 1.6rem;
+  }
+
+  .values-text {
+    font-size: 0.95rem;
+  }
+}
+/* Brand Ethos Page Specific Styles */
+.brand-ethos-section {
+  font-family: "Poppins", sans-serif;
+  padding: 50px 0;
+}
+
+.ethos-heading {
+  font-family: Tenor Sans;
+  font-size: 60px;
+  font-weight: 400;
+  text-align: left;
+  margin-bottom: 40px;
+  padding-left: 20px;
+  color: #312625;
+}
+.title{
+  font-family: Tenor Sans;
+  font-weight: 400;
+  font-size: 40px;
+}
+.text{
+  font-family: Tenor Sans;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 40px;
+}
+/* Contact Us Page Specific Styles */
+.font{
+  font-family: "Raleway";
+  font-weight: 600;
+  font-size: 16px;
+}
+.contact-heading {
+  font-family: "Tenor Sans", sans-serif;
+  font-weight: 400;
+  font-size: 60px;
+  color: #312625;
+}
+@media (max-width: 768px) {
+  .contact-heading {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-heading {
+    font-size: 20px;
+  }
 }
