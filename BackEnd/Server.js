@@ -91,7 +91,7 @@ const authenticate = (req, res, next) => {
     console.error("JWT verify error:", err);
     return res.status(401).json({ message: "Invalid or expired token" });
   }
-};
+};  
 /* ------------------ Auth Routes ------------------ */
 // Signup
 app.post("/user/signup", async (req, res) => {
