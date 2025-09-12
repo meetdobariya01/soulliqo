@@ -1,0 +1,9 @@
+2025-09-13 00:02:29: [dotenv@17.2.1] injecting env (8) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+2025-09-13 00:02:29: 🚀 Server running on port 5000
+2025-09-13 00:02:29: ✅ MongoDB connected to: soliquo
+2025-09-13 00:14:47: [dotenv@17.2.1] injecting env (8) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+2025-09-13 00:14:47: 🚀 Server running on port 5000
+2025-09-13 00:14:47: ✅ MongoDB connected to: soliquo
+2025-09-13 00:14:56: [dotenv@17.2.1] injecting env (8) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+2025-09-13 00:14:56: 🚀 Server running on port 5000
+2025-09-13 00:14:56: ✅ MongoDB connected to: soliquo

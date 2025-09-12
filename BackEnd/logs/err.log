@@ -1,0 +1,6 @@
+2025-09-13 00:02:29: (node:24628) [MONGOOSE] Warning: Duplicate schema index on {"categoryName":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+2025-09-13 00:02:29: (Use `node --trace-warnings ...` to show where the warning was created)
+2025-09-13 00:14:47: (node:8336) [MONGOOSE] Warning: Duplicate schema index on {"categoryName":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+2025-09-13 00:14:47: (Use `node --trace-warnings ...` to show where the warning was created)
+2025-09-13 00:14:56: (node:25116) [MONGOOSE] Warning: Duplicate schema index on {"categoryName":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+2025-09-13 00:14:56: (Use `node --trace-warnings ...` to show where the warning was created)
