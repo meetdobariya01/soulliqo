@@ -4,3 +4,331 @@
 2025-09-13 00:14:47: (Use `node --trace-warnings ...` to show where the warning was created)
 2025-09-13 00:14:56: (node:25116) [MONGOOSE] Warning: Duplicate schema index on {"categoryName":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
 2025-09-13 00:14:56: (Use `node --trace-warnings ...` to show where the warning was created)
+2025-09-13 00:19:33: (node:1992) [MONGOOSE] Warning: Duplicate schema index on {"categoryName":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+2025-09-13 00:19:33: (Use `node --trace-warnings ...` to show where the warning was created)
+2025-09-13 00:38:58: (node:10696) [MONGOOSE] Warning: Duplicate schema index on {"categoryName":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+2025-09-13 00:38:58: (Use `node --trace-warnings ...` to show where the warning was created)
+2025-09-13 00:52:05: ReferenceError: appget is not defined
+2025-09-13 00:52:05:     at Object.<anonymous> (D:\Job\soulliqo-clean\soulliqo\BackEnd\Server.js:700:1)
+2025-09-13 00:52:05:     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+2025-09-13 00:52:05:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 00:52:05:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 00:52:05:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 00:52:05:     at Object.<anonymous> (D:\Software\v22.17.0\node_modules\pm2\lib\ProcessContainerFork.js:33:23)
+2025-09-13 00:52:05:     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+2025-09-13 00:52:05:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 00:52:05:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 00:52:05:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 00:52:06: ReferenceError: appget is not defined
+2025-09-13 00:52:06:     at Object.<anonymous> (D:\Job\soulliqo-clean\soulliqo\BackEnd\Server.js:700:1)
+2025-09-13 00:52:06:     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+2025-09-13 00:52:06:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 00:52:06:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 00:52:06:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 00:52:06:     at Object.<anonymous> (D:\Software\v22.17.0\node_modules\pm2\lib\ProcessContainerFork.js:33:23)
+2025-09-13 00:52:06:     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+2025-09-13 00:52:06:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 00:52:06:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 00:52:06:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 00:52:07: ReferenceError: appget is not defined
+2025-09-13 00:52:07:     at Object.<anonymous> (D:\Job\soulliqo-clean\soulliqo\BackEnd\Server.js:700:1)
+2025-09-13 00:52:07:     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+2025-09-13 00:52:07:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 00:52:07:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 00:52:07:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 00:52:07:     at Object.<anonymous> (D:\Software\v22.17.0\node_modules\pm2\lib\ProcessContainerFork.js:33:23)
+2025-09-13 00:52:07:     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+2025-09-13 00:52:07:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 00:52:07:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 00:52:07:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 00:52:08: ReferenceError: appget is not defined
+2025-09-13 00:52:08:     at Object.<anonymous> (D:\Job\soulliqo-clean\soulliqo\BackEnd\Server.js:700:1)
+2025-09-13 00:52:08:     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+2025-09-13 00:52:08:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 00:52:08:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 00:52:08:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 00:52:08:     at Object.<anonymous> (D:\Software\v22.17.0\node_modules\pm2\lib\ProcessContainerFork.js:33:23)
+2025-09-13 00:52:08:     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+2025-09-13 00:52:08:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 00:52:08:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 00:52:08:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 00:52:09: ReferenceError: appget is not defined
+2025-09-13 00:52:09:     at Object.<anonymous> (D:\Job\soulliqo-clean\soulliqo\BackEnd\Server.js:700:1)
+2025-09-13 00:52:09:     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+2025-09-13 00:52:09:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 00:52:09:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 00:52:09:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 00:52:09:     at Object.<anonymous> (D:\Software\v22.17.0\node_modules\pm2\lib\ProcessContainerFork.js:33:23)
+2025-09-13 00:52:09:     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+2025-09-13 00:52:09:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 00:52:09:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 00:52:09:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 00:52:09: ReferenceError: appget is not defined
+2025-09-13 00:52:09:     at Object.<anonymous> (D:\Job\soulliqo-clean\soulliqo\BackEnd\Server.js:700:1)
+2025-09-13 00:52:09:     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+2025-09-13 00:52:09:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 00:52:09:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 00:52:09:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 00:52:09:     at Object.<anonymous> (D:\Software\v22.17.0\node_modules\pm2\lib\ProcessContainerFork.js:33:23)
+2025-09-13 00:52:09:     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+2025-09-13 00:52:09:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 00:52:09:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 00:52:09:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 00:52:11: (node:6016) [MONGOOSE] Warning: Duplicate schema index on {"categoryName":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+2025-09-13 00:52:11: (Use `node --trace-warnings ...` to show where the warning was created)
+2025-09-13 01:04:35: (node:18212) [MONGOOSE] Warning: Duplicate schema index on {"categoryName":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+2025-09-13 01:04:35: (Use `node --trace-warnings ...` to show where the warning was created)
+2025-09-13 01:04:37: (node:1268) [MONGOOSE] Warning: Duplicate schema index on {"categoryName":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+2025-09-13 01:04:37: (Use `node --trace-warnings ...` to show where the warning was created)
+2025-09-13 01:04:46: (node:14020) [MONGOOSE] Warning: Duplicate schema index on {"categoryName":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+2025-09-13 01:04:46: (Use `node --trace-warnings ...` to show where the warning was created)
+2025-09-13 01:13:44: (node:3940) [MONGOOSE] Warning: Duplicate schema index on {"categoryName":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+2025-09-13 01:13:44: (Use `node --trace-warnings ...` to show where the warning was created)
+2025-09-13 01:14:31: (node:4644) [MONGOOSE] Warning: Duplicate schema index on {"categoryName":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+2025-09-13 01:14:31: (Use `node --trace-warnings ...` to show where the warning was created)
+2025-09-13 01:29:17: (node:9976) [MONGOOSE] Warning: Duplicate schema index on {"categoryName":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+2025-09-13 01:29:17: (Use `node --trace-warnings ...` to show where the warning was created)
+2025-09-13 01:36:41: (node:22924) [MONGOOSE] Warning: Duplicate schema index on {"categoryName":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+2025-09-13 01:36:41: (Use `node --trace-warnings ...` to show where the warning was created)
+2025-09-13 01:36:57: D:\Job\soulliqo-clean\soulliqo\BackEnd\Server.js:757
+2025-09-13 01:36:57: app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+2025-09-13 01:36:57:                                                                          
+2025-09-13 01:36:57: 
+2025-09-13 01:36:57: SyntaxError: Unexpected end of input
+2025-09-13 01:36:57:     at wrapSafe (node:internal/modules/cjs/loader:1662:18)
+2025-09-13 01:36:57:     at Module._compile (node:internal/modules/cjs/loader:1704:20)
+2025-09-13 01:36:57:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:57:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:57:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:57:     at Object.<anonymous> (D:\Software\v22.17.0\node_modules\pm2\lib\ProcessContainerFork.js:33:23)
+2025-09-13 01:36:57:     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+2025-09-13 01:36:57:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:57:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:57:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:57: D:\Job\soulliqo-clean\soulliqo\BackEnd\Server.js:757
+2025-09-13 01:36:57: app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+2025-09-13 01:36:57:                                                                          
+2025-09-13 01:36:57: 
+2025-09-13 01:36:57: SyntaxError: Unexpected end of input
+2025-09-13 01:36:57:     at wrapSafe (node:internal/modules/cjs/loader:1662:18)
+2025-09-13 01:36:57:     at Module._compile (node:internal/modules/cjs/loader:1704:20)
+2025-09-13 01:36:57:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:57:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:57:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:57:     at Object.<anonymous> (D:\Software\v22.17.0\node_modules\pm2\lib\ProcessContainerFork.js:33:23)
+2025-09-13 01:36:57:     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+2025-09-13 01:36:57:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:57:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:57:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:57: D:\Job\soulliqo-clean\soulliqo\BackEnd\Server.js:757
+2025-09-13 01:36:57: app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+2025-09-13 01:36:57:                                                                          
+2025-09-13 01:36:57: 
+2025-09-13 01:36:57: SyntaxError: Unexpected end of input
+2025-09-13 01:36:57:     at wrapSafe (node:internal/modules/cjs/loader:1662:18)
+2025-09-13 01:36:57:     at Module._compile (node:internal/modules/cjs/loader:1704:20)
+2025-09-13 01:36:57:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:57:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:57:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:57:     at Object.<anonymous> (D:\Software\v22.17.0\node_modules\pm2\lib\ProcessContainerFork.js:33:23)
+2025-09-13 01:36:57:     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+2025-09-13 01:36:57:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:57:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:57:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:57: D:\Job\soulliqo-clean\soulliqo\BackEnd\Server.js:757
+2025-09-13 01:36:57: app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+2025-09-13 01:36:57:                                                                          
+2025-09-13 01:36:57: 
+2025-09-13 01:36:57: SyntaxError: Unexpected end of input
+2025-09-13 01:36:57:     at wrapSafe (node:internal/modules/cjs/loader:1662:18)
+2025-09-13 01:36:57:     at Module._compile (node:internal/modules/cjs/loader:1704:20)
+2025-09-13 01:36:57:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:57:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:57:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:57:     at Object.<anonymous> (D:\Software\v22.17.0\node_modules\pm2\lib\ProcessContainerFork.js:33:23)
+2025-09-13 01:36:57:     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+2025-09-13 01:36:57:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:57:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:57:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:57: D:\Job\soulliqo-clean\soulliqo\BackEnd\Server.js:757
+2025-09-13 01:36:57: app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+2025-09-13 01:36:57:                                                                          
+2025-09-13 01:36:57: 
+2025-09-13 01:36:57: SyntaxError: Unexpected end of input
+2025-09-13 01:36:57:     at wrapSafe (node:internal/modules/cjs/loader:1662:18)
+2025-09-13 01:36:57:     at Module._compile (node:internal/modules/cjs/loader:1704:20)
+2025-09-13 01:36:57:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:57:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:57:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:57:     at Object.<anonymous> (D:\Software\v22.17.0\node_modules\pm2\lib\ProcessContainerFork.js:33:23)
+2025-09-13 01:36:57:     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+2025-09-13 01:36:57:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:57:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:57:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:58: D:\Job\soulliqo-clean\soulliqo\BackEnd\Server.js:757
+2025-09-13 01:36:58: app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+2025-09-13 01:36:58:                                                                          
+2025-09-13 01:36:58: 
+2025-09-13 01:36:58: SyntaxError: Unexpected end of input
+2025-09-13 01:36:58:     at wrapSafe (node:internal/modules/cjs/loader:1662:18)
+2025-09-13 01:36:58:     at Module._compile (node:internal/modules/cjs/loader:1704:20)
+2025-09-13 01:36:58:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:58:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:58:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:58:     at Object.<anonymous> (D:\Software\v22.17.0\node_modules\pm2\lib\ProcessContainerFork.js:33:23)
+2025-09-13 01:36:58:     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+2025-09-13 01:36:58:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:58:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:58:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:58: D:\Job\soulliqo-clean\soulliqo\BackEnd\Server.js:757
+2025-09-13 01:36:58: app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+2025-09-13 01:36:58:                                                                          
+2025-09-13 01:36:58: 
+2025-09-13 01:36:58: SyntaxError: Unexpected end of input
+2025-09-13 01:36:58:     at wrapSafe (node:internal/modules/cjs/loader:1662:18)
+2025-09-13 01:36:58:     at Module._compile (node:internal/modules/cjs/loader:1704:20)
+2025-09-13 01:36:58:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:58:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:58:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:58:     at Object.<anonymous> (D:\Software\v22.17.0\node_modules\pm2\lib\ProcessContainerFork.js:33:23)
+2025-09-13 01:36:58:     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+2025-09-13 01:36:58:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:58:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:58:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:58: D:\Job\soulliqo-clean\soulliqo\BackEnd\Server.js:757
+2025-09-13 01:36:58: app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+2025-09-13 01:36:58:                                                                          
+2025-09-13 01:36:58: 
+2025-09-13 01:36:58: SyntaxError: Unexpected end of input
+2025-09-13 01:36:58:     at wrapSafe (node:internal/modules/cjs/loader:1662:18)
+2025-09-13 01:36:58:     at Module._compile (node:internal/modules/cjs/loader:1704:20)
+2025-09-13 01:36:58:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:58:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:58:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:58:     at Object.<anonymous> (D:\Software\v22.17.0\node_modules\pm2\lib\ProcessContainerFork.js:33:23)
+2025-09-13 01:36:58:     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+2025-09-13 01:36:58:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:58:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:58:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:58: D:\Job\soulliqo-clean\soulliqo\BackEnd\Server.js:757
+2025-09-13 01:36:58: app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+2025-09-13 01:36:58:                                                                          
+2025-09-13 01:36:58: 
+2025-09-13 01:36:58: SyntaxError: Unexpected end of input
+2025-09-13 01:36:58:     at wrapSafe (node:internal/modules/cjs/loader:1662:18)
+2025-09-13 01:36:58:     at Module._compile (node:internal/modules/cjs/loader:1704:20)
+2025-09-13 01:36:58:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:58:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:58:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:58:     at Object.<anonymous> (D:\Software\v22.17.0\node_modules\pm2\lib\ProcessContainerFork.js:33:23)
+2025-09-13 01:36:58:     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+2025-09-13 01:36:58:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:58:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:58:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:58: D:\Job\soulliqo-clean\soulliqo\BackEnd\Server.js:757
+2025-09-13 01:36:58: app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+2025-09-13 01:36:58:                                                                          
+2025-09-13 01:36:58: 
+2025-09-13 01:36:58: SyntaxError: Unexpected end of input
+2025-09-13 01:36:58:     at wrapSafe (node:internal/modules/cjs/loader:1662:18)
+2025-09-13 01:36:58:     at Module._compile (node:internal/modules/cjs/loader:1704:20)
+2025-09-13 01:36:58:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:58:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:58:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:58:     at Object.<anonymous> (D:\Software\v22.17.0\node_modules\pm2\lib\ProcessContainerFork.js:33:23)
+2025-09-13 01:36:58:     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+2025-09-13 01:36:58:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:58:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:58:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:58: D:\Job\soulliqo-clean\soulliqo\BackEnd\Server.js:757
+2025-09-13 01:36:58: app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+2025-09-13 01:36:58:                                                                          
+2025-09-13 01:36:58: 
+2025-09-13 01:36:58: SyntaxError: Unexpected end of input
+2025-09-13 01:36:58:     at wrapSafe (node:internal/modules/cjs/loader:1662:18)
+2025-09-13 01:36:58:     at Module._compile (node:internal/modules/cjs/loader:1704:20)
+2025-09-13 01:36:58:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:58:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:58:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:58:     at Object.<anonymous> (D:\Software\v22.17.0\node_modules\pm2\lib\ProcessContainerFork.js:33:23)
+2025-09-13 01:36:58:     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+2025-09-13 01:36:58:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:58:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:58:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:59: D:\Job\soulliqo-clean\soulliqo\BackEnd\Server.js:757
+2025-09-13 01:36:59: app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+2025-09-13 01:36:59:                                                                          
+2025-09-13 01:36:59: 
+2025-09-13 01:36:59: SyntaxError: Unexpected end of input
+2025-09-13 01:36:59:     at wrapSafe (node:internal/modules/cjs/loader:1662:18)
+2025-09-13 01:36:59:     at Module._compile (node:internal/modules/cjs/loader:1704:20)
+2025-09-13 01:36:59:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:59:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:59:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:59:     at Object.<anonymous> (D:\Software\v22.17.0\node_modules\pm2\lib\ProcessContainerFork.js:33:23)
+2025-09-13 01:36:59:     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+2025-09-13 01:36:59:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:59:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:59:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:59: D:\Job\soulliqo-clean\soulliqo\BackEnd\Server.js:757
+2025-09-13 01:36:59: app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+2025-09-13 01:36:59:                                                                          
+2025-09-13 01:36:59: 
+2025-09-13 01:36:59: SyntaxError: Unexpected end of input
+2025-09-13 01:36:59:     at wrapSafe (node:internal/modules/cjs/loader:1662:18)
+2025-09-13 01:36:59:     at Module._compile (node:internal/modules/cjs/loader:1704:20)
+2025-09-13 01:36:59:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:59:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:59:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:59:     at Object.<anonymous> (D:\Software\v22.17.0\node_modules\pm2\lib\ProcessContainerFork.js:33:23)
+2025-09-13 01:36:59:     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+2025-09-13 01:36:59:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:59:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:59:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:59: D:\Job\soulliqo-clean\soulliqo\BackEnd\Server.js:757
+2025-09-13 01:36:59: app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+2025-09-13 01:36:59:                                                                          
+2025-09-13 01:36:59: 
+2025-09-13 01:36:59: SyntaxError: Unexpected end of input
+2025-09-13 01:36:59:     at wrapSafe (node:internal/modules/cjs/loader:1662:18)
+2025-09-13 01:36:59:     at Module._compile (node:internal/modules/cjs/loader:1704:20)
+2025-09-13 01:36:59:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:59:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:59:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:59:     at Object.<anonymous> (D:\Software\v22.17.0\node_modules\pm2\lib\ProcessContainerFork.js:33:23)
+2025-09-13 01:36:59:     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+2025-09-13 01:36:59:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:59:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:59:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:59: D:\Job\soulliqo-clean\soulliqo\BackEnd\Server.js:757
+2025-09-13 01:36:59: app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+2025-09-13 01:36:59:                                                                          
+2025-09-13 01:36:59: 
+2025-09-13 01:36:59: SyntaxError: Unexpected end of input
+2025-09-13 01:36:59:     at wrapSafe (node:internal/modules/cjs/loader:1662:18)
+2025-09-13 01:36:59:     at Module._compile (node:internal/modules/cjs/loader:1704:20)
+2025-09-13 01:36:59:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:59:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:59:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:59:     at Object.<anonymous> (D:\Software\v22.17.0\node_modules\pm2\lib\ProcessContainerFork.js:33:23)
+2025-09-13 01:36:59:     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+2025-09-13 01:36:59:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:59:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:59:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:59: D:\Job\soulliqo-clean\soulliqo\BackEnd\Server.js:757
+2025-09-13 01:36:59: app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+2025-09-13 01:36:59:                                                                          
+2025-09-13 01:36:59: 
+2025-09-13 01:36:59: SyntaxError: Unexpected end of input
+2025-09-13 01:36:59:     at wrapSafe (node:internal/modules/cjs/loader:1662:18)
+2025-09-13 01:36:59:     at Module._compile (node:internal/modules/cjs/loader:1704:20)
+2025-09-13 01:36:59:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:59:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:59:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:36:59:     at Object.<anonymous> (D:\Software\v22.17.0\node_modules\pm2\lib\ProcessContainerFork.js:33:23)
+2025-09-13 01:36:59:     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+2025-09-13 01:36:59:     at Object..js (node:internal/modules/cjs/loader:1895:10)
+2025-09-13 01:36:59:     at Module.load (node:internal/modules/cjs/loader:1465:32)
+2025-09-13 01:36:59:     at Function._load (node:internal/modules/cjs/loader:1282:12)
+2025-09-13 01:37:05: (node:22316) [MONGOOSE] Warning: Duplicate schema index on {"categoryName":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+2025-09-13 01:37:05: (Use `node --trace-warnings ...` to show where the warning was created)

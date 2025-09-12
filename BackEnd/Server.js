@@ -671,55 +671,94 @@ app.use((err, req, res, next) => {
   console.error("🔥 Server Error:", err.stack || err);
   res.status(500).json({ message: "Something went wrong on the server." });
 });
-app.get("/categories", async (req, res) => {
-  try {
-    // Fetch all available products
-    const products = await Product.find({ isAvailable: true }).select("category image");
-    const categoryImages = {};
-    const uniqueCategories = [...new Set(products.map(p => p.category))];
-    products.forEach(product => {
-      const cat = product.category;
-      if (!categoryImages[cat] && product.image) {
-        categoryImages[cat] = product.image;
-      }
-    });
-    // Build the categories array
-    const categories = uniqueCategories.map(category => ({
-      id: category,
-      title: category,
-      img: categoryImages[category] || "/default-category-image.jpg",
-      link: `/category/${category.toLowerCase().replace(/\s+/g, '-')}`
-    }));
-    res.json(categories);
-  } catch (err) {
-    console.error("Error fetching categories from products:", err);
-    res.status(500).json({ error: "Server error fetching categories" });
-  }
-});
-// Get products by category
-app.get("/categories/:category", async (req, res) => {
-  try {
-    const category = req.params.category.replace(/-/g, " "); // handle slug format
-    const products = await Product.find({ category, isAvailable: true });
-    res.json(products);
-  } catch (err) {
-    console.error("Error fetching products by category:", err);
-    res.status(500).json({ error: "Server error fetching products" });
-  }
-});
-
-// Optional: Route for products by category
+// Endpoint to fetch all products (optional category filter)
 app.get("/products", async (req, res) => {
   try {
     const { category } = req.query;
     const query = category ? { category, isAvailable: true } : { isAvailable: true };
-    const products = await Product.find(query).populate("ratings.user", "name");
+    const products = await Product.find(query);
     res.json(products);
   } catch (err) {
     console.error("Error fetching products:", err);
     res.status(500).json({ error: "Server error fetching products" });
   }
 });
+
+// Endpoint to fetch all unique categories
+app.get("/categories", async (req, res) => {
+  try {
+    const products = await Product.find({ isAvailable: true }).select("category");
+    const uniqueCategories = [...new Set(products.map((p) => p.category))];
+    const categories = uniqueCategories.map((category) => ({
+      id: category,
+      title: category,
+      link: `/products?category=${encodeURIComponent(category)}`, // optional for frontend
+    }));
+    res.json(categories);
+  } catch (err) {
+    console.error("Error fetching categories:", err);
+    res.status(500).json({ error: "Server error fetching categories" });
+  }
+});
+// app.get("/categories", async (req, res) => {
+//   try {
+//     // Fetch all available products
+//     const products = await Product.find({ isAvailable: true }).select("category image");
+//     const categoryImages = {};
+//     const uniqueCategories = [...new Set(products.map(p => p.category))];
+//     products.forEach(product => {
+//       const cat = product.category;
+//       if (!categoryImages[cat] && product.image) {
+//         categoryImages[cat] = product.image;
+//       }
+//     });
+//     // Build the categories array
+//     const categories = uniqueCategories.map(category => ({
+//       id: category,
+//       title: category,
+//       img: categoryImages[category] || "/default-category-image.jpg",
+//       link: `/category/${category.toLowerCase().replace(/\s+/g, '-')}`
+//     }));
+//     res.json(categories);
+//   } catch (err) {
+//     console.error("Error fetching categories from products:", err);
+//     res.status(500).json({ error: "Server error fetching categories" });
+//   }
+// });
+// Get products by category
+// app.get("/:category", async (req, res) => {
+//   try {
+//     const category = req.params.category.replace(/-/g, " "); // handle slug format
+//     const products = await Product.find({ category, isAvailable: true });
+//     res.json(products);
+//   } catch (err) {
+//     console.error("Error fetching products by category:", err);
+//     res.status(500).json({ error: "Server error fetching products" });
+//   }
+// });
+// app.get("/categories/:category", async (req, res) => {
+//   try {
+//     const categoryName = req.params.category.replace(/-/g, " "); // convert slug back
+//     const products = await Product.find({ category: categoryName, isAvailable: true });
+//     res.json(products);
+//   } catch (err) {
+//     console.error("Error fetching products by category:", err);
+//     res.status(500).json({ error: "Server error fetching products" });
+//   }
+// });
+
+// Optional: Route for products by category
+// app.get("/products", async (req, res) => {
+//   try {
+//     const { category } = req.query;
+//     const query = category ? { category, isAvailable: true } : { isAvailable: true };
+//     const products = await Product.find(query).populate("ratings.user", "name");
+//     res.json(products);
+//   } catch (err) {
+//     console.error("Error fetching products:", err);
+//     res.status(500).json({ error: "Server error fetching products" });
+//   }
+// });
 /* ----------------- Process-level Crash Protection ----------------- */
 // process.on("unhandledRejection", (reason, promise) => console.error("🚨 Unhandled Rejection:", reason));
 // process.on("uncaughtException", (err) => console.error("💥 Uncaught Exception:", err));
