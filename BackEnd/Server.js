@@ -276,6 +276,122 @@ app.get("/create-your-own/chocolates/:categoryId/:boxId", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+app.post("/create-your-own/custom-box", async (req, res) => {
+  try {
+    const { userId, categoryId, boxId, selectedChocolates } = req.body;
+
+    // Validation: Check IDs
+    if (!mongoose.Types.ObjectId.isValid(userId) || !mongoose.Types.ObjectId.isValid(categoryId) || !mongoose.Types.ObjectId.isValid(boxId)) {
+      return res.status(400).json({ message: "Invalid IDs provided" });
+    }
+    if (!Array.isArray(selectedChocolates) || selectedChocolates.length === 0) {
+      return res.status(400).json({ message: "At least one chocolate must be selected" });
+    }
+
+    // Fetch category, box, and chocolates
+    const category = await Category.findById(categoryId).select('categoryName description');
+    const box = await Box.findById(boxId).select('boxName size price categoryName');
+    const chocolates = await Chocolate.find({ _id: { $in: selectedChocolates.map(s => s.chocolateId) } })
+      .select('chocolateName chocolateType price boxName categoryName _id');
+
+    if (!category || !box) {
+      return res.status(404).json({ message: "Category or Box not found" });
+    }
+
+    // Validate: Box belongs to category
+    if (box.categoryName !== category.categoryName) {
+      return res.status(403).json({ message: "Box does not belong to this category" });
+    }
+
+    // Validate: All selected chocolates belong to this box and category
+    // Also calculate totalQuantity and totalChocolatePrice here
+    let totalQuantity = 0;
+    let totalChocolatePrice = 0;
+    const invalidChoc = chocolates.find(choc => {
+      const isValidBox = choc.boxName !== box.boxName;
+      const isValidCategory = choc.categoryName !== category.categoryName;
+      if (isValidBox || isValidCategory) return true;
+
+      // If valid, calculate
+      const sel = selectedChocolates.find(s => s.chocolateId.toString() === choc._id.toString());
+      if (!sel) return true; // Should not happen, but safety
+      totalQuantity += sel.quantity || 1;
+      totalChocolatePrice += (choc.price * (sel.quantity || 1));
+      return false;
+    });
+
+    if (invalidChoc || chocolates.length !== selectedChocolates.length) {
+      return res.status(400).json({ message: "One or more chocolates do not belong to the selected box/category or invalid selection" });
+    }
+
+    // Validate: Total quantity does not exceed box size
+    if (totalQuantity > box.size) {
+      return res.status(400).json({ 
+        message: `Total selected chocolates (${totalQuantity}) exceed box size (${box.size})` 
+      });
+    }
+
+    const totalPrice = box.price + totalChocolatePrice;
+
+    // Find or create user's cart
+    let cart = await Cart.findOne({ user: userId });
+    if (!cart) {
+      cart = new Cart({ user: userId, items: [] });
+    }
+
+    // Check if similar custom box already exists (optional: merge quantities or handle duplicates)
+    // For simplicity, append as new item (you can add logic to update existing if needed)
+    const customBoxItem = {
+      type: "box",
+      box: box._id,
+      name: `Custom ${box.boxName} Box`, // e.g., "Custom Small Box"
+      size: box.size,
+      price: totalPrice, // Total for this box (box + chocolates)
+      quantity: 1, // One custom box
+      products: selectedChocolates.map(sel => ({
+        product: sel.chocolateId, // Ref to Chocolate
+        quantity: sel.quantity
+      }))
+    };
+
+    cart.items.push(customBoxItem);
+    await cart.save();
+
+    // Populate cart items for response (optional, for frontend display)
+    await cart.populate([
+      { path: 'items.box', select: 'boxName size price categoryName' },
+      { path: 'items.products.product', select: 'chocolateName chocolateType price image' }
+    ]);
+    res.status(201).json({
+      message: "Custom box added to cart successfully",
+      cart: {
+        _id: cart._id,
+        items: cart.items, // Includes the new custom box
+        totalItems: cart.items.length
+      },
+      customBoxDetails: {
+        _id: customBoxItem._id || 'new', // Note: _id not set yet on push, but can query after
+        category: {
+          _id: category._id,
+          name: category.categoryName,
+          description: category.description
+        },
+        box: {
+          _id: box._id,
+          name: box.boxName,
+          size: box.size,
+          basePrice: box.price
+        },
+        selectedChocolates: selectedChocolates,
+        totalPrice,
+        totalQuantity
+      }
+    });
+  } catch (err) {
+    console.error("Create custom box error:", err);
+    res.status(500).json({ message: "Server error creating custom box" });
+  }
+});
 // Ping
 app.get("/ping", (req, res) => res.json({ message: "Pong" }));
 /* ----------------- Wishlist Routes ----------------- */
@@ -321,18 +437,21 @@ app.get("/user/:userId/wishlist", async (req, res) => {
 });
 /* ----------------- Cart & Box Selection Routes ----------------- */
 // Add product to cart
-app.post("/cart/add", authenticate, async (req, res) => {
+app.post("/add", authenticate, async (req, res) => {
   try {
     const { productId, quantity } = req.body;
     if (!productId || !quantity) return res.status(400).json({ message: "ProductId and quantity required" });
+
     let cart = await Cart.findOne({ user: req.user.id });
     if (!cart) cart = new Cart({ user: req.user.id, items: [] });
-    const itemIndex = cart.items.findIndex(i => i.product.toString() === productId);
+
+    const itemIndex = cart.items.findIndex(i => i.product?.toString() === productId);
     if (itemIndex > -1) {
       cart.items[itemIndex].quantity += quantity;
     } else {
-      cart.items.push({ product: productId, quantity });
+      cart.items.push({ type: "product", product: productId, quantity });
     }
+
     await cart.save();
     res.json({ message: "Product added to cart", cart });
   } catch (err) {
@@ -340,16 +459,18 @@ app.post("/cart/add", authenticate, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
-// Update cart item
-app.put("/cart/update", authenticate, async (req, res) => {
+// Update item
+app.put("/update", authenticate, async (req, res) => {
   try {
     const { productId, quantity } = req.body;
     const cart = await Cart.findOne({ user: req.user.id });
     if (!cart) return res.status(404).json({ message: "Cart not found" });
+
     cart.items = cart.items.map(item => {
-      if (item.product.toString() === productId) item.quantity = quantity;
+      if (item.product?.toString() === productId) item.quantity = quantity;
       return item;
     });
+
     await cart.save();
     res.json({ message: "Cart updated", cart });
   } catch (err) {
@@ -357,43 +478,134 @@ app.put("/cart/update", authenticate, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
-// Remove item from cart
-app.delete("/cart/remove/:productId", authenticate, async (req, res) => {
+// Remove item
+app.delete("/remove/:itemId", authenticate, async (req, res) => {
   try {
     const cart = await Cart.findOne({ user: req.user.id });
     if (!cart) return res.status(404).json({ message: "Cart not found" });
-    cart.items = cart.items.filter(i => i.product.toString() !== req.params.productId);
+
+    cart.items = cart.items.filter(i => i._id.toString() !== req.params.itemId);
     await cart.save();
+
     res.json({ message: "Item removed", cart });
   } catch (err) {
     console.error("Cart remove error:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
-// Get user cart
-app.get("/cart", authenticate, async (req, res) => {
+// Get cart
+app.get("/", authenticate, async (req, res) => {
   try {
-    const cart = await Cart.findOne({ user: req.user.id }).populate("items.product");
+    const cart = await Cart.findOne({ user: req.user.id })
+      .populate("items.product")
+      .populate("items.box")
+      .populate("items.products.product");
+
     res.json(cart || { items: [] });
   } catch (err) {
     console.error("Get cart error:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
+// Add custom box to cart
+app.post("/custom-box", authenticate, async (req, res) => {
+  try {
+    const { categoryId, boxId, selectedChocolates } = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(categoryId) || !mongoose.Types.ObjectId.isValid(boxId)) {
+      return res.status(400).json({ message: "Invalid IDs" });
+    }
+    if (!Array.isArray(selectedChocolates) || selectedChocolates.length === 0) {
+      return res.status(400).json({ message: "At least one chocolate must be selected" });
+    }
+
+    const category = await Category.findById(categoryId).select("categoryName");
+    const box = await Box.findById(boxId).select("boxName size price categoryName");
+    const chocolates = await Chocolate.find({ _id: { $in: selectedChocolates.map(s => s.chocolateId) } })
+      .select("chocolateName price boxName categoryName");
+
+    if (!category || !box) return res.status(404).json({ message: "Category or Box not found" });
+    if (box.categoryName !== category.categoryName) return res.status(403).json({ message: "Box does not belong to this category" });
+
+    // Validate chocolates and calculate totals
+    let totalQuantity = 0, totalChocolatePrice = 0;
+    for (const sel of selectedChocolates) {
+      const choc = chocolates.find(c => c._id.toString() === sel.chocolateId);
+      if (!choc || choc.boxName !== box.boxName || choc.categoryName !== category.categoryName) {
+        return res.status(400).json({ message: "Invalid chocolate selection" });
+      }
+      totalQuantity += sel.quantity || 1;
+      totalChocolatePrice += choc.price * (sel.quantity || 1);
+    }
+
+    if (totalQuantity > box.size) {
+      return res.status(400).json({ message: `Selected chocolates exceed box size (${box.size})` });
+    }
+
+    const totalPrice = box.price + totalChocolatePrice;
+
+    let cart = await Cart.findOne({ user: req.user.id });
+    if (!cart) cart = new Cart({ user: req.user.id, items: [] });
+
+    cart.items.push({
+      type: "box",
+      box: box._id,
+      name: `Custom ${box.boxName} Box`,
+      size: box.size,
+      price: totalPrice,
+      quantity: 1,
+      products: selectedChocolates.map(sel => ({ product: sel.chocolateId, quantity: sel.quantity }))
+    });
+
+    await cart.save();
+
+    res.status(201).json({ message: "Custom box added to cart", cart });
+  } catch (err) {
+    console.error("Create custom box error:", err);
+    res.status(500).json({ message: "Server error creating custom box" });
+  }
+});
 /* ----------------- Orders Routes ----------------- */
 // Place an order
-app.post("/order/place", authenticate, async (req, res) => {
+app.post("/place", authenticate, async (req, res) => {
   try {
-    const { items, shippingAddress, total } = req.body;
-    if (!items || !total) return res.status(400).json({ message: "Items and total are required" });
-    const order = new Order({ user: req.user.id, items, shippingAddress, total });
+    const { address } = req.body;
+
+    const cart = await Cart.findOne({ user: req.user.id });
+    if (!cart || cart.items.length === 0) {
+      return res.status(400).json({ message: "Cart is empty" });
+    }
+
+    // Calculate subtotal
+    let subtotal = 0;
+    cart.items.forEach(item => subtotal += item.price * item.quantity);
+
+    const sgst = subtotal * 0.05;
+    const cgst = subtotal * 0.05;
+    const totalAmount = subtotal + sgst + cgst;
+
+    const order = new Order({
+      userId: req.user.id,
+      cartId: cart._id,
+      items: cart.items,
+      subtotal,
+      sgst,
+      cgst,
+      other: 0,
+      totalAmount,
+      address
+    });
+
     await order.save();
-    // Clear user's cart
-    await Cart.findOneAndDelete({ user: req.user.id });
-    res.json({ message: "Order placed successfully", order });
+
+    // Clear cart
+    cart.items = [];
+    await cart.save();
+
+    res.status(201).json({ message: "Order placed successfully", order });
   } catch (err) {
     console.error("Place order error:", err);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error while placing order" });
   }
 });
 // Get all user orders
@@ -458,6 +670,55 @@ app.post("/api/contact", async (req, res) => {
 app.use((err, req, res, next) => {
   console.error("🔥 Server Error:", err.stack || err);
   res.status(500).json({ message: "Something went wrong on the server." });
+});
+app.get("/categories", async (req, res) => {
+  try {
+    // Fetch all available products
+    const products = await Product.find({ isAvailable: true }).select("category image");
+    const categoryImages = {};
+    const uniqueCategories = [...new Set(products.map(p => p.category))];
+    products.forEach(product => {
+      const cat = product.category;
+      if (!categoryImages[cat] && product.image) {
+        categoryImages[cat] = product.image;
+      }
+    });
+    // Build the categories array
+    const categories = uniqueCategories.map(category => ({
+      id: category,
+      title: category,
+      img: categoryImages[category] || "/default-category-image.jpg",
+      link: `/category/${category.toLowerCase().replace(/\s+/g, '-')}`
+    }));
+    res.json(categories);
+  } catch (err) {
+    console.error("Error fetching categories from products:", err);
+    res.status(500).json({ error: "Server error fetching categories" });
+  }
+});
+// Get products by category
+app.get("/categories/:category", async (req, res) => {
+  try {
+    const category = req.params.category.replace(/-/g, " "); // handle slug format
+    const products = await Product.find({ category, isAvailable: true });
+    res.json(products);
+  } catch (err) {
+    console.error("Error fetching products by category:", err);
+    res.status(500).json({ error: "Server error fetching products" });
+  }
+});
+
+// Optional: Route for products by category
+app.get("/products", async (req, res) => {
+  try {
+    const { category } = req.query;
+    const query = category ? { category, isAvailable: true } : { isAvailable: true };
+    const products = await Product.find(query).populate("ratings.user", "name");
+    res.json(products);
+  } catch (err) {
+    console.error("Error fetching products:", err);
+    res.status(500).json({ error: "Server error fetching products" });
+  }
 });
 /* ----------------- Process-level Crash Protection ----------------- */
 // process.on("unhandledRejection", (reason, promise) => console.error("🚨 Unhandled Rejection:", reason));

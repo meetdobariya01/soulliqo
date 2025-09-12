@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 const ProductSchema = new mongoose.Schema({
   name: { type: String, required: true },
   description: { type: String },
@@ -9,11 +8,10 @@ const ProductSchema = new mongoose.Schema({
   isAvailable: { type: Boolean, default: true },
   ratings: [
     {
-      user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+      user: { type: mongoose.Schema.Types.ObjectId, ref: "User " },
       rating: Number,
       review: String,
     },
   ],
 }, { timestamps: true });
-
 module.exports = mongoose.model("Product", ProductSchema);

@@ -5,13 +5,19 @@ const CartSchema = new mongoose.Schema({
   items: [
     {
       type: { type: String, enum: ["product", "box"], required: true },
-      product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" }, // for single product
-      box: { type: mongoose.Schema.Types.ObjectId, ref: "Box" },         // for box
-      name: String,   // optional, mostly for boxes
-      size: Number,   // optional, only for box
-      price: Number,  // final price of the item
+
+      // For single product
+      product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+
+      // For box / custom box
+      box: { type: mongoose.Schema.Types.ObjectId, ref: "Box" },
+      name: String,     // e.g. "Custom Small Box"
+      size: Number,     // for boxes
+      price: Number,    // final calculated price
       quantity: { type: Number, default: 1 },
-      products: [     // only for custom box
+
+      // Only for custom boxes
+      products: [
         {
           product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
           quantity: { type: Number }
