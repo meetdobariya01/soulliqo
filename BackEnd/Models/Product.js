@@ -1,21 +1,19 @@
-const mongoose = require('mongoose');
-const foodSchema = new mongoose.Schema({
-  FoodName: String,
-  FoodPrice: Number,
-  Description: String,
-  Category: String,
-  Type: String,
-  Photos: String,
-  Unit: String,
-  
+const mongoose = require("mongoose");
+
+const ProductSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  description: { type: String },
+  category: { type: String, required: true },
+  price: { type: Number, required: true }, // price per single chocolate
+  image: { type: String },
+  isAvailable: { type: Boolean, default: true },
   ratings: [
     {
-      userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-      stars: { type: Number, min: 1, max: 5 }, // ⭐ star rating
-      comment: { type: String },
-      createdAt: { type: Date, default: Date.now }
-    }
+      user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+      rating: Number,
+      review: String,
+    },
   ],
-  averageRating: { type: Number, default: 0 },
-});
-module.exports = mongoose.model('Foods', foodSchema);
+}, { timestamps: true });
+
+module.exports = mongoose.model("Product", ProductSchema);

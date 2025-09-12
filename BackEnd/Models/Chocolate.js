@@ -1,24 +1,14 @@
-const mongoose = require("mongoose");
-
-const boxSizeSchema = new mongoose.Schema({
-  label: String,   // e.g. "Box of 12"
-  quantity: Number
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const chocolateSchema = new Schema({
+  categoryName: { type: String, required: true },  // Denormalized string (e.g., 'Classic')
+  chocolateType: { type: String, required: true },  // e.g., 'Nuts'
+  chocolateName: { type: String, required: true },  // e.g., 'Almond Delight'
+  boxName: { type: String, required: true }  // Denormalized string (e.g., 'Small Box') – Changed from ObjectId
+}, {
+  timestamps: true
 });
-
-const collectionSchema = new mongoose.Schema({
-  name: String,             // e.g. "Signature Collection"
-  boxSizes: [boxSizeSchema]
-});
-
-const categorySchema = new mongoose.Schema({
-  name: String,             // e.g. "Pralines"
-  collections: [collectionSchema]
-});
-
-const chocolateSchema = new mongoose.Schema({
-  brand: { type: String, default: "Sweet Indulgence" },
-  categories: [categorySchema]
-});
-
-// If model already exists, reuse it (important for hot reloads / PM2 restarts)
-module.exports = mongoose.models.Chocolate || mongoose.model("Chocolate", chocolateSchema);
+// Index for queries by boxName (string) and categoryName
+chocolateSchema.index({ boxName: 1 });
+chocolateSchema.index({ categoryName: 1 });
+module.exports = mongoose.model('Chocolate', chocolateSchema);

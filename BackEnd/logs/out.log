@@ -1,8 +1,107 @@
-2025-09-10 01:23:39: [dotenv@17.2.1] injecting env (8) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
-2025-09-10 01:23:51: [dotenv@17.2.1] injecting env (0) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
-2025-09-10 01:23:53: 🚀 Server running on port 5000
-2025-09-10 01:23:53: ✅ MongoDB connected to: soliquo
-2025-09-10 02:34:10: [dotenv@17.2.1] injecting env (8) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
-2025-09-10 02:34:20: [dotenv@17.2.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
-2025-09-10 02:34:22: 🚀 Server running on port 5000
-2025-09-10 02:34:22: ✅ MongoDB connected to: soliquo
+2025-09-12 16:34:13: [dotenv@17.2.1] injecting env (8) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+2025-09-12 16:34:13: 🚀 Server running on port 5000
+2025-09-12 16:34:13: ✅ MongoDB connected to: soliquo
+2025-09-12 17:25:25: Fetched categories: [
+2025-09-12 17:25:25:   {
+2025-09-12 17:25:25:     _id: new ObjectId('68c40992ed92aad856e5d430'),
+2025-09-12 17:25:25:     description: 'Classic collection'
+2025-09-12 17:25:25:   }
+2025-09-12 17:25:25: ]
+2025-09-12 17:27:05: [dotenv@17.2.1] injecting env (8) from .env -- tip: ⚙️  override existing env vars with { override: true }
+2025-09-12 17:27:05: 🚀 Server running on port 5000
+2025-09-12 17:27:05: ✅ MongoDB connected to: soliquo
+2025-09-12 17:35:13: [dotenv@17.2.1] injecting env (8) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+2025-09-12 17:35:14: 🚀 Server running on port 5000
+2025-09-12 17:35:14: ✅ MongoDB connected to: soliquo
+2025-09-12 17:43:56: [dotenv@17.2.1] injecting env (8) from .env -- tip: ⚙️  override existing env vars with { override: true }
+2025-09-12 17:43:56: 🚀 Server running on port 5000
+2025-09-12 17:43:56: ✅ MongoDB connected to: soliquo
+2025-09-12 17:44:42: [dotenv@17.2.1] injecting env (8) from .env -- tip: ⚙️  override existing env vars with { override: true }
+2025-09-12 17:44:43: 🚀 Server running on port 5000
+2025-09-12 17:44:43: ✅ MongoDB connected to: soliquo
+2025-09-12 17:44:51: [dotenv@17.2.1] injecting env (8) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+2025-09-12 17:44:51: 🚀 Server running on port 5000
+2025-09-12 17:44:51: ✅ MongoDB connected to: soliquo
+2025-09-12 17:44:56: [dotenv@17.2.1] injecting env (8) from .env -- tip: 📡 version env with Radar: https://dotenvx.com/radar
+2025-09-12 17:44:56: 🚀 Server running on port 5000
+2025-09-12 17:44:56: ✅ MongoDB connected to: soliquo
+2025-09-12 17:45:29: [dotenv@17.2.1] injecting env (8) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+2025-09-12 17:45:29: 🚀 Server running on port 5000
+2025-09-12 17:45:29: ✅ MongoDB connected to: soliquo
+2025-09-12 17:50:59: [dotenv@17.2.1] injecting env (8) from .env -- tip: 📡 observe env with Radar: https://dotenvx.com/radar
+2025-09-12 17:50:59: 🚀 Server running on port 5000
+2025-09-12 17:50:59: ✅ MongoDB connected to: soliquo
+2025-09-12 17:51:26: [dotenv@17.2.1] injecting env (8) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+2025-09-12 17:51:26: 🚀 Server running on port 5000
+2025-09-12 17:51:26: ✅ MongoDB connected to: soliquo
+2025-09-12 17:56:04: [dotenv@17.2.1] injecting env (8) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+2025-09-12 17:56:04: 🚀 Server running on port 5000
+2025-09-12 17:56:04: ✅ MongoDB connected to: soliquo
+2025-09-12 17:56:33: [dotenv@17.2.1] injecting env (8) from .env -- tip: 📡 observe env with Radar: https://dotenvx.com/radar
+2025-09-12 17:56:34: 🚀 Server running on port 5000
+2025-09-12 17:56:34: ✅ MongoDB connected to: soliquo
+2025-09-12 17:57:15: [dotenv@17.2.1] injecting env (8) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+2025-09-12 17:57:15: 🚀 Server running on port 5000
+2025-09-12 17:57:15: ✅ MongoDB connected to: soliquo
+2025-09-12 17:57:32: [dotenv@17.2.1] injecting env (8) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+2025-09-12 17:57:33: 🚀 Server running on port 5000
+2025-09-12 17:57:33: ✅ MongoDB connected to: soliquo
+2025-09-12 17:58:41: [dotenv@17.2.1] injecting env (8) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+2025-09-12 17:58:41: 🚀 Server running on port 5000
+2025-09-12 17:58:41: ✅ MongoDB connected to: soliquo
+2025-09-12 18:00:59: [dotenv@17.2.1] injecting env (8) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2025-09-12 18:00:59: [dotenv@17.2.1] injecting env (8) from .env -- tip: 📡 version env with Radar: https://dotenvx.com/radar
+2025-09-12 18:01:00: [dotenv@17.2.1] injecting env (8) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+2025-09-12 18:01:01: [dotenv@17.2.1] injecting env (8) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2025-09-12 18:01:02: [dotenv@17.2.1] injecting env (8) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2025-09-12 18:01:02: [dotenv@17.2.1] injecting env (8) from .env -- tip: 📡 auto-backup env with Radar: https://dotenvx.com/radar
+2025-09-12 18:01:03: [dotenv@17.2.1] injecting env (8) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2025-09-12 18:01:04: [dotenv@17.2.1] injecting env (8) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+2025-09-12 18:01:05: [dotenv@17.2.1] injecting env (8) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+2025-09-12 18:01:05: [dotenv@17.2.1] injecting env (8) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2025-09-12 18:01:06: [dotenv@17.2.1] injecting env (8) from .env -- tip: 📡 version env with Radar: https://dotenvx.com/radar
+2025-09-12 18:01:08: [dotenv@17.2.1] injecting env (8) from .env -- tip: 📡 observe env with Radar: https://dotenvx.com/radar
+2025-09-12 18:01:09: [dotenv@17.2.1] injecting env (8) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2025-09-12 18:01:10: [dotenv@17.2.1] injecting env (8) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2025-09-12 18:01:10: [dotenv@17.2.1] injecting env (8) from .env -- tip: 📡 observe env with Radar: https://dotenvx.com/radar
+2025-09-12 18:01:11: [dotenv@17.2.1] injecting env (8) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2025-09-12 18:01:12: [dotenv@17.2.1] injecting env (8) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2025-09-12 18:01:13: [dotenv@17.2.1] injecting env (8) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+2025-09-12 18:01:14: [dotenv@17.2.1] injecting env (8) from .env -- tip: 📡 observe env with Radar: https://dotenvx.com/radar
+2025-09-12 18:01:14: [dotenv@17.2.1] injecting env (8) from .env -- tip: 📡 observe env with Radar: https://dotenvx.com/radar
+2025-09-12 18:01:15: [dotenv@17.2.1] injecting env (8) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+2025-09-12 18:01:16: [dotenv@17.2.1] injecting env (8) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+2025-09-12 18:01:17: [dotenv@17.2.1] injecting env (8) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+2025-09-12 18:01:17: [dotenv@17.2.1] injecting env (8) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+2025-09-12 18:01:18: [dotenv@17.2.1] injecting env (8) from .env -- tip: 📡 observe env with Radar: https://dotenvx.com/radar
+2025-09-12 18:01:19: [dotenv@17.2.1] injecting env (8) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+2025-09-12 18:01:24: [dotenv@17.2.1] injecting env (8) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2025-09-12 18:01:24: 🚀 Server running on port 5000
+2025-09-12 18:01:24: ✅ MongoDB connected to: soliquo
+2025-09-12 18:01:44: [dotenv@17.2.1] injecting env (8) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+2025-09-12 18:01:44: 🚀 Server running on port 5000
+2025-09-12 18:01:44: ✅ MongoDB connected to: soliquo
+2025-09-12 18:02:12: [dotenv@17.2.1] injecting env (8) from .env -- tip: 📡 auto-backup env with Radar: https://dotenvx.com/radar
+2025-09-12 18:02:12: 🚀 Server running on port 5000
+2025-09-12 18:02:12: ✅ MongoDB connected to: soliquo
+2025-09-12 18:03:49: [dotenv@17.2.1] injecting env (8) from .env -- tip: 📡 observe env with Radar: https://dotenvx.com/radar
+2025-09-12 18:03:49: 🚀 Server running on port 5000
+2025-09-12 18:03:49: ✅ MongoDB connected to: soliquo
+2025-09-12 18:04:31: [dotenv@17.2.1] injecting env (8) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+2025-09-12 18:04:31: 🚀 Server running on port 5000
+2025-09-12 18:04:31: ✅ MongoDB connected to: soliquo
+2025-09-12 18:25:14: [dotenv@17.2.1] injecting env (8) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+2025-09-12 18:25:14: 🚀 Server running on port 5000
+2025-09-12 18:25:14: ✅ MongoDB connected to: soliquo
+2025-09-12 18:50:15: [dotenv@17.2.1] injecting env (8) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+2025-09-12 18:50:15: 🚀 Server running on port 5000
+2025-09-12 18:50:15: ✅ MongoDB connected to: soliquo
+2025-09-12 18:56:36: [dotenv@17.2.1] injecting env (8) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+2025-09-12 18:56:36: 🚀 Server running on port 5000
+2025-09-12 18:56:36: ✅ MongoDB connected to: soliquo
+2025-09-12 18:56:42: [dotenv@17.2.1] injecting env (8) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2025-09-12 18:56:42: 🚀 Server running on port 5000
+2025-09-12 18:56:42: ✅ MongoDB connected to: soliquo
+2025-09-12 18:57:07: [dotenv@17.2.1] injecting env (8) from .env -- tip: 📡 observe env with Radar: https://dotenvx.com/radar
+2025-09-12 18:57:07: 🚀 Server running on port 5000
+2025-09-12 18:57:07: ✅ MongoDB connected to: soliquo

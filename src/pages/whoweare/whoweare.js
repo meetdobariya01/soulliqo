@@ -3,13 +3,11 @@ import Header from "../../components/header/header";
 import { Container, Row, Col } from "react-bootstrap";
 import "../../index.css";
 import Footer from "../../components/footer/footer";
-
 const Whoweare = () => {
   return (
     <div>
       {/* Header Section */}
       <Header />
-
       <section className="who-section py-5">
         <Container>
           <Row className="align-items-center">
@@ -25,7 +23,6 @@ const Whoweare = () => {
                 className="img-fluid rounded who-image"
               />
             </Col>
-
             {/* Content */}
             <Col
               xs={12}
@@ -57,13 +54,9 @@ const Whoweare = () => {
           </Row>
         </Container>
       </section>
-
       {/* Footer Section */}
       <Footer/>
-    </div>
-
-    
+    </div>  
   );
 };
-
 export default Whoweare;
