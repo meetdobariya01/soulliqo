@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
 import "../../index.css";
 import Header from "../../components/header/header";
 import Collection from "../../components/collection/collection";
@@ -105,7 +106,9 @@ const Homepage = () => {
                 Make the gift of Soulliqo that little bit sweeter by adding a
                 free personalized message.
               </p>
-              <Button className="makebox-btn ">Shop Now</Button>
+              <Button as={NavLink} to="/ownbox" className="makebox-btn">
+                Shop Now
+              </Button>
             </div>
           </Col>
           {/* Right Image */}

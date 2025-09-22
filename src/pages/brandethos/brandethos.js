@@ -70,7 +70,7 @@ const AnimatedSection = ({ title, text, img, bg, reverse }) => (
       <motion.img
         src={img}
         alt={title}
-        className="img-fluid w-75 h-20"
+        className="img-fluid  h-20"
         style={{ objectFit: "cover" }}
         initial={{ opacity: 0, x: reverse ? 100 : -100 }}
         whileInView={{ opacity: 1, x: 0 }}

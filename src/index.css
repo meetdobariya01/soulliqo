@@ -242,7 +242,7 @@ body {
 }
 .choco-text-section {
   background: #fdfdfd;
-  padding: 50px 20px;
+  /* padding: 50px 20px; */
   position: relative;
 }
 
@@ -949,19 +949,19 @@ body {
   padding-left: 20px;
   color: #312625;
 }
-.title{
+.title {
   font-family: Tenor Sans;
   font-weight: 400;
   font-size: 40px;
 }
-.text{
+.text {
   font-family: Tenor Sans;
   font-weight: 400;
   font-size: 22px;
   line-height: 40px;
 }
 /* Contact Us Page Specific Styles */
-.font{
+.font {
   font-family: "Raleway";
   font-weight: 600;
   font-size: 16px;
@@ -982,4 +982,245 @@ body {
   .contact-heading {
     font-size: 20px;
   }
+}
+/* Wishlist Page Specific Styles */
+.wishlist-title,
+.wishlist-weight {
+  font-family: Tenor Sans;
+  font-weight: 400;
+  font-size: 16px;
+}
+.wishlist-oldprice,
+.wishlist-price {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 20px;
+}
+.wishlist-movetobag {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 16px;
+}
+/*Own Box Page Specific Styles */
+.box-title {
+  font-family: Tenor Sans;
+  font-weight: 400;
+  font-size: 30px;
+  color: #000 !important; /* Set text color (black or your theme color) */
+  text-decoration: none !important; /* Remove underline */
+  cursor: pointer;
+}
+.box-header {
+  font-family: Tenor Sans;
+  font-weight: 400;
+  font-size: 30px;
+  color: #312625;
+}
+.box-main-header {
+  font-family: Tenor Sans;
+  font-weight: 400;
+  font-size: 40px;
+  margin-top: 100px;
+}
+.box-main-subheader {
+  font-family: Tenor Sans;
+  font-weight: 400;
+  font-size: 18px;
+}
+.own-box-title {
+  font-family: Tenor Sans;
+  font-weight: 400;
+  font-size: 18px;
+}
+.own-box-price {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 20px;
+  color: #7b5b54;
+}
+.select-item-btn {
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 14px;
+  color: red;
+}
+/* Box Product Page Specific Styles */
+.boxproduct-title {
+  font-family: Poppins;
+  font-weight: 500;
+  font-size: 25px;
+  margin-top: 100px;
+}
+.boxproduct-name {
+  font-family: Tenor Sans;
+  font-weight: 400;
+  font-size: 14px;
+}
+/* Box Checkout Page Specific Styles */
+.boxcheckout-title {
+  font-family: Poppins;
+  font-weight: 500;
+  font-size: 25px;
+  margin-top: 100px;
+}
+.boxcheckout-total{
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 16px;
+}
+/* checkout Page Specific Styles */
+.checkout-title {
+  font-family: Tenor Sans;
+  font-weight: 400;
+  font-size: 28px;
+  margin-top: 50px;
+}
+.checkout-form{
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 23px;
+}
+.checkout-main-font{
+  font-family: Tenor Sans;
+  font-weight: 400;
+  font-size: 15px;
+}
+/* Chocolate Block Page Specific Styles */
+/* Banner Section */
+.chocolate-banner {
+  position: relative;
+  overflow: hidden;
+}
+
+.banner-text {
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  font-size: 3rem;
+  font-weight: 600;
+  color: white;
+}
+
+/* Product Box */
+.product-box {
+  position: relative;
+  cursor: pointer;
+  background: #fff;
+  border: none;
+  transition: transform 0.3s ease;
+}
+
+.product-box:hover {
+  transform: scale(1.02);
+}
+
+.product-label {
+  background: #f3f3f3;
+  padding: 10px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #333;
+}
+/* Product Grid */
+.product-card {
+  position: relative;
+  border: none;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  border: 2px solid #b68a4b; /* highlight border */
+}
+
+.product-img-wrapper {
+  overflow: hidden;
+}
+
+.product-img {
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-img {
+  transform: scale(1.08);
+}
+
+.price {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 20px;
+  color: #000;
+}
+
+.old-price {
+  font-family: Poppins;
+  font-weight: 400;
+  text-decoration: line-through;
+  font-size: 16px;
+  color: #999;
+}
+
+/* Wishlist Heart */
+.wishlist-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: white;
+  border-radius: 50%;
+  padding: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+  z-index: 5;
+}
+
+.wishlist-icon svg {
+  font-size: 18px;
+  color: #666;
+}
+
+.wishlist-icon:hover {
+  background: #b68a4b;
+}
+
+.wishlist-icon:hover svg {
+  color: #fff;
+}
+.product-title-grid{
+  font-family: Tenor Sans;
+  font-weight: 400;
+  font-size: 16px;
+}
+.product-name{
+  font-family: Tenor Sans;
+  font-weight: 400;
+  font-size: 28px;
+}
+.product-weight{
+  font-family: Tenor Sans;
+  font-weight: 400;
+  font-size: 24px;
+}
+.product-reviews{
+  font-family: Tenor Sans;
+  font-weight: 400;
+  font-size: 24px;
+  color: #312625;
+}
+.product-price{
+  font-family: Poppins;
+  font-weight: 700;
+  font-size: 24px;
+  margin-bottom: 30px;
+}
+.product-wishlist{
+  font-family: Raleway;
+  font-weight: 500;
+  font-size: 15px;
+  color: #312625;
 }

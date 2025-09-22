@@ -54,7 +54,16 @@ const Header = () => {
 
           {/* Center Navigation (Desktop Only) */}
           <Nav className="mx-auto d-none d-lg-flex navbar-font">
-            <Nav.Link href="#shop">SHOP</Nav.Link>
+            <NavDropdown
+              title="SHOP"
+              id="brand-dropdown"
+              className="custom-dropdown"
+            >
+              <NavDropdown.Item href="/chocolateblock">Chocolate Block </NavDropdown.Item>
+              <NavDropdown.Item href="#">Sweet Indulgence</NavDropdown.Item>
+              <NavDropdown.Item href="#">Melt In Mouth</NavDropdown.Item>
+            </NavDropdown>
+
             <NavDropdown
               title="BRAND JOURNEY"
               id="brand-dropdown"
@@ -99,9 +108,30 @@ const Header = () => {
         {/* Mobile Menu Overlay */}
         <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
           <Nav className="flex-column text-center">
-            <Nav.Link href="#shop" onClick={() => setMenuOpen(false)}>
-              SHOP
-            </Nav.Link>
+            <NavDropdown
+              title="SHOP"
+              id="brand-journey-dropdown"
+              className="custom-dropdown"
+            >
+              <NavDropdown.Item
+                href="/chocolateblock"
+                onClick={() => setMenuOpen(false)}
+              >
+                Chocolate Block
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                href="/ourmission"
+                onClick={() => setMenuOpen(false)}
+              >
+                Sweet Indulgence
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                href="/aboutus"
+                onClick={() => setMenuOpen(false)}
+              >
+                Melt In Mouth
+              </NavDropdown.Item>
+            </NavDropdown>
             <NavDropdown
               title="BRAND JOURNEY"
               id="brand-journey-dropdown"
