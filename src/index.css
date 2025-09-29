@@ -437,7 +437,7 @@ body {
 }
 
 .image-box img {
-  width: 100%;
+  /* width: 100%; */
   height: auto;
   border-radius: 12px;
 }
@@ -1063,7 +1063,7 @@ body {
   font-size: 25px;
   margin-top: 100px;
 }
-.boxcheckout-total{
+.boxcheckout-total {
   font-family: Poppins;
   font-weight: 400;
   font-size: 16px;
@@ -1075,12 +1075,12 @@ body {
   font-size: 28px;
   margin-top: 50px;
 }
-.checkout-form{
+.checkout-form {
   font-family: Poppins;
   font-weight: 600;
   font-size: 23px;
 }
-.checkout-main-font{
+.checkout-main-font {
   font-family: Tenor Sans;
   font-weight: 400;
   font-size: 15px;
@@ -1129,12 +1129,12 @@ body {
   border-radius: 12px;
   overflow: hidden;
   background: #fff;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .product-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
   border: 2px solid #b68a4b; /* highlight border */
 }
 
@@ -1173,7 +1173,7 @@ body {
   background: white;
   border-radius: 50%;
   padding: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: background 0.3s ease, color 0.3s ease;
   z-index: 5;
@@ -1191,36 +1191,121 @@ body {
 .wishlist-icon:hover svg {
   color: #fff;
 }
-.product-title-grid{
+.product-title-grid {
   font-family: Tenor Sans;
   font-weight: 400;
   font-size: 16px;
 }
-.product-name{
+.product-name {
   font-family: Tenor Sans;
   font-weight: 400;
   font-size: 28px;
 }
-.product-weight{
+.product-weight {
   font-family: Tenor Sans;
   font-weight: 400;
   font-size: 24px;
 }
-.product-reviews{
+.product-reviews {
   font-family: Tenor Sans;
   font-weight: 400;
   font-size: 24px;
   color: #312625;
 }
-.product-price{
+.product-price {
   font-family: Poppins;
   font-weight: 700;
   font-size: 24px;
   margin-bottom: 30px;
 }
-.product-wishlist{
+.product-wishlist {
   font-family: Raleway;
   font-weight: 500;
   font-size: 15px;
   color: #312625;
+}
+.product-pincode {
+  font-family: Tenor Sans;
+  font-weight: 400;
+  font-size: 24px;
+  color: #312625;
+}
+.pincode-form {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #2d2220; /* underline */
+  padding-bottom: 4px;
+  width: 100%;
+}
+
+.pincode-input {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  font-size: 16px;
+  color: #2d2220;
+  flex: 1;
+}
+
+.pincode-input::placeholder {
+  color: #aaa;
+}
+
+.pincode-btn {
+  border: none !important;
+  background: none !important;
+  color: #2d2220 !important;
+  font-weight: 500;
+  font-size: 16px;
+  text-transform: uppercase;
+  padding: 0;
+  margin-left: 10px;
+}
+.nav-tabs .nav-link.active {
+  color: #000 !important;    
+  background-color: #fff !important;  
+  border-color: #dee2e6 #dee2e6 #fff; 
+}
+.nav-tabs .nav-link {
+  color: #fff !important;
+}
+.bg-color{
+  background-color: #312625;
+}
+.nav-font{
+  font-family: "Raleway";
+  font-weight: 500;
+  font-size: 24px;
+}
+.tab-content{
+  font-family: Tenor Sans;
+  font-weight: 400;
+  font-size: 20px;
+}
+/* Related Products Section */
+.product-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px;
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.product-img {
+  height: 180px;
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+.releted-title{
+  font-family: Tenor Sans;
+  font-weight: 400;
+  font-size: 24px;
+}
+.product-details{
+  font-family: Tenor Sans;
+  font-weight: 400;
+  font-size: 16px;
 }

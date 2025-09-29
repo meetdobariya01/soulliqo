@@ -60,7 +60,7 @@ const Header = () => {
               className="custom-dropdown"
             >
               <NavDropdown.Item href="/chocolateblock">Chocolate Block </NavDropdown.Item>
-              <NavDropdown.Item href="#">Sweet Indulgence</NavDropdown.Item>
+              <NavDropdown.Item href="/sweetindulgence">Sweet Indulgence</NavDropdown.Item>
               <NavDropdown.Item href="#">Melt In Mouth</NavDropdown.Item>
             </NavDropdown>
 
@@ -120,7 +120,7 @@ const Header = () => {
                 Chocolate Block
               </NavDropdown.Item>
               <NavDropdown.Item
-                href="/ourmission"
+                href="/sweetindulgence"
                 onClick={() => setMenuOpen(false)}
               >
                 Sweet Indulgence
