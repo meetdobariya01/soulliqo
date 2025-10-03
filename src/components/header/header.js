@@ -25,7 +25,7 @@ const Header = () => {
 
   // Fetch categories from backend
   useEffect(() => {
-    fetch("http://localhost:5000/categories")
+    fetch("http://localhost:5000/products/categories")
       .then((res) => res.json())
       .then((data) => setCategories(data))
       .catch((err) => console.error("Error fetching categories:", err));
