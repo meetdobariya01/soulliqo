@@ -14,11 +14,27 @@ router.get("/", asyncHandler(async (req, res) => {
 // Get unique categories
 router.get("/categories", asyncHandler(async (req, res) => {
   const products = await Product.find({ isAvailable: true }).select("category");
+
+  // FIX: All image paths must be ROOT-RELATIVE (start with /)
+  const categoryImages = {
+    "Classics": "/images/1.png", 
+    "BON BON": "/images/2.png", 
+    "TRUFFLE": "/images/6.png", 
+    "PRALINE": "/images/4.png", 
+  };
+
   const uniqueCategories = [...new Set(products.map(p => p.category))];
-  const categories = uniqueCategories.map(cat => ({ id: cat, title: cat, link: `/products?category=${encodeURIComponent(cat)}` }));
+
+  const categories = uniqueCategories.map((cat) => ({
+    id: cat,
+    title: cat,
+    link: `/products?category=${encodeURIComponent(cat)}`,
+    // FIX: Ensure default image path is also root-relative
+    img: categoryImages[cat] || "/images/6.png", 
+  }));
+
   res.json(categories);
 }));
-
 // Submit rating
 router.post("/:productId/rate", asyncHandler(async (req, res) => {
   const { rating, review } = req.body;
