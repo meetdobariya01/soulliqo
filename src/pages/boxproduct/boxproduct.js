@@ -4,7 +4,6 @@ import {
   Row,
   Col,
   Button,
-  Card,
   ProgressBar,
   Breadcrumb,
 } from "react-bootstrap";
@@ -37,7 +36,6 @@ const Boxproduct = () => {
       return { ...prev, [id]: newQty };
     });
   };
-
   return (
     <div>
       {/* Header */}

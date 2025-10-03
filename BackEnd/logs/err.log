@@ -6084,3 +6084,13 @@
 2025-09-13 03:30:53: }
 2025-09-13 03:30:54: (node:23216) [MONGOOSE] Warning: Duplicate schema index on {"categoryName":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
 2025-09-13 03:30:54: (Use `node --trace-warnings ...` to show where the warning was created)
+2025-09-13 03:44:37: (node:22192) [MONGOOSE] Warning: Duplicate schema index on {"categoryName":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+2025-09-13 03:44:37: (Use `node --trace-warnings ...` to show where the warning was created)
+2025-10-03 14:22:45: (node:31324) [MONGOOSE] Warning: Duplicate schema index on {"categoryName":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+2025-10-03 14:22:45: (Use `node --trace-warnings ...` to show where the warning was created)
+2025-10-03 15:30:41: (node:30112) [MONGOOSE] Warning: Duplicate schema index on {"categoryName":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+2025-10-03 15:30:41: (Use `node --trace-warnings ...` to show where the warning was created)
+2025-10-03 15:34:33: (node:27560) [MONGOOSE] Warning: Duplicate schema index on {"categoryName":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+2025-10-03 15:34:33: (Use `node --trace-warnings ...` to show where the warning was created)
+2025-10-03 16:25:55: (node:25736) [MONGOOSE] Warning: Duplicate schema index on {"categoryName":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+2025-10-03 16:25:55: (Use `node --trace-warnings ...` to show where the warning was created)

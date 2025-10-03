@@ -63,7 +63,6 @@ const Contactus = () => {
             onSubmit={handleSubmit}
           >
             {status && <div className="col-12 alert alert-info">{status}</div>}
-
             <div className="col-md-4">
               <label className="form-label">Your Name</label>
               <input
@@ -133,7 +132,6 @@ const Contactus = () => {
           ></iframe>
         </div>
       </div>
-
       <Footer />
     </div>
   );

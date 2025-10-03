@@ -8,38 +8,31 @@ import {
   Carousel,
   Tab,
   Nav,
-  Card,
 } from "react-bootstrap";
 import { Heart, HeartFill } from "react-bootstrap-icons";
 import "../../index.css";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
 import Reletedproduct from "../../components/reletedproduct/reletedproduct";
-
 const Productdetails = () => {
   const [qty, setQty] = useState(1);
   const [wishlist, setWishlist] = useState(false);
   const [pincode, setPincode] = useState("");
   const [pincodeMessage, setPincodeMessage] = useState("");
-
   const images = [
     "./images/product-details1.jpg",
     "./images/chocolate-block-product.png",
     "./images/product-details1.jpg",
     "./images/chocolate-block-product.png",
   ];
-
   // Main image state
   const [mainImage, setMainImage] = useState(images[0]);
-
   const handleAddToCart = () => {
     alert(`Added ${qty} item(s) to cart ✅`);
   };
-
   const handleWishlist = () => {
     setWishlist(!wishlist);
   };
-
   const handleCheckPincode = () => {
     if (pincode === "380001" || pincode === "110001") {
       setPincodeMessage("✅ Delivery available to your pincode.");
@@ -47,12 +40,10 @@ const Productdetails = () => {
       setPincodeMessage("❌ Sorry, delivery not available.");
     }
   };
-
   return (
     <div>
       {/* HEADER */}
       <Header />
-
       <Container fluid className="py-5 container">
         <Row>
           {/* LEFT SIDE IMAGES (DESKTOP VIEW) */}
@@ -77,7 +68,6 @@ const Productdetails = () => {
                   />
                 ))}
               </Col>
-
               {/* Main Image */}
               <Col xs={9}>
                 <img
@@ -88,7 +78,6 @@ const Productdetails = () => {
               </Col>
             </Row>
           </Col>
-
           {/* MOBILE CAROUSEL */}
           <Col xs={12} className="d-md-none mb-4">
             <Carousel>
@@ -103,7 +92,6 @@ const Productdetails = () => {
               ))}
             </Carousel>
           </Col>
-
           {/* RIGHT SIDE DETAILS */}
           <Col md={6}>
             <h3 className="product-name">TIRAMISU</h3>
@@ -118,7 +106,6 @@ const Productdetails = () => {
                 ₹590.00
               </span>
             </h4>
-
             {/* Wishlist */}
             <div
               className="mb-4 product-wishlist"
@@ -132,7 +119,6 @@ const Productdetails = () => {
               )}{" "}
               Add to Wish List
             </div>
-
             {/* Pincode check */}
             <Form className="pincode-form">
               <Form.Control
@@ -150,9 +136,7 @@ const Productdetails = () => {
                 CHECK
               </Button>
             </Form>
-
             <small className="text-muted">{pincodeMessage}</small>
-
             {/* Quantity & Add to Cart */}
             <div className="d-flex align-items-center mt-4">
               <Button
@@ -188,7 +172,6 @@ const Productdetails = () => {
             </div>
           </Col>
         </Row>
-
         <section className="py-5">
           <Container>
             {/* Tabs */}
@@ -213,7 +196,6 @@ const Productdetails = () => {
                   </Nav.Link>
                 </Nav.Item>
               </Nav>
-
               {/* Tab Content */}
               <Tab.Content>
                 {/* Product Details */}
@@ -256,7 +238,6 @@ const Productdetails = () => {
                     <li>Product Code: 891545603</li>
                   </ul>
                 </Tab.Pane>
-
                 {/* Ingredients */}
                 <Tab.Pane
                   eventKey="ingredients"
@@ -264,7 +245,6 @@ const Productdetails = () => {
                 >
                   <p>Ingredient details will go here...</p>
                 </Tab.Pane>
-
                 {/* Reviews */}
                 <Tab.Pane
                   eventKey="reviews"
@@ -276,15 +256,12 @@ const Productdetails = () => {
             </Tab.Container>
           </Container>
         </section>
-
         {/* Related Products */}
         <Reletedproduct />
       </Container>
-
-      {/* FOOTER */}
+    {/* FOOTER */}
       <Footer />
     </div>
   );
 };
-
 export default Productdetails;
