@@ -9,6 +9,7 @@ import {
   Tab,
   Nav,
 } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
 import { Heart, HeartFill } from "react-bootstrap-icons";
 import "../../index.css";
 import Header from "../../components/header/header";
@@ -155,17 +156,17 @@ const Productdetails = () => {
                 +
               </Button>
               <Button
-                className="ms-3 py-2 cart-btn"
+                as={NavLink}
+                to="/boxcheckout"
+                className="ms-3 py-2 cart-btn font-light"
                 style={{
                   backgroundColor: "#7B4B3A",
                   border: "none",
-                  // padding: "5px 100px",
-                  color: "#fff",
                   fontWeight: "400",
                   fontFamily: "Poppins",
-                  fontSize: "25px",
+                  fontSize: "20px",
+                  padding: "10px 30px",
                 }}
-                onClick={handleAddToCart}
               >
                 Add to Cart
               </Button>
@@ -175,7 +176,7 @@ const Productdetails = () => {
         <section className="py-5">
           <Container>
             {/* Tabs */}
-              <Tab.Container defaultActiveKey="details">
+            <Tab.Container defaultActiveKey="details">
               <Nav variant="tabs" className="mb-3 bg-color text-white p-2">
                 <Nav.Item>
                   <Nav.Link eventKey="details" className="text-white nav-font">

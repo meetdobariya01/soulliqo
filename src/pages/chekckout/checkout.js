@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
 import Footer from "../../components/footer/footer";
 import Header from "../../components/header/header";
 
@@ -134,11 +135,17 @@ const Checkout = () => {
             {/* Place Order */}
             <div className="mt-4">
               <Button
+                as={NavLink}
+                to="/orderconfrimed"
                 style={{
                   backgroundColor: "#7B4B3A",
                   border: "none",
                   borderRadius: "6px",
                   padding: "12px 40px",
+                  color: "#fff",
+                  fontWeight: "500",
+                  fontFamily: "Poppins",
+                  textDecoration: "none",
                 }}
               >
                 PLACE ORDER

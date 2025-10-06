@@ -60,6 +60,7 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <Nav className="mx-auto d-none d-lg-flex navbar-font">
+<<<<<<< HEAD
             {/* SHOP Dropdown */}
             <NavDropdown title="SHOP" id="brand-dropdown" className="custom-dropdown">
               {categories.length > 0 ? (
@@ -71,6 +72,16 @@ const Header = () => {
               ) : (
                 <NavDropdown.Item href="#">Loading...</NavDropdown.Item>
               )}
+=======
+            <NavDropdown
+              title="SHOP"
+              id="brand-dropdown"
+              className="custom-dropdown"
+            >
+              <NavDropdown.Item href="/chocolateblock">Chocolate Block </NavDropdown.Item>
+              <NavDropdown.Item href="/sweetindulgence">Sweet Indulgence</NavDropdown.Item>
+              <NavDropdown.Item href="/product">Melt In Mouth</NavDropdown.Item>
+>>>>>>> ffc4ec9 (Update new files)
             </NavDropdown>
 
             {/* BRAND JOURNEY */}
@@ -91,7 +102,7 @@ const Header = () => {
               className="icon-btn d-none d-lg-block"
               onClick={() => setSearchOpen(!searchOpen)}
             />
-            <Link to="/cart" className="icon-btn position-relative ms-3">
+            <Link to="/boxcheckout" className="icon-btn position-relative ms-3">
               <FaShoppingBag />
               <span className="cart-count">1</span>
             </Link>
@@ -107,6 +118,7 @@ const Header = () => {
         {/* Mobile Menu Overlay */}
         <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
           <Nav className="flex-column text-center">
+<<<<<<< HEAD
             {/* Mobile SHOP */}
             <NavDropdown title="SHOP" id="mobile-shop-dropdown" className="custom-dropdown">
               {categories.length > 0 ? (
@@ -122,6 +134,31 @@ const Header = () => {
               ) : (
                 <NavDropdown.Item href="#">Loading...</NavDropdown.Item>
               )}
+=======
+            <NavDropdown
+              title="SHOP"
+              id="brand-journey-dropdown"
+              className="custom-dropdown"
+            >
+              <NavDropdown.Item
+                href="/chocolateblock"
+                onClick={() => setMenuOpen(false)}
+              >
+                Chocolate Block
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                href="/sweetindulgence"
+                onClick={() => setMenuOpen(false)}
+              >
+                Sweet Indulgence
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                href="/product"
+                onClick={() => setMenuOpen(false)}
+              >
+                Melt In Mouth
+              </NavDropdown.Item>
+>>>>>>> ffc4ec9 (Update new files)
             </NavDropdown>
 
             {/* Mobile BRAND JOURNEY */}

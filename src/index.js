@@ -24,6 +24,8 @@ import Chocoblock from "./pages/chocoblock/chocoblock";
 import Productgrid from "./pages/product-grid/productgrid";
 import Productdetails from "./pages/productdetails/productdetails";
 import Sweetindulgence from "./pages/sweetindulgence/sweetindulgence";
+import Boxcollection from "./pages/boxcollection/boxcollection";
+import Orderconfrimed from "./pages/orderconfrimed/orderconfrimed";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -48,6 +50,8 @@ root.render(
       <Route path="/product" element={<Productgrid />} />
       <Route path="/productdetails" element={<Productdetails />} />
       <Route path="/sweetindulgence" element={<Sweetindulgence />} />
+      <Route path="/boxcollection" element={<Boxcollection />} />
+      <Route path="/orderconfrimed" element={<Orderconfrimed />} />
     </Routes>
   </Router>
 );

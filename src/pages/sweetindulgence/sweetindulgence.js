@@ -10,25 +10,25 @@ const Sweetindulgence = () => {
       id: 1,
       title: "Bon Bon",
       image: "./images/bon-bon.jpg", // replace with real image
-      link: "/bonbon",
+      link: "/ownbox",
     },
     {
       id: 2,
       title: "Truffle",
       image: "./images/truffle.png", // replace with real image
-      link: "/truffle",
+      link: "/boxcollection",
     },
     {
       id: 3,
       title: "Pralines",
       image: "./images/pralines.png", // replace with real image
-      link: "/pralines",
+      link: "/boxcollection",
     },
     {
       id: 4,
       title: "Dragees",
       image: "./images/dragees.jpg", // replace with real image
-      link: "/dragees",
+      link: "/boxcollection",
     },
   ];
   return (

@@ -28,9 +28,9 @@ const Homepage = () => {
       </div>
       {/* Mobile View Section */}
       <div className="d-block d-md-none choco-location text-center">
-        <Container>
-          <Row>
-            <Col>
+        <Container fluid className="p-0">
+          <Row className="m-0">
+            <Col className="p-0">
               <div className="choco-mobile-box">
                 <h3 className="loc-title">New in Ahmedabad</h3>
                 <p className="loc-sub">
@@ -41,6 +41,7 @@ const Homepage = () => {
           </Row>
         </Container>
       </div>
+
       <div className="choco-text-section d-none d-md-block">
         <Container fluid>
           <Row className="align-items-center">
@@ -106,9 +107,23 @@ const Homepage = () => {
                 Make the gift of Soulliqo that little bit sweeter by adding a
                 free personalized message.
               </p>
-              <Button as={NavLink} to="/ownbox" className="makebox-btn">
-                Shop Now
-              </Button>
+              <div className="d-flex justify-content-lg-end justify-content-center mt-3">
+                <Button
+                  as={NavLink}
+                  to="/ownbox"
+                  style={{
+                    backgroundColor: "#7B5B54",
+                    color: "#fff",
+                    fontSize: "16px",
+                    padding: "10px 20px",
+                    border: "none",
+                    textDecoration: "none",
+                    fontFamily: "Tenor Sans",
+                  }}
+                >
+                  Shop Now
+                </Button>
+              </div>
             </div>
           </Col>
           {/* Right Image */}
