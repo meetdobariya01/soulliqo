@@ -26,7 +26,7 @@ const Footer = () => {
                 viewport={{ once: true }}
               >
                 <img
-                  src="./images/logo-footer.png"
+                  src="/images/logo-footer.png"
                   alt="Soulliqo"
                   className="footer-logo"
                 />

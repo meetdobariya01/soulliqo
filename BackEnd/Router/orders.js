@@ -1,6 +1,6 @@
 const express = require("express");
 const asyncHandler = require("../Middleware/asyncHandler");
-const { authenticate } = require("../Middleware/auth");
+const { authenticate } = require("../Middleware/authenticate");
 const Cart = require("../Models/Cart");
 const Order = require("../Models/Order.Traking");
 

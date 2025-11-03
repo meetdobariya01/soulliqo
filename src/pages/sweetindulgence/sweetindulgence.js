@@ -1,46 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
+import axios from "axios";
 
 const Sweetindulgence = () => {
-  const products = [
-    {
-      id: 1,
-      title: "Bon Bon",
-      image: "./images/bon-bon.jpg", // replace with real image
-      link: "/bonbon",
-    },
-    {
-      id: 2,
-      title: "Truffle",
-      image: "./images/truffle.png", // replace with real image
-      link: "/truffle",
-    },
-    {
-      id: 3,
-      title: "Pralines",
-      image: "./images/pralines.png", // replace with real image
-      link: "/pralines",
-    },
-    {
-      id: 4,
-      title: "Dragees",
-      image: "./images/dragees.jpg", // replace with real image
-      link: "/dragees",
-    },
-  ];
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/store/categories");
+        // Ensure we always have an array
+        setCategories(Array.isArray(res.data) ? res.data : []);
+      } catch (err) {
+        console.error("Error fetching categories:", err);
+        setError("Failed to load categories. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCategories();
+  }, []);
+
   return (
     <div>
-      {/* Header Section */}
       <Header />
 
-      {/* Banner Section */}
+      {/* Banner */}
       <div
-        className="banner d-flex align-items-center justify-content-center text-center container mt-2   "
+        className="banner d-flex align-items-center justify-content-center text-center container mt-2"
         style={{
-          backgroundImage: `url('./images/sweet.png')`, 
+          backgroundImage: `url('./images/sweet.png')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           height: "400px",
@@ -49,35 +43,50 @@ const Sweetindulgence = () => {
           fontWeight: "600",
         }}
       >
-        {/* Sweet Indulgence */}
+        Sweet Indulgence
       </div>
 
-      {/* Product Section */}
+      {/* Categories */}
       <Container className="my-5">
-        <Row>
-          {products.map((product) => (
-            <Col key={product.id} xs={12} sm={6} md={3} className="mb-4">
-              <NavLink to={product.link} style={{ textDecoration: "none" }}>
-                <Card className="h-100 text-center border-0 shadow-sm product-card">
+        {loading ? (
+          <p>Loading categories...</p>
+        ) : error ? (
+          <p className="text-danger">{error}</p>
+        ) : categories.length === 0 ? (
+          <p>No categories available.</p>
+        ) : (
+          <Row>
+            {categories.map((category, index) => (
+              <Col key={category._id || index} xs={12} sm={6} md={3} className="mb-4">
+                <Card
+                  as={NavLink}
+                  to={`/ownbox/${category._id || ""}`}
+                  className="h-100 text-center border-0 shadow-sm text-decoration-none"
+                  aria-label={`View ${category.name || "Category"} collection`}
+                >
+                  {/* Category Image */}
                   <Card.Img
                     variant="top"
-                    src={product.image}
-                    alt={product.title}
-                    className="img-fluid"
+                    src={category.image || "./images/category-placeholder.png"}
+                    alt={category.name || "Category image"}
+                    style={{ height: "180px", objectFit: "cover" }}
                   />
-                  <Card.Body className="p-2">
-                    <Card.Title className="text-dark fs-6">
-                      {product.title}
+
+                  <Card.Body className="p-3">
+                    <Card.Title className="fs-5 text-dark">
+                      {category.name || "Unnamed Category"}
                     </Card.Title>
+                    <Card.Text className="text-muted small">
+                      {category.description || "No description available."}
+                    </Card.Text>
                   </Card.Body>
                 </Card>
-              </NavLink>
-            </Col>
-          ))}
-        </Row>
+              </Col>
+            ))}
+          </Row>
+        )}
       </Container>
 
-      {/* Footer Section */}
       <Footer />
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Row,
@@ -6,106 +6,110 @@ import {
   Card,
   Button,
   Breadcrumb,
-  Modal,
+  Spinner,
 } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import axios from "axios";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
 
-const boxes = [
-  {
-    id: 1,
-    img: "./images/ownbox1.png",
-    title: "Box of 16",
-    price: "₹2000",
-    description: "A premium collection of 16 handcrafted chocolates.",
-  },
-  {
-    id: 2,
-    img: "./images/ownbox2.png",
-    title: "Box of 21",
-    price: "₹2900",
-    description: "A luxury box of 21 assorted chocolates.",
-  },
-  {
-    id: 3,
-    img: "./images/ownbox3.png",
-    title: "Box of 24",
-    price: "₹3500",
-    description: "A grand box of 24 artisanal chocolates.",
-  },
-];
+const API_BASE_URL = "http://localhost:5000/api/store";
 
 const Ownbox = () => {
-  const [show, setShow] = useState(false);
-  const [selectedBox, setSelectedBox] = useState(null);
+  const { collectionId } = useParams();
+  const navigate = useNavigate();
+  const [collectionData, setCollectionData] = useState(null);
+  const [availableSizes, setAvailableSizes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const handleShow = (box) => {
-    setSelectedBox(box);
-    setShow(true);
-  };
+  useEffect(() => {
+    if (!collectionId) {
+      setError("No category selected.");
+      setLoading(false);
+      return;
+    }
 
-  const handleClose = () => setShow(false);
+    const fetchBoxSizes = async () => {
+      try {
+        const url = `${API_BASE_URL}/collections/${collectionId}/boxes`;
+        const res = await axios.get(url);
+        setCollectionData(res.data.category);
+        setAvailableSizes(res.data.availableSizes);
+        setError(null);
+      } catch (err) {
+        console.error("Error fetching box sizes:", err);
+        setError("Could not fetch box sizes for this category.");
+        setAvailableSizes([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBoxSizes();
+  }, [collectionId]);
+
+  if (loading)
+    return (
+      <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+        <Spinner animation="border" variant="secondary" />
+      </div>
+    );
+
+  if (error)
+    return (
+      <Container className="py-5 text-center">
+        <p className="text-danger">{error}</p>
+        <NavLink to="/">Go Home</NavLink>
+      </Container>
+    );
+
   return (
     <div>
-      {/* Header */}
       <Header />
-
       <Container className="py-5">
-        {/* Breadcrumb */}
-        <Breadcrumb>
-          <Breadcrumb.Item className="box-title" href="/">
-            HOME
-          </Breadcrumb.Item>
-          <Breadcrumb.Item className="box-header" active>
-            BUILD YOUR OWN BOX
-          </Breadcrumb.Item>
+        <Breadcrumb className="mb-4">
+          <li className="breadcrumb-item box-title">
+            <NavLink to="/" className="text-decoration-none">HOME</NavLink>
+          </li>
+          <li className="breadcrumb-item box-title">
+            <NavLink to="/sweetindulgence" className="text-decoration-none">
+              {collectionData.name?.toUpperCase()}
+            </NavLink>
+          </li>
+          <li className="breadcrumb-item active box-header">CHOOSE BOX SIZE</li>
         </Breadcrumb>
 
-        {/* Heading */}
         <h2 className="fw-bold text-center mb-2 box-main-header">
-          CHOOSE YOUR CHOCOLATE BOX SIZE
+          CHOOSE YOUR CUSTOM CHOCOLATE BOX SIZE
         </h2>
-        <p className="text-muted text-center mb-5 box-main-subheader">
-          CHOOSE AMONGST THE DISTINCT OF CHOCOLATES TO CUSTOMIZE YOUR CHOCOLATE
-          BOX
-        </p>
 
-        {/* Box Cards */}
-        <Row className="g-4">
-          {boxes.map((box) => (
-            <Col xs={12} sm={6} md={4} key={box.id}>
+        <Row className="g-4 justify-content-center">
+          {availableSizes.map((size) => (
+            <Col xs={12} sm={6} md={3} key={size}>
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
+                transition={{ duration: 0.5 }}
                 viewport={{ once: true }}
               >
-                <Card className="h-100 border box-card">
+                <Card className="h-100 border box-card text-center p-4">
                   <Card.Img
                     variant="top"
-                    src={box.img}
-                    className="p-3"
-                    style={{ objectFit: "contain", height: "250px" }}
+                    src={collectionData.image || "./images/category-placeholder.png"}
+                    alt={collectionData.name}
+                    style={{ height: "180px", objectFit: "cover" }}
                   />
-                  <Card.Body className="text-center">
-                    <Card.Title className="fw-bold own-box-title">
-                      {box.title}
-                    </Card.Title>
-                    <Card.Text className="fw-bold own-box-price">
-                      {box.price}
-                    </Card.Text>
+                  <Card.Body>
+                    <Card.Title className="fw-bold own-box-title fs-1">{size}</Card.Title>
+                    <Card.Text className="text-muted mb-4">Chocolates</Card.Text>
                     <Button
+                      onClick={() => navigate(`/box-styles/${collectionId}/${size}`)}
                       className="w-100 fw-semibold py-2 select-item-btn"
-                      style={{
-                        backgroundColor: "#7B4B3A",
-                        border: "none",
-                        borderRadius: "8px",
-                      }}
-                      onClick={() => handleShow(box)}
+                      style={{ backgroundColor: "#7B4B3A", border: "none", borderRadius: "8px" }}
                     >
-                      Select Item
+                      Select {size} Pc. Box
                     </Button>
                   </Card.Body>
                 </Card>
@@ -113,34 +117,7 @@ const Ownbox = () => {
             </Col>
           ))}
         </Row>
-
-        {/* Modal for Item Selection */}
-        <Modal show={show} onHide={handleClose} centered>
-          <Modal.Header closeButton>
-            <Modal.Title>{selectedBox?.title}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <img
-              src={selectedBox?.img}
-              alt={selectedBox?.title}
-              className="img-fluid mb-3"
-            />
-            <p>{selectedBox?.description}</p>
-            <h5 className="fw-bold">{selectedBox?.price}</h5>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              as={NavLink}
-              to="/boxproduct"
-              style={{ backgroundColor: "#7B4B3A", border: "none" }}
-            >
-              Confirm Selection
-            </Button>
-          </Modal.Footer>
-        </Modal>
       </Container>
-
-      {/* Footer */}
       <Footer />
     </div>
   );

@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+// ✅ Import all pages
 import Homepage from "./pages/homepage/homepage";
 import Login from "./pages/login/login";
 import Signup from "./pages/signup/signup";
@@ -17,6 +18,7 @@ import Brandethos from "./pages/brandethos/brandethos";
 import Contactus from "./pages/contactus/contactus";
 import Wishlist from "./pages/wishlist/wishlist";
 import Ownbox from "./pages/ownbox/Ownbox";
+import BoxStyles from "./pages/box-styles/box-styles";
 import Boxproduct from "./pages/boxproduct/boxproduct";
 import Boxcheckout from "./pages/boxcheckout/boxcheckout";
 import Checkout from "./pages/chekckout/checkout";
@@ -24,6 +26,7 @@ import Chocoblock from "./pages/chocoblock/chocoblock";
 import Productgrid from "./pages/product-grid/productgrid";
 import Productdetails from "./pages/productdetails/productdetails";
 import Sweetindulgence from "./pages/sweetindulgence/sweetindulgence";
+import Collection from "./components/collection/collection";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -40,14 +43,17 @@ root.render(
       <Route path="/brandethos" element={<Brandethos />} />
       <Route path="/contactus" element={<Contactus />} />
       <Route path="/wishlist" element={<Wishlist />} />
-      <Route path="/ownbox" element={<Ownbox />} />
-      <Route path="/boxproduct" element={<Boxproduct />} />
+      <Route path="/sweetindulgence" element={<Sweetindulgence />} />
+      <Route path="/ownbox/:collectionId" element={<Ownbox />} />
+      <Route path="/box-styles/:collectionId/:size" element={<BoxStyles />} />
       <Route path="/boxcheckout" element={<Boxcheckout />} />
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/chocolateblock" element={<Chocoblock />} />
       <Route path="/product" element={<Productgrid />} />
-      <Route path="/productdetails" element={<Productdetails />} />
-      <Route path="/sweetindulgence" element={<Sweetindulgence />} />
+      <Route path="/product/:id" element={<Productdetails />} />
+      <Route path="/collection/:category" element={<Productgrid />} />
+      <Route path="/collection" element={<Collection />} />
+       <Route path="/boxproduct/:categoryId/:boxId" element={<Boxproduct />} />
     </Routes>
   </Router>
 );
