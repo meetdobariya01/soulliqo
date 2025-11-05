@@ -27,6 +27,8 @@ import Productgrid from "./pages/product-grid/productgrid";
 import Productdetails from "./pages/productdetails/productdetails";
 import Sweetindulgence from "./pages/sweetindulgence/sweetindulgence";
 import Collection from "./components/collection/collection";
+import Cart from "./components/Cart/Cart";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -51,9 +53,11 @@ root.render(
       <Route path="/chocolateblock" element={<Chocoblock />} />
       <Route path="/product" element={<Productgrid />} />
       <Route path="/product/:id" element={<Productdetails />} />
+      <Route path="/products/:category" element={<Productgrid />} />
       <Route path="/collection/:category" element={<Productgrid />} />
       <Route path="/collection" element={<Collection />} />
        <Route path="/boxproduct/:categoryId/:boxId" element={<Boxproduct />} />
+       <Route path="/cart" element={<Cart />} />
     </Routes>
   </Router>
 );

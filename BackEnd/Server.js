@@ -54,8 +54,13 @@ app.use(
 );
 
 // Serve static files
-app.use(express.static(path.join(__dirname, "public")));
-app.use("/images", express.static("public/images"));
+// app.use(express.static(path.join(__dirname, "public")));
+// app.use("/images", express.static("public/images"));
+// Serve images from actual React public folder
+app.use(
+  "/images",
+  express.static("D:/Job/soulliqo-clean/soulliqo/public/images")
+);
 
 // ============================
 //  SESSION CONFIG
@@ -132,6 +137,81 @@ app.get("/api/store/categories", async (req, res) => {
 });
 
 // GET boxes by category
+
+// app.get("/api/store/collections/:collectionId/boxes", async (req, res) => {
+//   try {
+//     const { collectionId } = req.params;
+//     const { size } = req.query;
+
+//     if (!mongoose.Types.ObjectId.isValid(collectionId)) {
+//       return res.status(400).json({ message: "Invalid category ID" });
+//     }
+
+//     const category = await Category.findById(collectionId).select("COLLECTION description image");
+//     if (!category) return res.status(404).json({ message: "Category not found" });
+
+//     const categoryName = (category.COLLECTION || "").trim();
+
+//     const boxes = await Box.find({
+//       COLLECTION: new RegExp(`^\\s*${categoryName}\\s*$`, "i"),
+//     }).select(
+//       "boxName size price COLLECTION BoxCategories totalLimit typeLimits description image additionalInformation"
+//     );
+
+//     if (!boxes.length) {
+//       return res.status(404).json({ message: "No boxes found for this category" });
+//     }
+
+//     // If size not provided, return available sizes
+//     if (!size) {
+//       const uniqueSizes = [...new Set(boxes.map((b) => b.size))].sort((a, b) => a - b);
+//       return res.json({
+//         category: {
+//           id: category._id,
+//           name: categoryName,
+//           description: category.description || "",
+//           image: category.image || "./images/category-placeholder.png",
+//         },
+//         availableSizes: uniqueSizes,
+//       });
+//     }
+
+//     // Filter by box size
+//     const filteredBoxes = boxes.filter((b) => b.size === Number(size));
+//     if (!filteredBoxes.length) {
+//       return res.status(404).json({ message: `No boxes found for size ${size}` });
+//     }
+
+//     const formatted = filteredBoxes.map((box) => ({
+//       _id: box._id,
+//       name: box.boxName || "",
+//       size: box.size,
+//       price: box.price,
+//       description: box.description || "",
+//       image: box.image || "./images/product-grid.png",
+//       additionalInformation: box.additionalInformation || "",
+//       boxCategories: box.BoxCategories || [],
+//       totalLimit: box.totalLimit || box.size,
+//       typeLimits: box.typeLimits || {},
+//     }));
+
+//     res.json({
+//       category: {
+//         id: category._id,
+//         name: categoryName,
+//         description: category.description || "",
+//         image: category.image || "./images/category-placeholder.png",
+//       },
+//       size: Number(size),
+//       boxes: formatted,
+//     });
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// });
+
+// GET chocolates by category + box
+
 app.get("/api/store/collections/:collectionId/boxes", async (req, res) => {
   try {
     const { collectionId } = req.params;
@@ -148,29 +228,45 @@ app.get("/api/store/collections/:collectionId/boxes", async (req, res) => {
 
     const boxes = await Box.find({
       COLLECTION: new RegExp(`^\\s*${categoryName}\\s*$`, "i"),
-    }).select(
-      "boxName size price COLLECTION BoxCategories totalLimit typeLimits description image additionalInformation"
-    );
+    }).select("boxName size price description image BoxCategories totalLimit typeLimits additionalInformation");
 
     if (!boxes.length) {
       return res.status(404).json({ message: "No boxes found for this category" });
     }
 
-    // If size not provided, return available sizes
+    // ✅ Normalize image URLs (auto-prepend server URL if missing)
+ const getFullImageUrl = (img) => {
+  if (!img) return `${process.env.SERVER_URL || "http://localhost:5000"}/images/product-grid.png`;
+  if (img.startsWith("http")) return img;
+  const cleanPath = img.replace(/^\/?/, ""); // remove leading slash
+  return `${process.env.SERVER_URL || "http://localhost:5000"}${cleanPath.startsWith("images") ? "/" : "/images/"}${cleanPath}`;
+};
+
+    // ✅ Build size-to-image map
+    const sizeMap = {};
+    boxes.forEach((b) => {
+      const img = getFullImageUrl(b.image);
+      if (!sizeMap[b.size]) sizeMap[b.size] = img;
+    });
+
+    // ✅ Return available sizes
     if (!size) {
-      const uniqueSizes = [...new Set(boxes.map((b) => b.size))].sort((a, b) => a - b);
+      const uniqueSizes = Object.keys(sizeMap).map(Number).sort((a, b) => a - b);
       return res.json({
         category: {
           id: category._id,
           name: categoryName,
           description: category.description || "",
-          image: category.image || "./images/category-placeholder.png",
+          image: getFullImageUrl(category.image),
         },
-        availableSizes: uniqueSizes,
+        availableSizes: uniqueSizes.map((s) => ({
+          size: s,
+          image: sizeMap[s],
+        })),
       });
     }
 
-    // Filter by box size
+    // ✅ Return boxes for selected size
     const filteredBoxes = boxes.filter((b) => b.size === Number(size));
     if (!filteredBoxes.length) {
       return res.status(404).json({ message: `No boxes found for size ${size}` });
@@ -182,7 +278,7 @@ app.get("/api/store/collections/:collectionId/boxes", async (req, res) => {
       size: box.size,
       price: box.price,
       description: box.description || "",
-      image: box.image || "./images/product-grid.png",
+      image: getFullImageUrl(box.image),
       additionalInformation: box.additionalInformation || "",
       boxCategories: box.BoxCategories || [],
       totalLimit: box.totalLimit || box.size,
@@ -194,17 +290,19 @@ app.get("/api/store/collections/:collectionId/boxes", async (req, res) => {
         id: category._id,
         name: categoryName,
         description: category.description || "",
-        image: category.image || "./images/category-placeholder.png",
+        image: getFullImageUrl(category.image),
       },
       size: Number(size),
       boxes: formatted,
     });
   } catch (err) {
+    console.error("❌ Box API Error:", err);
     res.status(500).json({ message: err.message });
   }
 });
 
-// GET chocolates by category + box
+
+
 app.get("/api/store/chocolates/:categoryId/:boxId", async (req, res) => {
   try {
     const { categoryId, boxId } = req.params;

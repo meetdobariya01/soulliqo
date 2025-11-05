@@ -1,10 +1,6 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const asyncHandler = require("../Middleware/asyncHandler");
 const Cart = require("../Models/Cart");
-const Box = require("../Models/Box");
-const Chocolate = require("../Models/Chocolate");
-const Category = require("../Models/Category");
 const { authenticate } = require("../Middleware/authenticate");
 
 const router = express.Router();
@@ -14,7 +10,7 @@ router.get("/", authenticate, asyncHandler(async (req, res) => {
   const cart = await Cart.findOne({ user: req.user._id })
     .populate("items.product")
     .populate("items.box")
-    .populate("items.products.product");
+    .populate("items.products.chocolate");
   res.json(cart || { items: [] });
 }));
 
@@ -38,7 +34,7 @@ router.post("/add", authenticate, asyncHandler(async (req, res) => {
   res.json({ message: "Product added to cart", cart });
 }));
 
-// ✅ Update item (protected)
+// ✅ Update item quantity (protected)
 router.put("/update", authenticate, asyncHandler(async (req, res) => {
   const { productId, quantity } = req.body;
   const cart = await Cart.findOne({ user: req.user._id });
@@ -63,26 +59,63 @@ router.delete("/remove/:itemId", authenticate, asyncHandler(async (req, res) => 
   res.json({ message: "Item removed", cart });
 }));
 
-// ✅ Add custom box to cart (already protected)
-router.post("/custom-box", authenticate, async (req, res) => {
-  try {
-    const { boxId, categoryId, selectedChocolates } = req.body;
+// ✅ Add custom box (protected)
+// ✅ Add custom box (protected)
+router.post(
+  "/custom-box",
+  authenticate,
+  asyncHandler(async (req, res) => {
+    const { boxId, selectedChocolates, price } = req.body;
     const userId = req.user._id;
 
-    const newCart = new Cart({
-      user: userId,
-      boxId,
-      categoryId,
-      selectedChocolates,
-    });
+    if (!boxId || !Array.isArray(selectedChocolates) || selectedChocolates.length === 0) {
+      return res
+        .status(400)
+        .json({ message: "Box ID and selected chocolates are required." });
+    }
 
-    await newCart.save();
-    res.json({ message: "Custom box added to cart successfully" });
-  } catch (err) {
-    console.error("Custom-box error:", err);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-});
+    // find or create cart
+    let cart = await Cart.findOne({ user: userId });
+
+    if (!cart) {
+      cart = new Cart({ user: userId, items: [] });
+    }
+
+    // calculate price safely
+    const totalPrice = Number(price) || 0;
+
+    // create a new custom box item
+    const newBoxItem = {
+      type: "box",
+      box: boxId,
+      name: "Custom Box",
+      price: totalPrice,
+      quantity: 1,
+      products: selectedChocolates.map((c) => ({
+        chocolate: c.chocolateId,
+        quantity: c.quantity,
+      })),
+    };
+
+    // push new custom box
+    cart.items.push(newBoxItem);
+
+    await cart.save();
+
+    await cart.populate([
+      { path: "items.product" },
+      { path: "items.box" },
+      { path: "items.products.chocolate" },
+    ]);
+
+    res.json({
+      message: "✅ Custom box added to cart successfully",
+      cart,
+    });
+  })
+);
+
+
 
 module.exports = router;
 

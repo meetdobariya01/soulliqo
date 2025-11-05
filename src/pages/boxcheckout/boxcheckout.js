@@ -49,62 +49,64 @@ setOrderTotal(total);
 }, [box]);
 
 const handleCheckout = async () => {
-const token = localStorage.getItem("token");
-if (!token) {
-alert("Please log in to continue.");
-navigate("/login");
-return;
-}
+  const token = localStorage.getItem("token");
+  if (!token) {
+    alert("Please log in to continue.");
+    navigate("/login");
+    return;
+  }
 
-if (!box?._id) {
-  alert("Box details missing.");
-  return;
-}
+  if (!box?._id) {
+    alert("Box details missing.");
+    return;
+  }
 
-const payload = {
-  categoryId: box?.category?._id || products[0]?.category?._id,
-  boxId: box._id,
-  price: orderTotal,
-  selectedChocolates: selectedChocolates.map((i) => ({
-    chocolateId: i.id,
-    quantity: i.qty,
-  })),
-};
-
-try {
-  const res = await axios.post(`${API_BASE_URL}/cart/custom-box`, payload, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-
-  alert(res.data.message || "Box added successfully!");
-
-  // ✅ Append new box to boxes array
-  const existingBoxes = JSON.parse(localStorage.getItem("boxes") || "[]");
-  const newBox = {
-    _id: box._id,
-    size: box.size,
+  const payload = {
+    categoryId: box?.category?._id || products[0]?.category?._id,
+    boxId: box._id,
     price: orderTotal,
-    selectedChocolates,
+    selectedChocolates: selectedChocolates.map((i) => ({
+      chocolateId: i.id,
+      quantity: i.qty,
+    })),
   };
-  const updatedBoxes = [
-    ...existingBoxes.filter((b) => b.size !== box.size),
-    newBox,
-  ];
-  localStorage.setItem("boxes", JSON.stringify(updatedBoxes));
 
-  navigate("/checkout");
-} catch (err) {
-  console.error("Checkout error:", err.response || err);
-  alert(err.response?.data?.message || "Checkout failed.");
-}
+  try {
+    const res = await axios.post(`${API_BASE_URL}/cart/custom-box`, payload, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
+    alert(res.data.message || "Box added to cart successfully!");
 
+    // ✅ Save to localStorage (for reload persistence)
+    const existingBoxes = JSON.parse(localStorage.getItem("boxes") || "[]");
+    const newBox = {
+      _id: box._id,
+      size: box.size,
+      price: orderTotal,
+      selectedChocolates,
+    };
+    const updatedBoxes = [
+      ...existingBoxes.filter((b) => b.size !== box.size),
+      newBox,
+    ];
+    localStorage.setItem("boxes", JSON.stringify(updatedBoxes));
+
+    // ✅ Redirect to Cart page instead of Checkout
+    navigate("/cart");
+  } catch (err) {
+    console.error("Checkout error:", err.response || err);
+    alert(err.response?.data?.message || "Checkout failed.");
+  }
 };
 
 // ✅ Prevent showing old data
 if (!box?._id || !selectedChocolates.length) {
-return ( <Container className="py-5 text-center"> <p>Box data or selected chocolates not found. Please select chocolates first.</p> </Container>
-);
+  return (
+    <Container className="py-5 text-center">
+      <p>Box data or selected chocolates not found. Please select chocolates first.</p>
+    </Container>
+  );
 }
 
 return ( <div> <Header /> <Container className="py-4">

@@ -36,7 +36,8 @@ const Ownbox = () => {
         const url = `${API_BASE_URL}/collections/${collectionId}/boxes`;
         const res = await axios.get(url);
         setCollectionData(res.data.category);
-        setAvailableSizes(res.data.availableSizes);
+        // ✅ ensure availableSizes is array of objects [{ size, image }]
+        setAvailableSizes(res.data.availableSizes || []);
         setError(null);
       } catch (err) {
         console.error("Error fetching box sizes:", err);
@@ -52,7 +53,10 @@ const Ownbox = () => {
 
   if (loading)
     return (
-      <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "100vh" }}
+      >
         <Spinner animation="border" variant="secondary" />
       </div>
     );
@@ -71,7 +75,9 @@ const Ownbox = () => {
       <Container className="py-5">
         <Breadcrumb className="mb-4">
           <li className="breadcrumb-item box-title">
-            <NavLink to="/" className="text-decoration-none">HOME</NavLink>
+            <NavLink to="/" className="text-decoration-none">
+              HOME
+            </NavLink>
           </li>
           <li className="breadcrumb-item box-title">
             <NavLink to="/sweetindulgence" className="text-decoration-none">
@@ -86,8 +92,8 @@ const Ownbox = () => {
         </h2>
 
         <Row className="g-4 justify-content-center">
-          {availableSizes.map((size) => (
-            <Col xs={12} sm={6} md={3} key={size}>
+          {availableSizes.map((item) => (
+            <Col xs={12} sm={6} md={3} key={item.size}>
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -95,21 +101,31 @@ const Ownbox = () => {
                 viewport={{ once: true }}
               >
                 <Card className="h-100 border box-card text-center p-4">
-                  <Card.Img
-                    variant="top"
-                    src={collectionData.image || "./images/category-placeholder.png"}
-                    alt={collectionData.name}
-                    style={{ height: "180px", objectFit: "cover" }}
-                  />
+                <Card.Img
+  variant="top"
+  src={item.image}
+  alt={`${item.size} Pc Box`}
+
+  style={{ height: "180px", objectFit: "cover" }}
+/>
+
                   <Card.Body>
-                    <Card.Title className="fw-bold own-box-title fs-1">{size}</Card.Title>
+                    <Card.Title className="fw-bold own-box-title fs-1">
+                      {item.size}
+                    </Card.Title>
                     <Card.Text className="text-muted mb-4">Chocolates</Card.Text>
                     <Button
-                      onClick={() => navigate(`/box-styles/${collectionId}/${size}`)}
+                      onClick={() =>
+                        navigate(`/box-styles/${collectionId}/${item.size}`)
+                      }
                       className="w-100 fw-semibold py-2 select-item-btn"
-                      style={{ backgroundColor: "#7B4B3A", border: "none", borderRadius: "8px" }}
+                      style={{
+                        backgroundColor: "#7B4B3A",
+                        border: "none",
+                        borderRadius: "8px",
+                      }}
                     >
-                      Select {size} Pc. Box
+                      Select {item.size} Pc. Box
                     </Button>
                   </Card.Body>
                 </Card>
