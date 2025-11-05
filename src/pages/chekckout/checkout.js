@@ -1,108 +1,346 @@
-import React from "react";
+// import React, { useEffect, useState } from "react";
+// import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
+// import Footer from "../../components/footer/footer";
+// import Header from "../../components/header/header";
+// import { useLocation, useNavigate } from "react-router-dom";
+
+// const Checkout = () => {
+//   const location = useLocation();
+//   const navigate = useNavigate();
+//   const [cart, setCart] = useState(
+//     location.state?.cart || JSON.parse(localStorage.getItem("checkoutCart") || "{}")
+//   );
+
+//   const [totalAmount, setTotalAmount] = useState(0);
+
+//   useEffect(() => {
+//     if (cart?.items?.length) {
+//       const total = cart.items.reduce((sum, item) => {
+//         const itemPrice = Number(item.price) || Number(item.product?.price) || 0;
+//         const qty = Number(item.quantity) || 1;
+//         return sum + itemPrice * qty;
+//       }, 0);
+//       setTotalAmount(total);
+//     }
+//   }, [cart]);
+
+//   if (!cart?.items?.length) {
+//     return (
+//       <Container className="py-5 text-center">
+//         <p>No cart data found. Please add items first.</p>
+//       </Container>
+//     );
+//   }
+
+//   const handlePlaceOrder = () => {
+//     alert("Order placed successfully!");
+//     localStorage.removeItem("checkoutCart");
+//     navigate("/");
+//   };
+
+//   return (
+//     <div>
+//       <Header />
+//       <Container fluid className="py-4 px-3 container">
+//         <h5 className="checkout-title mb-4">CHECKOUT</h5>
+//         <Row>
+//           {/* LEFT SIDE - DELIVERY FORM */}
+//           <Col md={7} className="mb-4">
+//             <h6 className="mb-3">Contact</h6>
+//             <Form.Control type="email" placeholder="Email" className="mb-4 rounded-0" />
+//             <h6 className="mb-3">Delivery</h6>
+//             <Row>
+//               <Col md={12} className="mb-3">
+//                 <Form.Select className="rounded-0">
+//                   <option>Country/Region</option>
+//                   <option>India</option>
+//                 </Form.Select>
+//               </Col>
+//               <Col md={6} className="mb-3">
+//                 <Form.Control type="text" placeholder="First Name" />
+//               </Col>
+//               <Col md={6} className="mb-3">
+//                 <Form.Control type="text" placeholder="Last Name" />
+//               </Col>
+//               <Col md={12} className="mb-3">
+//                 <Form.Control type="text" placeholder="Address" />
+//               </Col>
+//               <Col md={6} className="mb-3">
+//                 <Form.Control type="text" placeholder="City" />
+//               </Col>
+//               <Col md={3} className="mb-3">
+//                 <Form.Control type="text" placeholder="State" />
+//               </Col>
+//               <Col md={3} className="mb-3">
+//                 <Form.Control type="text" placeholder="Pincode" />
+//               </Col>
+//             </Row>
+
+//             <Form.Check
+//               type="checkbox"
+//               label="Save this information for next time"
+//               className="mb-4"
+//             />
+
+//             <h6 className="mb-3">Payment</h6>
+//             <Card className="mb-4">
+//               <Card.Body>
+//                 <img
+//                   src="./images/payment.jpg"
+//                   alt="payment options"
+//                   className="img-fluid mb-2"
+//                 />
+//                 <p className="small mb-0">
+//                   You’ll be redirected to Razorpay to complete payment securely.
+//                 </p>
+//               </Card.Body>
+//             </Card>
+
+//             <div className="mt-4">
+//               <Button
+//                 style={{
+//                   backgroundColor: "#7B4B3A",
+//                   border: "none",
+//                   borderRadius: "6px",
+//                   padding: "12px 40px",
+//                 }}
+//                 onClick={handlePlaceOrder}
+//               >
+//                 PLACE ORDER
+//               </Button>
+//             </div>
+//           </Col>
+
+//           {/* RIGHT SIDE - ORDER SUMMARY */}
+//           <Col md={5}>
+//             <Card className="mb-3">
+//               <Card.Body>
+//                 <h6 className="fw-semibold small mb-2">Available Offers</h6>
+//                 <p className="small mb-0">
+//                   10% Instant Discount on RBL Bank Credit Card and Credit Card EMI
+//                   on a min spend of ₹3,500.
+//                 </p>
+//               </Card.Body>
+//             </Card>
+
+//             <h6 className="fw-semibold mb-3">ORDER SUMMARY</h6>
+//             {cart.items.map((item, index) => (
+//               <Card className="mb-2 rounded-0" key={index}>
+//                 <Card.Body className="d-flex align-items-start">
+//                   <img
+//                     src={
+//                       item.product?.image ||
+//                       item.box?.image ||
+//                       "./images/product-grid.png"
+//                     }
+//                     alt={item.product?.name || item.name || "Custom Box"}
+//                     style={{
+//                       width: "60px",
+//                       height: "60px",
+//                       objectFit: "cover",
+//                       borderRadius: "4px",
+//                     }}
+//                     className="me-3"
+//                   />
+//                   <div className="flex-grow-1">
+//                     <p className="mb-1 small fw-semibold">
+//                       {item.product?.name || item.name || "Custom Box"}
+//                     </p>
+//                     {item.type === "box" && (
+//                       <ul className="small mb-1 ps-3">
+//                         {item.products?.map((p, idx) => (
+//                           <li key={idx}>
+//                             {p.chocolate?.name} × {p.quantity}
+//                           </li>
+//                         ))}
+//                       </ul>
+//                     )}
+//                     <p className="mb-1 small text-muted">
+//                       Qty: {item.quantity || 1}
+//                     </p>
+//                     <p className="small fw-semibold">
+//                       ₹{(item.price || item.product?.price || 0).toFixed(2)}
+//                     </p>
+//                   </div>
+//                 </Card.Body>
+//               </Card>
+//             ))}
+
+//             <hr />
+//             <div className="d-flex justify-content-between fw-semibold">
+//               <span>Total Amount</span>
+//               <span>₹{totalAmount.toFixed(2)}</span>
+//             </div>
+//           </Col>
+//         </Row>
+//       </Container>
+//       <Footer />
+//     </div>
+//   );
+// };
+
+// export default Checkout;
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import Footer from "../../components/footer/footer";
 import Header from "../../components/header/header";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const cartItems = [
-  {
-    id: 1,
-    name: "Sea Salt Caramel",
-    qty: 9,
-    price: 1099,
-    discountPrice: 179,
-    discount: "6% OFF",
-    img: "./images/wishlist.png",
-  },
-  {
-    id: 2,
-    name: "Hazelnut Truffle",
-    qty: 5,
-    price: 2399,
-    discountPrice: 179,
-    discount: "67% OFF",
-    img: "./images/wishlist.png",
-  },
-  {
-    id: 3,
-    name: "Mango Habanero Chili",
-    qty: 1,
-    price: 2399,
-    discountPrice: 179,
-    discount: "67% OFF",
-    img: "./images/wishlist.png",
-  },
-  {
-    id: 4,
-    name: "Hazelnut Latte",
-    qty: 1,
-    price: 2399,
-    discountPrice: 179,
-    discount: "67% OFF",
-    img: "./images/wishlist.png",
-  },
-];
+const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
 const Checkout = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [cart, setCart] = useState(
+    location.state?.cart || JSON.parse(localStorage.getItem("checkoutCart") || "{}")
+  );
+
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [address, setAddress] = useState({
+    country: "India",
+    firstName: "",
+    lastName: "",
+    street: "",
+    city: "",
+    state: "",
+    pincode: "",
+    email: "",
+  });
+
+  useEffect(() => {
+    if (cart?.items?.length) {
+      const total = cart.items.reduce((sum, item) => {
+        const itemPrice = Number(item.price) || Number(item.product?.price) || 0;
+        const qty = Number(item.quantity) || 1;
+        return sum + itemPrice * qty;
+      }, 0);
+      setTotalAmount(total);
+    }
+  }, [cart]);
+
+  if (!cart?.items?.length) {
+    return (
+      <Container className="py-5 text-center">
+        <p>No cart data found. Please add items first.</p>
+      </Container>
+    );
+  }
+
+const handlePlaceOrder = async () => {
+  if (!address.city || !address.pincode) {
+    alert("Please enter city and pincode before placing order.");
+    return;
+  }
+
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Please log in first.");
+      navigate("/login");
+      return;
+    }
+
+    const res = await axios.post(
+      `${API_BASE_URL}/orders/place`,
+      { address },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    alert("✅ Order placed successfully!");
+    localStorage.removeItem("checkoutCart");
+    navigate("/");
+  } catch (err) {
+    console.error("Order placement failed:", err);
+    alert("❌ Failed to place order. Please try again.");
+  }
+};
+
+
   return (
     <div>
-      {/* Header */}
       <Header />
-
       <Container fluid className="py-4 px-3 container">
         <h5 className="checkout-title mb-4">CHECKOUT</h5>
         <Row>
-          {/* LEFT SIDE */}
-          <Col md={7} className="mb-4 checkout-main-font">
-            {/* Contact */}
-            <h6 className=" mb-3 checkout-form">Contact</h6>
+          {/* LEFT SIDE - DELIVERY FORM */}
+          <Col md={7} className="mb-4">
+            <h6 className="mb-3">Contact</h6>
             <Form.Control
               type="email"
               placeholder="Email"
               className="mb-4 rounded-0"
+              value={address.email}
+              onChange={(e) => setAddress({ ...address, email: e.target.value })}
             />
-
-            {/* Delivery */}
-            <h6 className="checkout-form mb-3">Delivery</h6>
+            <h6 className="mb-3">Delivery</h6>
             <Row>
               <Col md={12} className="mb-3">
-                <Form.Select className="rounded-0">
-                  <option>Country/Region</option>
+                <Form.Select
+                  className="rounded-0"
+                  value={address.country}
+                  onChange={(e) => setAddress({ ...address, country: e.target.value })}
+                >
+                  <option>India</option>
                 </Form.Select>
               </Col>
               <Col md={6} className="mb-3">
-                <Form.Control type="text" placeholder="First Name" />
+                <Form.Control
+                  type="text"
+                  placeholder="First Name"
+                  value={address.firstName}
+                  onChange={(e) => setAddress({ ...address, firstName: e.target.value })}
+                />
               </Col>
               <Col md={6} className="mb-3">
-                <Form.Control type="text" placeholder="Last Name" />
+                <Form.Control
+                  type="text"
+                  placeholder="Last Name"
+                  value={address.lastName}
+                  onChange={(e) => setAddress({ ...address, lastName: e.target.value })}
+                />
               </Col>
               <Col md={12} className="mb-3">
-                <Form.Control type="text" placeholder="Address" />
-              </Col>
-              <Col md={12} className="mb-3">
-                <Form.Control type="text" placeholder="Apartment, suite, etc" />
+                <Form.Control
+                  type="text"
+                  placeholder="Address"
+                  value={address.street}
+                  onChange={(e) => setAddress({ ...address, street: e.target.value })}
+                />
               </Col>
               <Col md={6} className="mb-3">
-                <Form.Control type="text" placeholder="City" />
+                <Form.Control
+                  type="text"
+                  placeholder="City"
+                  value={address.city}
+                  onChange={(e) => setAddress({ ...address, city: e.target.value })}
+                />
               </Col>
               <Col md={3} className="mb-3">
-                <Form.Control type="text" placeholder="State" />
+                <Form.Control
+                  type="text"
+                  placeholder="State"
+                  value={address.state}
+                  onChange={(e) => setAddress({ ...address, state: e.target.value })}
+                />
               </Col>
               <Col md={3} className="mb-3">
-                <Form.Control type="text" placeholder="Pincode" />
+                <Form.Control
+                  type="text"
+                  placeholder="Pincode"
+                  value={address.pincode}
+                  onChange={(e) => setAddress({ ...address, pincode: e.target.value })}
+                />
               </Col>
             </Row>
-            <Form.Check
-              type="checkbox"
-              label="Save this information for next time"
-              className="mb-4"
-            />
 
-            {/* Payment */}
-            <h6 className="checkout-form mb-3">Payment</h6>
-            <p className="text-muted small">
-              All transaction are secure and encrypted.
-            </p>
+            <h6 className="mb-3">Payment</h6>
             <Card className="mb-4">
               <Card.Body>
                 <img
@@ -111,28 +349,11 @@ const Checkout = () => {
                   className="img-fluid mb-2"
                 />
                 <p className="small mb-0">
-                  After clicking "Pay now", you will be redirected to Razorpay
-                  Secure (UPI, Cards, Wallets, NetBanking) to complete your
-                  purchase securely.
+                  You’ll be redirected to Razorpay to complete payment securely.
                 </p>
               </Card.Body>
             </Card>
 
-            {/* Billing Address */}
-            <h6 className="checkout-form mb-3">Billing address</h6>
-            <Form.Check
-              type="radio"
-              name="billing"
-              label="Same as shipping address"
-              defaultChecked
-            />
-            <Form.Check
-              type="radio"
-              name="billing"
-              label="Use a different billing address"
-            />
-
-            {/* Place Order */}
             <div className="mt-4">
               <Button
                 as={NavLink}
@@ -147,33 +368,35 @@ const Checkout = () => {
                   fontFamily: "Poppins",
                   textDecoration: "none",
                 }}
+                onClick={handlePlaceOrder}
               >
                 PLACE ORDER
               </Button>
             </div>
           </Col>
 
-          {/* RIGHT SIDE */}
+          {/* RIGHT SIDE - ORDER SUMMARY */}
           <Col md={5}>
-            {/* Offers */}
             <Card className="mb-3">
               <Card.Body>
                 <h6 className="fw-semibold small mb-2">Available Offers</h6>
                 <p className="small mb-0">
-                  10% Instant Discount on RBL Bank Credit Card and Credit Card
-                  EMI on a min spend of ₹3,500. TCA
+                  10% Instant Discount on RBL Bank Credit Card and Credit Card EMI on a min spend of ₹3,500.
                 </p>
               </Card.Body>
             </Card>
 
-            {/* Cart Summary */}
-            <h6 className="fw-semibold mb-3">BOX OF 16</h6>
-            {cartItems.map((item) => (
-              <Card className="mb-2 rounded-0" key={item.id}>
-                <Card.Body className="d-flex align-items-center">
+            <h6 className="fw-semibold mb-3">ORDER SUMMARY</h6>
+            {cart.items.map((item, index) => (
+              <Card className="mb-2 rounded-0" key={index}>
+                <Card.Body className="d-flex align-items-start">
                   <img
-                    src={item.img}
-                    alt={item.name}
+                    src={
+                      item.product?.image ||
+                      item.box?.image ||
+                      "./images/product-grid.png"
+                    }
+                    alt={item.product?.name || item.name || "Custom Box"}
                     style={{
                       width: "60px",
                       height: "60px",
@@ -183,71 +406,37 @@ const Checkout = () => {
                     className="me-3"
                   />
                   <div className="flex-grow-1">
-                    <p className="mb-1 small fw-semibold">{item.name}</p>
-                    <p className="mb-1 small text-muted">
-                      Includes {item.qty} quantities of Truffle
+                    <p className="mb-1 small fw-semibold">
+                      {item.product?.name || item.name || "Custom Box"}
                     </p>
-                    <div className="d-flex align-items-center">
-                      <span className="fw-semibold me-2">
-                        ₹{item.discountPrice}
-                      </span>
-                      <small className="text-muted text-decoration-line-through me-2">
-                        ₹{item.price}
-                      </small>
-                      <small className="text-danger">{item.discount}</small>
-                    </div>
+                    {item.type === "box" && (
+                      <ul className="small mb-1 ps-3">
+                        {item.products?.map((p, idx) => (
+                          <li key={idx}>
+                            {p.chocolate?.name} × {p.quantity}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    <p className="mb-1 small text-muted">
+                      Qty: {item.quantity || 1}
+                    </p>
+                    <p className="small fw-semibold">
+                      ₹{(item.price || item.product?.price || 0).toFixed(2)}
+                    </p>
                   </div>
                 </Card.Body>
               </Card>
             ))}
 
-            {/* Gift Code */}
-            <div className="d-flex my-3">
-              <Form.Control
-                type="text"
-                placeholder="Gift Voucher Code"
-                className="rounded-0 me-2"
-              />
-              <Button
-                style={{ backgroundColor: "#7B4B3A", border: "none" }}
-                className="rounded-0"
-              >
-                Apply
-              </Button>
-            </div>
-
-            {/* Price Details */}
-            <h6 className="fw-semibold mb-3">PRICE DETAILS (16 Items)</h6>
-            <div className="d-flex justify-content-between small mb-1">
-              <span>Total MRP</span>
-              <span>₹3,898</span>
-            </div>
-            <div className="d-flex justify-content-between small mb-1">
-              <span>Discount on MRP</span>
-              <span className="text-success">- ₹1,698</span>
-            </div>
-            <div className="d-flex justify-content-between small mb-1">
-              <span>Coupon Discount</span>
-              <span className="text-danger">Apply Coupon</span>
-            </div>
-            <div className="d-flex justify-content-between small mb-1">
-              <span>Platform Fee</span>
-              <span>₹20</span>
-            </div>
-            <div className="d-flex justify-content-between small mb-3">
-              <span>Shipping Fee</span>
-              <span className="text-success">FREE</span>
-            </div>
             <hr />
             <div className="d-flex justify-content-between fw-semibold">
               <span>Total Amount</span>
-              <span>₹2,220</span>
+              <span>₹{totalAmount.toFixed(2)}</span>
             </div>
           </Col>
         </Row>
       </Container>
-
-      {/* Footer */}
       <Footer />
     </div>
   );

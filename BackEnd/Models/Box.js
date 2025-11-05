@@ -1,14 +1,16 @@
-  const mongoose = require('mongoose');
-  const Schema = mongoose.Schema;
-  const boxSchema = new Schema({
-    boxName: { type: String, required: true },
-    size: { type: Number, required: true },
-    price: { type: Number, required: true },
-    categoryName: { type: String, required: true }
-  }, {
-    timestamps: true
-  });
-  // Fix index to match field
-  boxSchema.index({ categoryName: 1 });
-  module.exports = mongoose.model('Box', boxSchema);
-  
+const mongoose = require("mongoose");
+
+const boxSchema = new mongoose.Schema({
+  boxName: String,
+  COLLECTION: String,
+  size: Number,
+  price: Number,
+  description: String,
+  totalLimit: Number,
+  typeLimits: Object,
+  BoxCategories: [String],
+  image: String,
+  additionalInformation: String,
+});
+
+module.exports = mongoose.models.Box || mongoose.model("Box", boxSchema);

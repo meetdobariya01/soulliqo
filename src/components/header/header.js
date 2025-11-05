@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { faHouse } from '@awesome.me/kit-KIT_CODE/icons/classic/solid'
+// import React, { useState } from "react";
 import {
   Navbar,
   Nav,
@@ -23,15 +24,13 @@ import "../../index.css";
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [categories, setCategories] = useState([]);
 
-  // Fetch categories from backend
-  useEffect(() => {
-    fetch("http://localhost:5000/products/categories")
-      .then((res) => res.json())
-      .then((data) => setCategories(data))
-      .catch((err) => console.error("Error fetching categories:", err));
-  }, []);
+  // Static categories
+  const categories = [
+    { id: 1, title: "Chocolate Block", link: "/chocolateblock" },
+    { id: 2, title: "Sweet Indulgence", link: "/sweetindulgence" },
+    { id: 3, title: "Melt in Mouth", link: "/product" },
+  ];
 
   return (
     <div>
@@ -57,7 +56,7 @@ const Header = () => {
             href="/"
             className="mx-auto mx-lg-0 d-flex align-items-center"
           >
-            <img src="./images/logo.jpg" alt="Logo" className="logo" />
+            <img src="/images/logo.jpg" alt="Logo" className="logo" />
           </Navbar.Brand>
 
           {/* Desktop Navigation */}
@@ -74,6 +73,11 @@ const Header = () => {
                 <NavDropdown.Item href="#">Loading...</NavDropdown.Item>
                 
               )}
+              {categories.map((category) => (
+                <NavDropdown.Item key={category.id} href={category.link}>
+                  {category.title}
+                </NavDropdown.Item>
+              ))}
             </NavDropdown>
 
             {/* BRAND JOURNEY */}
@@ -114,19 +118,15 @@ const Header = () => {
           <Nav className="flex-column text-center">
             {/* Mobile SHOP */}
             <NavDropdown title="SHOP" id="mobile-shop-dropdown" className="custom-dropdown">
-              {categories.length > 0 ? (
-                categories.map((category) => (
-                  <NavDropdown.Item
-                    key={category.id}
-                    href={category.link}
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    {category.title}
-                  </NavDropdown.Item>
-                ))
-              ) : (
-                <NavDropdown.Item href="#">Loading...</NavDropdown.Item>
-              )}
+              {categories.map((category) => (
+                <NavDropdown.Item
+                  key={category.id}
+                  href={category.link}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {category.title}
+                </NavDropdown.Item>
+              ))}
             </NavDropdown>
 
             {/* Mobile BRAND JOURNEY */}

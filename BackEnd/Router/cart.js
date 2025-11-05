@@ -1,29 +1,31 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const asyncHandler = require("../Middleware/asyncHandler");
-const { authenticate } = require("../Middleware/auth");
 const Cart = require("../Models/Cart");
-const Box = require("../Models/Box");
-const Chocolate = require("../Models/Chocolate");
-const Category = require("../Models/Category");
+const { authenticate } = require("../Middleware/authenticate");
 
 const router = express.Router();
 
-// Get cart
+// ✅ Get cart (protected)
 router.get("/", authenticate, asyncHandler(async (req, res) => {
-  const cart = await Cart.findOne({ user: req.user.id })
+  const cart = await Cart.findOne({ user: req.user._id })
     .populate("items.product")
     .populate("items.box")
-    .populate("items.products.product");
+    .populate("items.products.chocolate");
   res.json(cart || { items: [] });
 }));
 
-// Add product to cart
+// ✅ Add product to cart (protected)
 router.post("/add", authenticate, asyncHandler(async (req, res) => {
   const { productId, quantity } = req.body;
-  if (!productId || !quantity) return res.status(400).json({ message: "ProductId and quantity required" });
+  if (!productId || !quantity) {
+    return res.status(400).json({ message: "ProductId and quantity required" });
+  }
 
-  let cart = await Cart.findOne({ user: req.user.id }) || new Cart({ user: req.user.id, items: [] });
+  let cart = await Cart.findOne({ user: req.user._id });
+  if (!cart) {
+    cart = new Cart({ user: req.user._id, items: [] });
+  }
+
   const itemIndex = cart.items.findIndex(i => i.product?.toString() === productId);
   if (itemIndex > -1) cart.items[itemIndex].quantity += quantity;
   else cart.items.push({ type: "product", product: productId, quantity });
@@ -32,10 +34,10 @@ router.post("/add", authenticate, asyncHandler(async (req, res) => {
   res.json({ message: "Product added to cart", cart });
 }));
 
-// Update item
+// ✅ Update item quantity (protected)
 router.put("/update", authenticate, asyncHandler(async (req, res) => {
   const { productId, quantity } = req.body;
-  const cart = await Cart.findOne({ user: req.user.id });
+  const cart = await Cart.findOne({ user: req.user._id });
   if (!cart) return res.status(404).json({ message: "Cart not found" });
 
   cart.items = cart.items.map(item => {
@@ -47,9 +49,9 @@ router.put("/update", authenticate, asyncHandler(async (req, res) => {
   res.json({ message: "Cart updated", cart });
 }));
 
-// Remove item
+// ✅ Remove item (protected)
 router.delete("/remove/:itemId", authenticate, asyncHandler(async (req, res) => {
-  const cart = await Cart.findOne({ user: req.user.id });
+  const cart = await Cart.findOne({ user: req.user._id });
   if (!cart) return res.status(404).json({ message: "Cart not found" });
 
   cart.items = cart.items.filter(i => i._id.toString() !== req.params.itemId);
@@ -57,45 +59,113 @@ router.delete("/remove/:itemId", authenticate, asyncHandler(async (req, res) => 
   res.json({ message: "Item removed", cart });
 }));
 
-// Add custom box to cart
-router.post("/custom-box", authenticate, asyncHandler(async (req, res) => {
-  const { categoryId, boxId, selectedChocolates } = req.body;
-  if (!mongoose.Types.ObjectId.isValid(categoryId) || !mongoose.Types.ObjectId.isValid(boxId)) return res.status(400).json({ message: "Invalid IDs" });
-  if (!Array.isArray(selectedChocolates) || selectedChocolates.length === 0) return res.status(400).json({ message: "At least one chocolate must be selected" });
+// ✅ Add custom box (protected)
+// ✅ Add custom box (protected)
+router.post(
+  "/custom-box",
+  authenticate,
+  asyncHandler(async (req, res) => {
+    const { boxId, selectedChocolates, price } = req.body;
+    const userId = req.user._id;
 
-  const category = await Category.findById(categoryId).select("categoryName");
-  const box = await Box.findById(boxId).select("boxName size price categoryName");
-  const chocolates = await Chocolate.find({ _id: { $in: selectedChocolates.map(s => s.chocolateId) } })
-    .select("chocolateName price boxName categoryName");
+    if (!boxId || !Array.isArray(selectedChocolates) || selectedChocolates.length === 0) {
+      return res
+        .status(400)
+        .json({ message: "Box ID and selected chocolates are required." });
+    }
 
-  if (!category || !box) return res.status(404).json({ message: "Category or Box not found" });
-  if (box.categoryName !== category.categoryName) return res.status(403).json({ message: "Box does not belong to this category" });
+    // find or create cart
+    let cart = await Cart.findOne({ user: userId });
 
-  let totalQuantity = 0, totalChocolatePrice = 0;
-  for (const sel of selectedChocolates) {
-    const choc = chocolates.find(c => c._id.toString() === sel.chocolateId);
-    if (!choc || choc.boxName !== box.boxName || choc.categoryName !== category.categoryName) return res.status(400).json({ message: "Invalid chocolate selection" });
-    totalQuantity += sel.quantity || 1;
-    totalChocolatePrice += choc.price * (sel.quantity || 1);
-  }
+    if (!cart) {
+      cart = new Cart({ user: userId, items: [] });
+    }
 
-  if (totalQuantity > box.size) return res.status(400).json({ message: `Selected chocolates exceed box size (${box.size})` });
+    // calculate price safely
+    const totalPrice = Number(price) || 0;
 
-  const totalPrice = box.price + totalChocolatePrice;
-  let cart = await Cart.findOne({ user: req.user.id }) || new Cart({ user: req.user.id, items: [] });
+    // create a new custom box item
+    const newBoxItem = {
+      type: "box",
+      box: boxId,
+      name: "Custom Box",
+      price: totalPrice,
+      quantity: 1,
+      products: selectedChocolates.map((c) => ({
+        chocolate: c.chocolateId,
+        quantity: c.quantity,
+      })),
+    };
 
-  cart.items.push({
-    type: "box",
-    box: box._id,
-    name: `Custom ${box.boxName} Box`,
-    size: box.size,
-    price: totalPrice,
-    quantity: 1,
-    products: selectedChocolates.map(sel => ({ product: sel.chocolateId, quantity: sel.quantity }))
-  });
+    // push new custom box
+    cart.items.push(newBoxItem);
 
-  await cart.save();
-  res.status(201).json({ message: "Custom box added to cart", cart });
-}));
+    await cart.save();
+
+    await cart.populate([
+      { path: "items.product" },
+      { path: "items.box" },
+      { path: "items.products.chocolate" },
+    ]);
+
+    res.json({
+      message: "✅ Custom box added to cart successfully",
+      cart,
+    });
+  })
+);
+
+
 
 module.exports = router;
+
+
+
+
+// // routes/order.js
+// const express = require("express");
+// const axios = require("axios");
+// const { authenticate } = require("../Middleware/auth");
+
+// const router = express.Router();
+// const GOOGLE_API_KEY = "YOUR_GOOGLE_API_KEY"; // Replace with your key
+
+// // Validate Indian pincode via Google Maps API
+// const validatePincodeIndia = async (pincode) => {
+//   try {
+//     const response = await axios.get(
+//       `https://maps.googleapis.com/maps/api/geocode/json?address=${pincode}&key=${GOOGLE_API_KEY}`
+//     );
+//     const results = response.data.results;
+
+//     if (!results || results.length === 0) return false;
+
+//     const countryComponent = results[0].address_components.find(comp =>
+//       comp.types.includes("country")
+//     );
+
+//     return countryComponent && countryComponent.short_name === "IN";
+//   } catch (err) {
+//     console.error("Error validating pincode:", err);
+//     return false;
+//   }
+// };
+
+// // Endpoint to check pincode only
+// router.post("/check-pincode", authenticate, async (req, res) => {
+//   const { pincode } = req.body;
+
+//   if (!pincode) {
+//     return res.status(400).json({ message: "Pincode is required" });
+//   }
+
+//   const isValid = await validatePincodeIndia(pincode);
+
+//   if (isValid) {
+//     return res.status(200).json({ message: "✅ Delivery available to your pincode" });
+//   } else {
+//     return res.status(400).json({ message: "❌ Delivery only available in India" });
+//   }
+// });
+
+// module.exports = router;

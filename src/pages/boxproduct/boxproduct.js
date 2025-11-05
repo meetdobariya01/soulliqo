@@ -1,319 +1,342 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
-  Container,
-  Row,
-  Col,
-  Button,
-  ProgressBar,
-  Breadcrumb,
+Container,
+Row,
+Col,
+Button,
+ProgressBar,
+Breadcrumb,
+Spinner,
 } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams, useLocation } from "react-router-dom";
+import axios from "axios";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
-
-const products = [
-  { id: 1, name: "Sea Salt Caramel", img: "./images/wishlist.png" },
-  { id: 2, name: "Milk Chocolate Ganache", img: "./images/wishlist.png" },
-  { id: 3, name: "Dark Chocolate Ganache", img: "./images/wishlist.png" },
-  { id: 4, name: "Classic Speculoos", img: "./images/wishlist.png" },
-  { id: 5, name: "Indian Filter Coffee", img: "./images/wishlist.png" },
-  { id: 6, name: "Strawberry Blush", img: "./images/wishlist.png" },
-  { id: 7, name: "Cappuccino", img: "./images/wishlist.png" },
-  { id: 8, name: "Tiramisu", img: "./images/wishlist.png" },
-];
-
-const MAX_LIMIT = 16;
-
 const Boxproduct = () => {
-  const [cart, setCart] = useState({});
-  const totalSelected = Object.values(cart).reduce((a, b) => a + b, 0);
-
-  const updateQuantity = (id, change) => {
-    setCart((prev) => {
-      const current = prev[id] || 0;
-      if (change > 0 && totalSelected >= MAX_LIMIT) return prev;
-      const newQty = Math.max(0, current + change);
-      return { ...prev, [id]: newQty };
-    });
+const params = useParams();
+const location = useLocation();
+const rawCategoryId = params.categoryId;
+const rawBoxId = params.boxId;
+const fallbackCategoryId =
+location?.state?.categoryId ||
+location?.state?.category?.id ||
+location?.state?.category?._id ||
+location?.state?.box?.category?.id ||
+location?.state?.box?.category?._id ||
+null;
+const categoryId =
+rawCategoryId && rawCategoryId !== "undefined"
+? rawCategoryId
+: fallbackCategoryId;
+const boxId =
+rawBoxId && rawBoxId !== "undefined"
+? rawBoxId
+: location?.state?.box?._id || rawBoxId;
+const [products, setProducts] = useState([]);
+const [cart, setCart] = useState({});
+const [box, setBox] = useState({});
+const [boxLimit, setBoxLimit] = useState(16);
+const [typeLimits, setTypeLimits] = useState({});
+const [loading, setLoading] = useState(true);
+const [error, setError] = useState(null);
+  const resolveImage = (img) => {
+    if (!img) return "./images/product-grid.png";
+    if (/^(https?:)?\/\//i.test(img) || /^data:/i.test(img)) return img;
+    const base = process.env.REACT_APP_API_URL || "http://localhost:5000";
+    if (img.startsWith("/")) return `${base}${img}`;
+    return `${base}/${img}`;
   };
-  return (
-    <div>
-      {/* Header */}
-      <Header />
+useEffect(() => {
+const fetchChocolates = async () => {
+if (!categoryId || !boxId) {
+setError(
+"Missing categoryId or boxId. Please navigate from the category/box selection page."
+);
+setProducts([]);
+setBox({});
+setBoxLimit(16);
+setTypeLimits({});
+setLoading(false);
+setCart({});
+return;
+}
 
-      {/* Product Selection */}
-      <Container fluid className="py-4 container">
-        <Breadcrumb>
-          <Breadcrumb.Item className="box-title" href="/ownbox">
-            BUILD YOUR OWN BOX
-          </Breadcrumb.Item>
-          <Breadcrumb.Item className="box-header" active>
-            BOX OF 16
-          </Breadcrumb.Item>
-        </Breadcrumb>
+  setLoading(true);
+  setError(null);
 
-        <h5
-          className="text-center mb-4  boxproduct-title"
-          style={{ color: "#8B6F4E" }}
-        >
-          CHOOSE PRODUCT
-        </h5>
-        <Row>
-          {products.map((product) => (
-            <Col key={product.id} xs={6} sm={4} md={3} lg={2} className="mb-4">
-              <div className="text-center">
-                <img
-                  src={product.img}
-                  alt={product.name}
-                  className="img-fluid mb-2"
-                />
-                <p className="small fw-semibold boxproduct-name">
-                  {product.name}
-                </p>
-                <div className="d-flex justify-content-center align-items-center">
-                  <Button
-                    variant="light"
-                    className="border rounded-0"
-                    onClick={() => updateQuantity(product.id, -1)}
-                  >
-                    -
-                  </Button>
-                  <span
-                    className="px-3 py-1 border-top border-bottom"
-                    style={{ minWidth: "30px" }}
-                  >
-                    {cart[product.id] || 0}
-                  </span>
-                  <Button
-                    variant="light"
-                    className="border rounded-0"
-                    onClick={() => updateQuantity(product.id, 1)}
-                  >
-                    +
-                  </Button>
-                </div>
-              </div>
-            </Col>
-          ))}
-        </Row>
+  try {
+    const base = process.env.REACT_APP_API_URL || "http://localhost:5000";
+    const url = `${base}/api/store/chocolates/${categoryId}/${boxId}`;
+    const res = await axios.get(url);
 
-        {/* Bottom Banner */}
-        {totalSelected > 0 && (
-          <div
-            className="position-fixed bottom-0 start-0 w-100 bg-light shadow-lg p-3 d-flex justify-content-between align-items-center bg-dark"
-            style={{ zIndex: 999 }}
-          >
-            <div className="flex-grow-1 me-3 text-light">
-              <p className="mb-1 small">
-                Select up to {MAX_LIMIT} &nbsp; | &nbsp;{" "}
-                <strong>{totalSelected} selected</strong>
-              </p>
-              <ProgressBar
-                now={(totalSelected / MAX_LIMIT) * 100}
-                variant="warning"
-                style={{ height: "6px" }}
-              />
-            </div>
-            <NavLink to="/boxcheckout" style={{ textDecoration: "none" }}>
-              <Button
-                variant="dark"
-                className="px-4 py-2 rounded-0"
-                style={{
-                  backgroundColor: "#fff",
-                  border: "none",
-                  color: "#6F524C",
-                }}
-              >
-                Review Your Order
-              </Button>
-            </NavLink>
-          </div>
-        )}
-      </Container>
+    const data = Array.isArray(res.data) ? res.data : [];
+    setProducts(data);
 
-      {/* Footer */}
-      <Footer />
-    </div>
-  );
+    if (data.length > 0) {
+      const fetchedBox = data[0].box || {};
+      setBox(fetchedBox);
+      setBoxLimit(fetchedBox.totalLimit || fetchedBox.size || 16);
+
+      const normalizedTypeLimits = Object.fromEntries(
+        Object.entries(fetchedBox.typeLimits || {}).map(([k, v]) => [
+          k.toLowerCase(),
+          v,
+        ])
+      );
+      setTypeLimits(normalizedTypeLimits);
+    } else {
+      setBox({});
+      setBoxLimit(16);
+      setTypeLimits({});
+    }
+    setError(null);
+  } catch (err) {
+    console.error("Error fetching chocolates:", err);
+    const serverMessage = err?.response?.data?.message;
+    setError(
+      serverMessage || "Unable to load products. Please try again later."
+    );
+    setProducts([]);
+    setBox({});
+    setBoxLimit(16);
+    setTypeLimits({});
+  } finally {
+    setLoading(false);
+    setCart({});
+  }
 };
 
+fetchChocolates();
+
+
+}, [categoryId, boxId]);
+
+const typeCounts = products.reduce((acc, p) => {
+const id = p._id;
+const qty = cart[id] || 0;
+const type = (p.chocolateType || p.type || "").toLowerCase();
+if (!type) return acc;
+acc[type] = (acc[type] || 0) + qty;
+return acc;
+}, {});
+
+const updateQuantity = (id, change) => {
+setCart((prev) => {
+const product = products.find((p) => p._id === id);
+if (!product) return prev;
+
+  const currentQty = prev[id] || 0;
+  const newQty = Math.max(0, currentQty + change);
+
+  const prevTotal = Object.values(prev).reduce((a, b) => a + b, 0);
+  const delta = Math.max(0, newQty - currentQty);
+  const newTotal = prevTotal + delta;
+
+  if (change > 0 && newTotal > boxLimit) {
+    alert(
+      `Total limit reached: you can only select up to ${boxLimit} chocolates.`
+    );
+    return prev;
+  }
+
+  const type = (product.chocolateType || product.type || "").toLowerCase();
+  if (change > 0 && type && typeLimits[type] !== undefined) {
+    const prevTypeCount =
+      products.reduce((acc, p) => {
+        const pid = p._id;
+        const ptype = (p.chocolateType || p.type || "").toLowerCase();
+        if (!ptype) return acc;
+        acc[ptype] = (acc[ptype] || 0) + (prev[pid] || 0);
+        return acc;
+      }, {})[type] || 0;
+
+    if (prevTypeCount + delta > typeLimits[type]) {
+      alert(
+        `You can only add up to ${typeLimits[type]} ${type.toUpperCase()} chocolates.`
+      );
+      return prev;
+    }
+  }
+
+  const updated = { ...prev, [id]: newQty };
+  if (updated[id] === 0) delete updated[id];
+  return updated;
+});
+
+
+};
+
+return ( <div> <Header />
+
+  <Container fluid className="py-4 container">
+    <Breadcrumb>
+      <Breadcrumb.Item className="box-title" href="/ownbox">
+        BUILD YOUR OWN BOX
+      </Breadcrumb.Item>
+      <Breadcrumb.Item className="box-header" active>
+        {box?.size ? `BOX OF ${box.size}` : "BOX"}
+      </Breadcrumb.Item>
+    </Breadcrumb>
+
+    <h5
+      className="text-center mb-4 boxproduct-title"
+      style={{ color: "#8B6F4E" }}
+    >
+      CHOOSE YOUR CHOCOLATES
+    </h5>
+
+    {loading ? (
+      <div className="text-center my-5">
+        <Spinner animation="border" variant="warning" />
+        <p className="mt-2 text-muted">Loading chocolates...</p>
+      </div>
+    ) : error ? (
+      <div className="text-center my-5">
+        <p className="text-danger">{error}</p>
+        <div className="mt-2">
+          <NavLink to="/sweetindulgence" style={{ textDecoration: "none" }}>
+            <Button variant="outline-dark">Back to Categories</Button>
+          </NavLink>
+        </div>
+      </div>
+    ) : products.length === 0 ? (
+      <div className="text-center my-5 text-muted">
+        No products found for this category.
+      </div>
+    ) : (
+      <>
+        {Object.values(typeLimits).some((limit) => limit === 0) && (
+          <div className="text-center text-muted mb-3">
+            Some chocolates are not available in this box.
+          </div>
+        )}
+
+        <Row>
+          {products
+            .filter((product) => {
+              const type = (product.type || product.chocolateType || "").toLowerCase();
+              // Hide chocolates that have limit 0
+              if (typeLimits && typeLimits[type] === 0) return false;
+              return true;
+            })
+            .map((product) => {
+              const id = product._id;
+              const name =
+                product.name || product.chocolateName || "Chocolate";
+              const type = product.type || product.chocolateType || "";
+              const img = resolveImage(product.image);
+              return (
+                <Col key={id} xs={6} sm={4} md={3} lg={2} className="mb-4">
+                  <div className="text-center">
+                    <img
+                      src={img}
+                      alt={name}
+                      className="img-fluid mb-2"
+                      style={{
+                        maxHeight: 150,
+                        objectFit: "cover",
+                        borderRadius: 8,
+                      }}
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = "/images/product-grid.png";
+                      }}
+                    />
+                    <p className="small fw-semibold boxproduct-name">
+                      {name}
+                    </p>
+                    {type && (
+                      <p className="text-muted small">{type} Chocolate</p>
+                    )}
+                    <div className="d-flex justify-content-center align-items-center">
+                      <Button
+                        variant="light"
+                        className="border rounded-0"
+                        onClick={() => updateQuantity(id, -1)}
+                      >
+                        -
+                      </Button>
+                      <span
+                        className="px-3 py-1 border-top border-bottom"
+                        style={{ minWidth: 30, textAlign: "center" }}
+                      >
+                        {cart[id] || 0}
+                      </span>
+                      <Button
+                        variant="light"
+                        className="border rounded-0"
+                        onClick={() => updateQuantity(id, 1)}
+                      >
+                        +
+                      </Button>
+                    </div>
+                  </div>
+                </Col>
+              );
+            })}
+        </Row>
+      </>
+    )}
+
+    {Object.values(cart).reduce((a, b) => a + b, 0) > 0 && (
+      <div
+        className="position-fixed bottom-0 start-0 w-100 bg-dark shadow-lg p-3 d-flex justify-content-between align-items-center"
+        style={{ zIndex: 999 }}
+      >
+        <div className="flex-grow-1 me-3 text-light">
+          <p className="mb-1 small">
+            Select up to {boxLimit} total &nbsp; | &nbsp;
+            <strong>
+              {Object.values(cart).reduce((a, b) => a + b, 0)} selected
+            </strong>
+          </p>
+
+          <ProgressBar
+            now={
+              (Object.values(cart).reduce((a, b) => a + b, 0) / boxLimit) *
+              100
+            }
+            variant="warning"
+            style={{ height: 6 }}
+          />
+
+          <div className="mt-2 small">
+            {Object.keys(typeLimits).length === 0 ? (
+              <div className="text-muted small">No per-type limits</div>
+            ) : (
+              Object.entries(typeLimits).map(([t, limit]) => (
+                <div key={t}>
+                  {t.toUpperCase()}: {typeCounts[t] || 0}/{limit}
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+
+        <NavLink
+          to="/boxcheckout"
+          state={{ cart, products, box }}
+          style={{ textDecoration: "none" }}
+        >
+          <Button
+            variant="dark"
+            className="px-4 py-2 rounded-0"
+            style={{
+              backgroundColor: "#fff",
+              border: "none",
+              color: "#6F524C",
+            }}
+          >
+            Review Your Order
+          </Button>
+        </NavLink>
+      </div>
+    )}
+  </Container>
+
+  <Footer />
+</div>
+
+);
+};
 export default Boxproduct;
-
-
-
-// import React, { useState } from "react";
-// import {
-//   Container,
-//   Row,
-//   Col,
-//   Button,
-//   ProgressBar,
-//   Breadcrumb,
-// } from "react-bootstrap";
-// import { useNavigate } from "react-router-dom";
-// import axios from "axios";
-// import Header from "../../components/header/header";
-// import Footer from "../../components/footer/footer";
-
-// const products = [
-//   { id: "BBSRC", name: "Sea Salt Caramel", img: "./images/wishlist.png" },
-//   { id: "BBMCG", name: "Milk Chocolate Ganache", img: "./images/wishlist.png" },
-//   { id: "BBDCG", name: "Dark Chocolate Ganache", img: "./images/wishlist.png" },
-//   { id: "BBCS", name: "Classic Speculoos", img: "./images/wishlist.png" },
-//   { id: "BBIFC", name: "Indian Filter Coffee", img: "./images/wishlist.png" },
-//   { id: "BBSB", name: "Strawberry Blush", img: "./images/wishlist.png" },
-//   { id: "BBCAP", name: "Cappuccino", img: "./images/wishlist.png" },
-//   { id: "BBTR", name: "Tiramisu", img: "./images/wishlist.png" },
-// ];
-
-// const MAX_LIMIT = 16;
-
-// const Boxproduct = () => {
-//   const [cart, setCart] = useState({});
-//   const totalSelected = Object.values(cart).reduce((a, b) => a + b, 0);
-//   const navigate = useNavigate();
-
-//   const updateQuantity = (id, change) => {
-//     setCart((prev) => {
-//       const current = prev[id] || 0;
-//       if (change > 0 && totalSelected >= MAX_LIMIT) return prev;
-//       const newQty = Math.max(0, current + change);
-//       return { ...prev, [id]: newQty };
-//     });
-//   };
-
-//   // 🔹 Add box to backend cart
-//   const addBoxToCart = async () => {
-//     try {
-//       const token = localStorage.getItem("token"); // JWT from login
-//       if (!token) {
-//         alert("Please login first.");
-//         return;
-//       }
-
-//       const items = Object.entries(cart)
-//         .filter(([_, qty]) => qty > 0)
-//         .map(([id, qty]) => ({
-//           productId: id, // must match MongoDB Product._id or sku_code
-//           quantity: qty,
-//         }));
-
-//       const payload = {
-//         boxName: "BOX OF 16 - CUSTOM",
-//         boxSize: MAX_LIMIT,
-//         items,
-//       };
-
-//       const res = await axios.post(
-//         "http://localhost:5000/cart/add-box",
-//         payload,
-//         { headers: { Authorization: `Bearer ${token}` } }
-//       );
-
-//       console.log("✅ Box added:", res.data);
-//       navigate("/boxcheckout"); // go to checkout
-//     } catch (err) {
-//       console.error("❌ Error adding box:", err.response?.data || err.message);
-//       alert("Failed to add box. Please try again.");
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <Header />
-
-//       <Container fluid className="py-4 container">
-//         <Breadcrumb>
-//           <Breadcrumb.Item className="box-title" href="/ownbox">
-//             BUILD YOUR OWN BOX
-//           </Breadcrumb.Item>
-//           <Breadcrumb.Item className="box-header" active>
-//             BOX OF 16
-//           </Breadcrumb.Item>
-//         </Breadcrumb>
-
-//         <h5
-//           className="text-center mb-4 boxproduct-title"
-//           style={{ color: "#8B6F4E" }}
-//         >
-//           CHOOSE PRODUCT
-//         </h5>
-
-//         <Row>
-//           {products.map((product) => (
-//             <Col key={product.id} xs={6} sm={4} md={3} lg={2} className="mb-4">
-//               <div className="text-center">
-//                 <img
-//                   src={product.img}
-//                   alt={product.name}
-//                   className="img-fluid mb-2"
-//                 />
-//                 <p className="small fw-semibold boxproduct-name">
-//                   {product.name}
-//                 </p>
-//                 <div className="d-flex justify-content-center align-items-center">
-//                   <Button
-//                     variant="light"
-//                     className="border rounded-0"
-//                     onClick={() => updateQuantity(product.id, -1)}
-//                   >
-//                     -
-//                   </Button>
-//                   <span
-//                     className="px-3 py-1 border-top border-bottom"
-//                     style={{ minWidth: "30px" }}
-//                   >
-//                     {cart[product.id] || 0}
-//                   </span>
-//                   <Button
-//                     variant="light"
-//                     className="border rounded-0"
-//                     onClick={() => updateQuantity(product.id, 1)}
-//                   >
-//                     +
-//                   </Button>
-//                 </div>
-//               </div>
-//             </Col>
-//           ))}
-//         </Row>
-
-//         {/* Bottom Banner */}
-//         {totalSelected > 0 && (
-//           <div
-//             className="position-fixed bottom-0 start-0 w-100 bg-light shadow-lg p-3 d-flex justify-content-between align-items-center bg-dark"
-//             style={{ zIndex: 999 }}
-//           >
-//             <div className="flex-grow-1 me-3 text-light">
-//               <p className="mb-1 small">
-//                 Select up to {MAX_LIMIT} &nbsp; | &nbsp;
-//                 <strong>{totalSelected} selected</strong>
-//               </p>
-//               <ProgressBar
-//                 now={(totalSelected / MAX_LIMIT) * 100}
-//                 variant="warning"
-//                 style={{ height: "6px" }}
-//               />
-//             </div>
-//             <Button
-//               variant="dark"
-//               className="px-4 py-2 rounded-0"
-//               style={{
-//                 backgroundColor: "#fff",
-//                 border: "none",
-//                 color: "#6F524C",
-//               }}
-//               onClick={addBoxToCart}
-//             >
-//               Review Your Order
-//             </Button>
-//           </div>
-//         )}
-//       </Container>
-
-//       <Footer />
-//     </div>
-//   );
-// };
-
-// export default Boxproduct;

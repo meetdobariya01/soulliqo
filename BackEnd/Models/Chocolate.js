@@ -1,14 +1,15 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const chocolateSchema = new Schema({
-  categoryName: { type: String, required: true },  // Denormalized string (e.g., 'Classic')
-  chocolateType: { type: String, required: true },  // e.g., 'Nuts'
-  chocolateName: { type: String, required: true },  // e.g., 'Almond Delight'
-  boxName: { type: String, required: true }  // Denormalized string (e.g., 'Small Box') – Changed from ObjectId
-}, {
-  timestamps: true
+const mongoose = require("mongoose");
+
+const chocolateSchema = new mongoose.Schema({
+  chocolateName: String,
+  chocolateType: String,
+  COLLECTION: String,
+  description: String,
+  price: Number,
+  image: String,
+  BoxCategories: [String],
+  SKU_CODE: String,
 });
-// Index for queries by boxName (string) and categoryName
-chocolateSchema.index({ boxName: 1 });
-chocolateSchema.index({ categoryName: 1 });
-module.exports = mongoose.model('Chocolate', chocolateSchema);
+
+module.exports =
+  mongoose.models.Chocolate || mongoose.model("Chocolate", chocolateSchema);

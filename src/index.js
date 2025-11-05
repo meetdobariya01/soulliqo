@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+// ✅ Import all pages
 import Homepage from "./pages/homepage/homepage";
 import Login from "./pages/login/login";
 import Signup from "./pages/signup/signup";
@@ -17,6 +18,7 @@ import Brandethos from "./pages/brandethos/brandethos";
 import Contactus from "./pages/contactus/contactus";
 import Wishlist from "./pages/wishlist/wishlist";
 import Ownbox from "./pages/ownbox/Ownbox";
+import BoxStyles from "./pages/box-styles/box-styles";
 import Boxproduct from "./pages/boxproduct/boxproduct";
 import Boxcheckout from "./pages/boxcheckout/boxcheckout";
 import Checkout from "./pages/chekckout/checkout";
@@ -29,6 +31,9 @@ import Orderconfrimed from "./pages/orderconfrimed/orderconfrimed";
 import Forgotpassword from "./pages/forgotpassword/forgotpassword";
 import Otppage from "./pages/otppage/otppage";
 import Otpvarification from "./pages/otpvarification/otpvarification";
+import Collection from "./components/collection/collection";
+import Cart from "./components/Cart/Cart";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -45,8 +50,9 @@ root.render(
       <Route path="/brandethos" element={<Brandethos />} />
       <Route path="/contactus" element={<Contactus />} />
       <Route path="/wishlist" element={<Wishlist />} />
-      <Route path="/ownbox" element={<Ownbox />} />
-      <Route path="/boxproduct" element={<Boxproduct />} />
+      <Route path="/sweetindulgence" element={<Sweetindulgence />} />
+      <Route path="/ownbox/:collectionId" element={<Ownbox />} />
+      <Route path="/box-styles/:collectionId/:size" element={<BoxStyles />} />
       <Route path="/boxcheckout" element={<Boxcheckout />} />
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/chocolateblock" element={<Chocoblock />} />
@@ -58,6 +64,12 @@ root.render(
       <Route path="/forgotpassword" element={<Forgotpassword />} />
       <Route path="/otppage" element={<Otppage />} />
       <Route path="/otpvarification" element={<Otpvarification />} />
+      <Route path="/product/:id" element={<Productdetails />} />
+      <Route path="/products/:category" element={<Productgrid />} />
+      <Route path="/collection/:category" element={<Productgrid />} />
+      <Route path="/collection" element={<Collection />} />
+       <Route path="/boxproduct/:categoryId/:boxId" element={<Boxproduct />} />
+       <Route path="/cart" element={<Cart />} />
     </Routes>
   </Router>
 );

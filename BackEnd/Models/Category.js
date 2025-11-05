@@ -1,11 +1,11 @@
-const mongoose = require('mongoose');
-  const Schema = mongoose.Schema;
-  const categorySchema = new Schema({
-    categoryName: { type: String, required: true, unique: true },
-    description: { type: String, default: '' }
-  }, {
-    timestamps: true
-  });
-  // Fix index to match field
-  categorySchema.index({ categoryName: 1 });
-  module.exports = mongoose.model('Category', categorySchema);
+const mongoose = require("mongoose");
+
+const categorySchema = new mongoose.Schema({
+  COLLECTION: String,
+  description: String,
+  image: String,
+});
+
+module.exports =
+  mongoose.models.Category ||
+  mongoose.model("Category", categorySchema, "categories");

@@ -9,12 +9,12 @@ const UserSchema = new mongoose.Schema(
     mobile: { type: String, unique: true, sparse: true },
     role: {
       type: String,
-      required: true,
-      enum: ["user", "admin"], // lowercase consistency
+      enum: ["user", "admin"],
       default: "user",
     },
     otp: { type: String }, // for forgot password
     otpExpires: { type: Date },
+    wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }], // merged field
   },
   { timestamps: true }
 );
