@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { faHouse } from '@awesome.me/kit-KIT_CODE/icons/classic/solid'
 import {
   Navbar,
   Nav,
@@ -60,7 +62,6 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <Nav className="mx-auto d-none d-lg-flex navbar-font">
-<<<<<<< HEAD
             {/* SHOP Dropdown */}
             <NavDropdown title="SHOP" id="brand-dropdown" className="custom-dropdown">
               {categories.length > 0 ? (
@@ -71,17 +72,8 @@ const Header = () => {
                 ))
               ) : (
                 <NavDropdown.Item href="#">Loading...</NavDropdown.Item>
+                
               )}
-=======
-            <NavDropdown
-              title="SHOP"
-              id="brand-dropdown"
-              className="custom-dropdown"
-            >
-              <NavDropdown.Item href="/chocolateblock">Chocolate Block </NavDropdown.Item>
-              <NavDropdown.Item href="/sweetindulgence">Sweet Indulgence</NavDropdown.Item>
-              <NavDropdown.Item href="/product">Melt In Mouth</NavDropdown.Item>
->>>>>>> ffc4ec9 (Update new files)
             </NavDropdown>
 
             {/* BRAND JOURNEY */}
@@ -112,13 +104,14 @@ const Header = () => {
             <Link to="/login" className="icon-btn ms-3">
               <FaUser />
             </Link>
+                   {/* <FontAwesomeIcon icon={faHouse} /> */}
+
           </div>
         </Container>
 
         {/* Mobile Menu Overlay */}
         <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
           <Nav className="flex-column text-center">
-<<<<<<< HEAD
             {/* Mobile SHOP */}
             <NavDropdown title="SHOP" id="mobile-shop-dropdown" className="custom-dropdown">
               {categories.length > 0 ? (
@@ -134,31 +127,6 @@ const Header = () => {
               ) : (
                 <NavDropdown.Item href="#">Loading...</NavDropdown.Item>
               )}
-=======
-            <NavDropdown
-              title="SHOP"
-              id="brand-journey-dropdown"
-              className="custom-dropdown"
-            >
-              <NavDropdown.Item
-                href="/chocolateblock"
-                onClick={() => setMenuOpen(false)}
-              >
-                Chocolate Block
-              </NavDropdown.Item>
-              <NavDropdown.Item
-                href="/sweetindulgence"
-                onClick={() => setMenuOpen(false)}
-              >
-                Sweet Indulgence
-              </NavDropdown.Item>
-              <NavDropdown.Item
-                href="/product"
-                onClick={() => setMenuOpen(false)}
-              >
-                Melt In Mouth
-              </NavDropdown.Item>
->>>>>>> ffc4ec9 (Update new files)
             </NavDropdown>
 
             {/* Mobile BRAND JOURNEY */}

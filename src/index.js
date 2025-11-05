@@ -26,6 +26,9 @@ import Productdetails from "./pages/productdetails/productdetails";
 import Sweetindulgence from "./pages/sweetindulgence/sweetindulgence";
 import Boxcollection from "./pages/boxcollection/boxcollection";
 import Orderconfrimed from "./pages/orderconfrimed/orderconfrimed";
+import Forgotpassword from "./pages/forgotpassword/forgotpassword";
+import Otppage from "./pages/otppage/otppage";
+import Otpvarification from "./pages/otpvarification/otpvarification";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -52,6 +55,9 @@ root.render(
       <Route path="/sweetindulgence" element={<Sweetindulgence />} />
       <Route path="/boxcollection" element={<Boxcollection />} />
       <Route path="/orderconfrimed" element={<Orderconfrimed />} />
+      <Route path="/forgotpassword" element={<Forgotpassword />} />
+      <Route path="/otppage" element={<Otppage />} />
+      <Route path="/otpvarification" element={<Otpvarification />} />
     </Routes>
   </Router>
 );
