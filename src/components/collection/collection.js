@@ -30,14 +30,32 @@ const Collection = () => {
     slides.push(collections.slice(i, i + chunkSize));
   }
 
-  // Helper to fix image URLs
+  // ✅ Safe helper to get image URL
   const getImageUrl = (img) => {
     const API_BASE = "http://localhost:5000";
-    if (!img) return "/placeholder.jpg";
-    if (Array.isArray(img)) img = img[0];
-    if (typeof img === "string" && img.includes(",")) img = img.split(",")[0].trim();
-    if (!img.startsWith("http") && !img.startsWith("/")) img = "/" + img;
+
+    // If image field is undefined, null, or empty
+    if (!img) return "https://via.placeholder.com/240x180?text=No+Image";
+
+    // If it's an array, take the first valid item
+    if (Array.isArray(img)) {
+      const validImg = img.find((i) => typeof i === "string" && i.trim() !== "");
+      if (!validImg)
+        return "https://via.placeholder.com/240x180?text=No+Image";
+      img = validImg;
+    }
+
+    // Make sure img is a string
+    if (typeof img !== "string" || img.trim() === "")
+      return "https://via.placeholder.com/240x180?text=No+Image";
+
+    // Remove extra commas
+    if (img.includes(",")) img = img.split(",")[0].trim();
+
+    // Handle missing slashes or relative URLs
     if (img.startsWith("http")) return img;
+    if (!img.startsWith("/")) img = "/" + img;
+
     return `${API_BASE}${img}`;
   };
 

@@ -106,7 +106,7 @@ const Homepage = () => {
                 Make the gift of Soulliqo that little bit sweeter by adding a
                 free personalized message.
               </p>
-              <Button as={NavLink} to="/ownbox" className="makebox-btn">
+              <Button as={NavLink} to="/sweetindulgence" className="makebox-btn">
                 Shop Now
               </Button>
             </div>

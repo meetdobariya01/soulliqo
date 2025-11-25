@@ -330,7 +330,6 @@
 // export default Productdetails;
 
 
-
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col, Button, Form, Carousel, Tab, Nav } from "react-bootstrap";
@@ -367,7 +366,7 @@ const Productdetails = () => {
     }
   };
 
-  // Fetch product data and reviews whenever id changes
+  // ✅ Fetch product + reviews
   useEffect(() => {
     const fetchProductData = async () => {
       try {
@@ -383,7 +382,7 @@ const Productdetails = () => {
         const reviewsData = await safeJson(reviewsRes);
         setReviews(reviewsData);
 
-        // Wishlist check
+        // Check wishlist
         if (data && data._id) {
           const wishlistRes = await fetch(`${Api}/wishlist/${userId}`, {
             headers: { Authorization: `Bearer ${token}` },
@@ -402,7 +401,7 @@ const Productdetails = () => {
     fetchProductData();
   }, [id, token, userId]);
 
-  // Add to cart
+  // ✅ Add to cart
   const handleAddToCart = async () => {
     if (!token) return alert("Please login to add items to cart.");
     setLoadingCart(true);
@@ -420,8 +419,6 @@ const Productdetails = () => {
       if (!res.ok) return alert(data.message || "Failed to add to cart.");
 
       alert(`✅ Added ${qty} ${product.name} to cart`);
-
-      // Redirect to cart page
       window.location.href = "/cart";
     } catch (err) {
       console.error(err);
@@ -430,7 +427,7 @@ const Productdetails = () => {
     setLoadingCart(false);
   };
 
-  // Wishlist toggle
+  // ✅ Wishlist toggle
   const handleWishlist = async () => {
     if (!token) return alert("Please login to manage your wishlist.");
     setLoadingWishlist(true);
@@ -459,7 +456,7 @@ const Productdetails = () => {
     setLoadingWishlist(false);
   };
 
-  // Pincode check
+  // ✅ Pincode check
   const handleCheckPincode = () => {
     const pincodePattern = /^[1-9][0-9]{5}$/;
     if (pincodePattern.test(pincode)) {
@@ -469,7 +466,7 @@ const Productdetails = () => {
     }
   };
 
-  // Submit review
+  // ✅ Submit review
   const handleSubmitReview = async () => {
     if (!rating || !reviewText) return alert("Please provide rating and review text.");
     if (!token) return alert("Please login to submit a review.");
@@ -494,27 +491,27 @@ const Productdetails = () => {
 
   if (!product) return <div>Loading...</div>;
 
-  // ✅ FIXED IMAGE HANDLING (supports CSV, arrays, URLs)
+  // ✅ FIXED IMAGE HANDLING (handles arrays or comma-separated values)
   const images = (() => {
     if (!product?.image) return [];
 
     if (Array.isArray(product.image)) {
-      return product.image.map((img) =>
-        img.startsWith("http") ? img : `${Api}${img}`
-      );
+      return product.image
+        .flatMap((img) => img.split(",").map((i) => i.trim()))
+        .filter(Boolean)
+        .map((img) => (img.startsWith("http") ? img : `${Api}${img}`));
     }
 
     if (typeof product.image === "string") {
       return product.image
         .split(",")
         .map((img) => img.trim())
+        .filter(Boolean)
         .map((img) => (img.startsWith("http") ? img : `${Api}${img}`));
     }
 
     return [];
   })();
-
-  console.log("✅ Product Images:", images);
 
   const averageRating =
     reviews.length > 0 ? reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length : 0;
