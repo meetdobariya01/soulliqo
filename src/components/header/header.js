@@ -83,13 +83,15 @@ const Header = () => {
             {/* BRAND JOURNEY */}
             <NavDropdown title="BRAND JOURNEY" id="brand-dropdown" className="custom-dropdown">
               <NavDropdown.Item href="/whoweare">Who we Are</NavDropdown.Item>
-              <NavDropdown.Item href="/ourmission">Our Mission</NavDropdown.Item>
+              <NavDropdown.Item href="/ourmission">Our Mission and Values</NavDropdown.Item>
               <NavDropdown.Item href="/aboutus">All about SOULLIQO</NavDropdown.Item>
-              <NavDropdown.Item href="/ourvalues">Our Values</NavDropdown.Item>
+              {/* <NavDropdown.Item href="/ourvalues">Our Values</NavDropdown.Item> */}
               <NavDropdown.Item href="/brandethos">Brand Ethos</NavDropdown.Item>
             </NavDropdown>
 
             <Nav.Link href="/contactus">CONTACT US</Nav.Link>
+
+              <Nav.Link href="/gallery">Gallery</Nav.Link>  
           </Nav>
 
           {/* Right side icons */}
@@ -132,13 +134,15 @@ const Header = () => {
             {/* Mobile BRAND JOURNEY */}
             <NavDropdown title="BRAND JOURNEY" id="mobile-brand-dropdown" className="custom-dropdown">
               <NavDropdown.Item href="/whoweare" onClick={() => setMenuOpen(false)}>Who we Are</NavDropdown.Item>
-              <NavDropdown.Item href="/ourmission" onClick={() => setMenuOpen(false)}>Our Mission</NavDropdown.Item>
+              <NavDropdown.Item href="/ourmission" onClick={() => setMenuOpen(false)}>Our Mission and Values</NavDropdown.Item>
               <NavDropdown.Item href="/aboutus" onClick={() => setMenuOpen(false)}>All about SOULLIQO</NavDropdown.Item>
-              <NavDropdown.Item href="/ourvalues" onClick={() => setMenuOpen(false)}>Our Values</NavDropdown.Item>
+              {/* <NavDropdown.Item href="/ourvalues" onClick={() => setMenuOpen(false)}>Our Values</NavDropdown.Item> */}
               <NavDropdown.Item href="/brandethos" onClick={() => setMenuOpen(false)}>Brand Ethos</NavDropdown.Item>
             </NavDropdown>
 
             <Nav.Link href="/contactus" onClick={() => setMenuOpen(false)}>CONTACT US</Nav.Link>
+
+             <Nav.Link href="/gallery" onClick={() => setMenuOpen(false)}>Gallery</Nav.Link>
           </Nav>
         </div>
       </Navbar>

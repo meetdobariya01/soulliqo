@@ -13,7 +13,7 @@ import Afterlogin from "./pages/afterlogin/afterlogin";
 import Whoweare from "./pages/whoweare/whoweare";
 import Ourmission from "./pages/ourmission/ourmission";
 import Aboutus from "./pages/aboutus/aboutus";
-import Ourvalues from "./pages/ourvalues/ourvalues";
+// import Ourvalues from "./pages/ourvalues/ourvalues";
 import Brandethos from "./pages/brandethos/brandethos";
 import Contactus from "./pages/contactus/contactus";
 import Wishlist from "./pages/wishlist/wishlist";
@@ -33,6 +33,10 @@ import Otppage from "./pages/otppage/otppage";
 import Otpvarification from "./pages/otpvarification/otpvarification";
 import Collection from "./components/collection/collection";
 import Cart from "./components/Cart/Cart";
+import Termsandcondition from "./pages/termsandcondition/termsandcondition";
+import Privacypolicy from "./pages/privacypolicy/privacypolicy";
+import Refundandcancellation from "./pages/refund&cancellationpolicy/refundandcancellation";
+import Gallery from "./pages/gallery/gallery";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -46,7 +50,7 @@ root.render(
       <Route path="/whoweare" element={<Whoweare />} />
       <Route path="/ourmission" element={<Ourmission />} />
       <Route path="/aboutus" element={<Aboutus />} />
-      <Route path="/ourvalues" element={<Ourvalues />} />
+      {/* <Route path="/ourvalues" element={<Ourvalues />} /> */}
       <Route path="/brandethos" element={<Brandethos />} />
       <Route path="/contactus" element={<Contactus />} />
       <Route path="/wishlist" element={<Wishlist />} />
@@ -70,6 +74,11 @@ root.render(
       <Route path="/collection" element={<Collection />} />
        <Route path="/boxproduct/:categoryId/:boxId" element={<Boxproduct />} />
        <Route path="/cart" element={<Cart />} />
+       <Route path="/terms-and-condition" element={<Termsandcondition />} />
+       <Route path="/privacy-policy" element={<Privacypolicy />} />
+       <Route path="/refund-and-cancellation" element={<Refundandcancellation />} />
+       <Route path="/gallery" element={<Gallery />} />
+       <Route path="*" element={<h1>404 Not Found</h1>} />
     </Routes>
   </Router>
 );

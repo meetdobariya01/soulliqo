@@ -175,136 +175,85 @@ body {
 
 /* Home Page Specific Styles */
 
-/* Desktop Banner */
-.choco-banner {
-  background: url("../public/images/main-banner.jpg") no-repeat center center;
-  background-size: cover;
-  height: 70vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #2c2c2c;
-  position: relative;
-}
-
-.choco-text .title {
-  font-size: 2.5rem;
-  font-weight: 400;
-  margin-bottom: 1rem;
-}
-
-.choco-text .brand {
-  font-size: 1.8rem;
-}
-
-.choco-text .highlight {
-  background: black;
-  color: #fff;
-  padding: 5px 15px;
-  font-weight: 600;
-  margin-right: 10px;
-}
-
-.choco-text .script {
-  font-family: "Dancing Script", cursive;
-  font-size: 1.5rem;
-  color: #6b4226;
-}
-
-/* Mobile View */
-.choco-location {
-  background: url("../public/images/mobile-banner.jpg") no-repeat center center;
-  background-size: cover;
-  height: 60vh;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding: 20px;
-  
-}
-
-.choco-mobile-box {
-  background: #b88a4a;
-  padding: 20px;
-  border-radius: 8px;
-  color: white;
+.carousel-container {
   width: 100%;
-  margin-top: 114%;
+  max-width: 900px;
+  margin: 40px auto;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.2);
 }
 
-.choco-location .loc-title {
-  font-size: 1.5rem;
-  font-weight: 600;
+.carousel-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 40px auto;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.2);
 }
 
-.choco-location .loc-sub {
-  font-size: 1rem;
-  margin: 0;
-}
-.choco-text-section {
-  background: #fdfdfd;
-  /* padding: 50px 20px; */
-  position: relative;
+.carousel-img,
+.carousel-video {
+  height: 800px;           /* Default height for desktop */
+  width: 100%;
+  object-fit: cover;
 }
 
-.choco-title {
-  font-size: 2.5rem;
-  font-weight: 400;
-  color: #2c2c2c;
-  margin-bottom: 1rem;
-}
-
-.choco-brand {
-  font-size: 1.8rem;
-  margin-left: 18%;
-}
-
-.highlight {
-  background: black;
-  color: #fff;
-  padding: 6px 15px;
-  font-weight: 600;
-  margin-right: 10px;
-  letter-spacing: 2px;
-}
-
-.script {
-  font-family: "Dancing Script", cursive;
-  font-size: 1.5rem;
-  color: #6b4226;
-}
-
-/* Flower image on the right */
-.flower-col {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.flower-img {
-  background: url("../public/images/flower.png") no-repeat right center;
-  background-size: contain;
-  width: 300px;
-  height: 300px;
-}
-.slice-of-heaven {
-  font-family: "Tenor Sans", sans-serif;
-  font-weight: 400;
-  font-size: 65px;
-}
-.the-nautigal-bold {
-  font-family: "The Nautigal", cursive;
-  font-weight: 700;
-  font-style: normal;
-  font-size: 60px;
-}
-
-/* Hide section on mobile */
-@media (max-width: 767px) {
-  .choco-text-section {
-    display: none;
+/* 📱 Mobile View - Auto Height */
+@media (max-width: 768px) {
+  .carousel-img,
+  .carousel-video {
+    height: auto;
   }
 }
+
+.carousel-caption {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgba(190, 158, 115, 0.9);
+  color: #fff;
+  padding: 25px 0;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+}
+
+.carousel-caption h2 {
+  font-size: 2rem;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.carousel-caption p {
+  font-size: 1.1rem;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.carousel-caption {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgba(190, 158, 115, 0.9);
+  color: #fff;
+  padding: 25px 0;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+}
+
+.carousel-caption h2 {
+  font-size: 2rem;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.carousel-caption p {
+  font-size: 1.1rem;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
 /* Collection Component Styles */
 .font-collection {
   font-family: "Tenor Sans", sans-serif;
@@ -681,6 +630,58 @@ body {
   margin-top: 20px;
   color: #555;
 }
+.terms-bg {
+  background: linear-gradient(135deg, #fff4e6, #ffe9d6);
+  min-height: 100vh;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+.text-choco {
+  color: #5a3825;
+}
+
+.card {
+  background: #ffffffb3;
+  backdrop-filter: blur(6px);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 10px 25px rgba(90, 56, 37, 0.2);
+}
+
+ul, ol {
+  margin-left: 20px;
+}
+
+a {
+  color: #a0522d;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding: 1.5rem;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+  }
+}
+
 
 /* Login Page Specific Styles */
 .Login-font {
@@ -751,13 +752,14 @@ body {
 .who-title {
   font-family: "Tenor Sans", sans-serif;
   font-weight: 400;
-  font-size: 60px;
+  font-size: 50px;
 }
 .who-subtitle,
 .who-text {
   font-family: Tenor Sans;
   font-weight: 400;
-  font-size: 22px;
+  font-size: 20px;
+  text-align: justify;
 }
 .title {
   font-size: 2.5rem;
@@ -797,7 +799,7 @@ body {
 
 .mission-title {
   font-family: Tenor Sans;
-  font-size: 60px;
+  font-size: 50px;
   font-weight: 400;
   margin-bottom: 15px;
   color: #312625;
@@ -806,7 +808,7 @@ body {
 .mission-quote,
 .mission-text {
   font-family: Tenor Sans;
-  font-size: 22px;
+  font-size: 20px;
   color: #312625;
   margin-bottom: 20px;
   font-weight: 400;
@@ -864,7 +866,7 @@ body {
 
 .about-title {
   font-family: Tenor Sans;
-  font-size: 60px;
+  font-size: 50px;
   font-weight: 400;
   margin-bottom: 20px;
   color: #000000;
@@ -872,9 +874,10 @@ body {
 
 .about-text {
   font-family: Tenor Sans;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 400;
   color: #000000;
+  text-align: justify;
 }
 
 /* Image style */
@@ -901,7 +904,7 @@ body {
 /* Text Box */
 .values-box {
   background: #f9f5ef;
-  padding: 60px;
+  padding: 50px;
   min-height: 100%;
   display: flex;
   flex-direction: column;
@@ -917,8 +920,9 @@ body {
 
 .values-text {
   font-family: Tenor Sans;
-  font-size: 22px;
+  font-size: 20px;
   line-height: 1.8;
+  text-align: justify;
 }
 
 /* Responsive Fixes */
@@ -958,7 +962,7 @@ body {
 .text {
   font-family: Tenor Sans;
   font-weight: 400;
-  font-size: 22px;
+  font-size: 20px;
   line-height: 40px;
 }
 /* Contact Us Page Specific Styles */

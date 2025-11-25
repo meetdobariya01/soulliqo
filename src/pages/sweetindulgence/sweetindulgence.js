@@ -73,7 +73,7 @@ const Sweetindulgence = () => {
           fontWeight: "600",
         }}
       >
-        Sweet Indulgence
+        {/* Sweet Indulgence */}
       </div>
 
       {/* Categories */}
