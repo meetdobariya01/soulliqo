@@ -45,7 +45,7 @@ const Whoweare = () => {
               <p className="who-text">From the first cacao tree...</p>
               <p className="who-text">Since the Aztecs used it as currency...</p>
               <p className="who-text">From 'xocolatl' to improvised Aztec's brew...</p>
-              <p>
+              <p className="who-text">
                 To the recent 'chocolates' of England and the Dutch mixes...
               </p>
               <p className="who-text">

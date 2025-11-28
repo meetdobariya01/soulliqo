@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
 import { motion } from "framer-motion";
-import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaEnvelope } from "react-icons/fa";
 import axios from "axios"; // for API calls
 const Contactus = () => {
   const [formData, setFormData] = useState({
@@ -42,15 +42,15 @@ const Contactus = () => {
           </motion.h2>
           {/* Social Media Icons */}
           <div className="position-absolute top-50 end-0 translate-middle-y me-4 d-flex flex-column gap-3 text-dark">
-            <motion.a href="#" whileHover={{ scale: 1.2 }} className="d-flex align-items-center justify-content-center border rounded-circle p-2">
+            <motion.a href="https://www.facebook.com/thesoulliqo" target="blank" whileHover={{ scale: 1.2 }} className="d-flex align-items-center justify-content-center border rounded-circle p-2 text-dark">
               <FaFacebookF />
             </motion.a>
-            <motion.a href="#" whileHover={{ scale: 1.2 }} className="d-flex align-items-center justify-content-center border rounded-circle p-2">
+            <motion.a href="https://www.instagram.com/soulliqo/" target="blank" whileHover={{ scale: 1.2 }} className="d-flex align-items-center justify-content-center border rounded-circle p-2 text-dark">
               <FaInstagram />
             </motion.a>
-            <motion.a href="#" whileHover={{ scale: 1.2 }} className="d-flex align-items-center justify-content-center border rounded-circle p-2">
-              <FaTwitter />
-            </motion.a>
+            <motion.a href="mailto:soulliqo@gmail.com" whileHover={{ scale: 1.2 }} className="d-flex align-items-center justify-content-center border rounded-circle p-2 text-dark">
+              <FaEnvelope />
+            </motion.a> 
           </div>
         </div>
         {/* Contact Form */}
