@@ -39,8 +39,7 @@ import Refundandcancellation from "./pages/refund&cancellationpolicy/refundandca
 import Gallery from "./pages/gallery/gallery";
 import Order from "./pages/orders/order";
 import Shiping from "./pages/shiping/shiping";
-
-
+import Error from "./pages/error/error";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -75,15 +74,18 @@ root.render(
       <Route path="/products/:category" element={<Productgrid />} />
       <Route path="/collection/:category" element={<Productgrid />} />
       <Route path="/collection" element={<Collection />} />
-       <Route path="/boxproduct/:categoryId/:boxId" element={<Boxproduct />} />
-       <Route path="/cart" element={<Cart />} />
-       <Route path="/terms-and-condition" element={<Termsandcondition />} />
-       <Route path="/privacy-policy" element={<Privacypolicy />} />
-       <Route path="/refund-and-cancellation" element={<Refundandcancellation />} />
-       <Route path="/shiping" element={<Shiping />} />
-       <Route path="/gallery" element={<Gallery />} />
-       <Route path="/orders" element={<Order />} />
-       <Route path="*" element={<h1>404 Not Found</h1>} />
+      <Route path="/boxproduct/:categoryId/:boxId" element={<Boxproduct />} />
+      <Route path="/cart" element={<Cart />} />
+      <Route path="/terms-and-condition" element={<Termsandcondition />} />
+      <Route path="/privacy-policy" element={<Privacypolicy />} />
+      <Route
+        path="/refund-and-cancellation"
+        element={<Refundandcancellation />}
+      />
+      <Route path="/shiping" element={<Shiping />} />
+      <Route path="/gallery" element={<Gallery />} />
+      <Route path="/orders" element={<Order />} />
+      <Route path="*" element={<Error />} />
     </Routes>
   </Router>
 );

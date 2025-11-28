@@ -23,7 +23,7 @@ const Discover = () => {
       img: "/images/discover3.png",
       link: "/recommended",
     },
-     {
+    {
       title: "Bestsellers",
       img: "/images/discover1.png",
       link: "/bestsellers",
@@ -31,9 +31,8 @@ const Discover = () => {
   ];
   return (
     <div>
-
       <Container fluid className="discover-section py-5">
-            <h2 className="discover-title text-center mb-5">DISCOVER</h2>
+        <h2 className="discover-title text-center mb-2 mb-lg-5">DISCOVER</h2>
 
         <Row className="align-items-center">
           {/* Left text (desktop view) */}
@@ -75,7 +74,9 @@ const Discover = () => {
                         alt={item.title}
                         className="img-fluid"
                       />
-                      <span className="badge text-dark p-3 discover-title-1">{item.title}</span>
+                      <span className="badge text-dark p-3 discover-title-1">
+                        {item.title}
+                      </span>
                     </div>
                   </a>
                 </SwiperSlide>

@@ -7,25 +7,25 @@ import "swiper/css/pagination";
 const Custmerlove = () => {
       const reviews = [
     {
-      name: "Ahmed Saimoon",
-      image: "/images/review.jpg", // profile image
+      name: "Ananya Desai",
+      image: "/images/review-1.jpg", // profile image
       stars: 4,
-      text: "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
+      text: "Every bite feels like a luxury dessert. Smooth, bold, and perfectly balanced.I ordered once, and now it’s a weekly ritual.",
       product: "./images/custmer-love.png", // product image
     },
     {
-      name: "Ahmed Saimoon",
-      image: "/images/review.jpg",
+      name: "Rohit Mehra",
+      image: "/images/review-2.jpg",
       stars: 5,
-      text: "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
-      product: "./images/custmer-love.png",
+      text: "The caramel crunch is addictive. My kids keep fighting for the last piece! Delivery was super fast and the packaging felt soooo premium.",
+      product: "./images/custmer-love-2.jpg",
     },
     {
-      name: "Ahmed Saimoon",
-      image: "/images/review.jpg",
+      name: "Diya Shah",
+      image: "/images/review-3.jpg",
       stars: 4,
-      text: "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
-      product: "./images/custmer-love.png",
+      text: "The hazelnuts are fresh, the chocolate is silky, and the aroma is unforgettable.Opens like a luxury gift—tastes even better.",
+      product: "./images/custmer-love-3.jpg",
     },
   ];
   return (

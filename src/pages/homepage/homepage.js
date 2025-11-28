@@ -38,10 +38,10 @@ const Homepage = () => {
       {/* collection component */}
       <Collection />
       {/* Video Section */}
-      <section className="our-story py-5">
+      <section className="our-story">
         <div className="container text-center">
           <h2 className="mb-4 story-font">Our Story</h2>
-          <p className="lead mx-auto mb-4 story-text story-font">
+          <p className=" mx-auto mb-4 story-text story-font">
             We are farmers, fermenters, chocolate makers, chocolatiers and
             storytellers from India, in search of a distinct identity for
             chocolate that we can proudly call our own. In our pursuit, we are
@@ -76,7 +76,7 @@ const Homepage = () => {
           >
             <div className="flower-bg">
               <h2 className="makebox-title text-center text-lg-end mb-4 mb-lg-0">
-                Make your own <br /> Box
+                Make your own Box
               </h2>
               <p className="makebox-text text-center text-lg-end mb-4 mb-lg-0">
                 Make the gift of Soulliqo that little bit sweeter by adding a
@@ -104,7 +104,7 @@ const Homepage = () => {
           {/* Right Image */}
           <Col lg={6} md={12} className="text-center">
             <img
-              src="./images/chocolate-box.png"
+              src="./images/own-box.jpg"
               alt="Make your own Box"
               className="img-fluid makebox-image h-25"
             />

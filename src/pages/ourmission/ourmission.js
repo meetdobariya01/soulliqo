@@ -39,9 +39,9 @@ const Ourmission = () => {
               className="mb-4 mb-md-0 d-flex justify-content-center align-items-center"
             >
               <img
-                src="./images/mission.png"
+                src="./images/mission.jpg"
                 alt="Our Mission"
-                className="img-fluid rounded shadow w-75"
+                className="img-fluid rounded shadow"
               />
             </Col>
           </Row>
@@ -54,7 +54,7 @@ const Ourmission = () => {
             {/* Left Side - Image */}
             <Col md={6} className="values-img-col">
               <img
-                src="./images/value.png" // change to your image path
+                src="./images/value.jpg" // change to your image path
                 alt="Our Values"
                 className="values-img"
               />
