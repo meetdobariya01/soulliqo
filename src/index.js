@@ -37,6 +37,9 @@ import Termsandcondition from "./pages/termsandcondition/termsandcondition";
 import Privacypolicy from "./pages/privacypolicy/privacypolicy";
 import Refundandcancellation from "./pages/refund&cancellationpolicy/refundandcancellation";
 import Gallery from "./pages/gallery/gallery";
+import Order from "./pages/orders/order";
+import Shiping from "./pages/shiping/shiping";
+
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -77,7 +80,9 @@ root.render(
        <Route path="/terms-and-condition" element={<Termsandcondition />} />
        <Route path="/privacy-policy" element={<Privacypolicy />} />
        <Route path="/refund-and-cancellation" element={<Refundandcancellation />} />
+       <Route path="/shiping" element={<Shiping />} />
        <Route path="/gallery" element={<Gallery />} />
+       <Route path="/orders" element={<Order />} />
        <Route path="*" element={<h1>404 Not Found</h1>} />
     </Routes>
   </Router>

@@ -1,0 +1,269 @@
+/* ===============================
+    DASHBOARD WRAPPER
+================================*/
+.dashboard-container {
+  width: 100%;
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+  font-family: "Poppins", sans-serif;
+}
+
+/* ===============================
+    NAVIGATION BAR
+================================*/
+.dashboard-nav {
+  display: flex;
+  justify-content: space-around;
+  padding: 12px 0;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.dashboard-nav span {
+  cursor: pointer;
+  padding-bottom: 8px;
+  color: #444;
+}
+
+.dashboard-nav .active {
+  border-bottom: 2px solid #000;
+  color: #000;
+}
+
+/* ===============================
+    EMPTY SCREENS (Orders / Address)
+================================*/
+.empty-screen {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.circle {
+  background: #000;
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 50%;
+  font-size: 14px;
+}
+
+.box-img {
+  width: 150px;
+  margin: 20px 0;
+}
+
+/* ===============================
+    BUTTONS
+================================*/
+.black-btn {
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 12px 26px;
+  border-radius: 5px;
+  margin-top: 15px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.black-btn:hover {
+  opacity: 0.8;
+}
+
+.white-btn {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.white-btn.red {
+  border-color: #ff4d4d;
+  color: #ff4d4d;
+}
+
+.white-btn:hover {
+  background: #f8f8f8;
+}
+
+/* ===============================
+    ALL ORDERS
+================================*/
+.orders-list {
+  padding: 20px 0;
+}
+
+.heading {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.search-filter {
+  display: flex;
+  gap: 10px;
+}
+
+.search-box {
+  flex: 1;
+  height: 42px;
+}
+
+.filter-btn {
+  height: 42px;
+  min-width: 110px;
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+}
+
+.order-card {
+  border: 1px solid #eee;
+  padding: 15px;
+  margin: 20px 0;
+  border-radius: 10px;
+}
+
+.order-status {
+  font-size: 15px;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.order-status.in-transit {
+  color: #ff9800;
+}
+
+.order-status.delivered {
+  color: #4caf50;
+}
+
+.arrival {
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.order-row {
+  display: flex;
+  gap: 15px;
+}
+
+.item-img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.item-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Review Row */
+.review-row {
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.review-link {
+  color: #1976d2;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+/* ===============================
+    POPUP SCREEN (Review / Edit / Delete)
+================================*/
+.popup-screen {
+  background: #fff;
+  border-radius: 10px;
+  padding: 25px;
+  margin-top: 20px;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+}
+
+.popup-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* Textarea */
+.textarea {
+  min-height: 120px;
+  margin-bottom: 15px;
+}
+
+/* Upload Box */
+.upload-box {
+  margin-bottom: 15px;
+}
+
+.upload-btn {
+  background: #ddd;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ===============================
+    TRACK ORDER TIMELINE
+================================*/
+.timeline {
+  list-style: none;
+  padding-left: 0;
+  margin: 20px 0;
+}
+
+.timeline li {
+  padding: 8px 0;
+  border-left: 2px solid #000;
+  padding-left: 10px;
+  margin-left: 5px;
+  font-size: 14px;
+}
+
+/* ===============================
+    SAVED ADDRESS
+================================*/
+.saved-address {
+  margin-top: 20px;
+}
+
+.address-box {
+  border: 1px solid #eee;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 15px;
+}
+
+/* ===============================
+    RESPONSIVE
+================================*/
+@media (max-width: 600px) {
+  .dashboard-nav {
+    font-size: 14px;
+  }
+
+  .order-row {
+    flex-direction: column;
+  }
+
+  .item-img {
+    width: 100%;
+    height: 180px;
+  }
+}

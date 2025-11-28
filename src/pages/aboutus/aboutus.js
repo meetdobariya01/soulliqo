@@ -15,7 +15,7 @@ const Aboutus = () => {
         <Container fluid>
           <Row className="align-items-center">
             {/* Left Side - Image */}
-            <Col md={6} className="p-0 position-relative">
+            <Col md={6} className=" position-relative">
               <img
                 src="./images/aboutus.png"
                 alt="Chocolate Chef"
@@ -25,7 +25,7 @@ const Aboutus = () => {
             </Col>
 
             {/* Right Side - Content */}
-            <Col md={6} className="p-5">
+            <Col md={6} className="">
               <div className="about-box shadow">
                 <h2 className="about-title">About us</h2>
                 <p className="about-text">

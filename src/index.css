@@ -175,83 +175,88 @@ body {
 
 /* Home Page Specific Styles */
 
-.carousel-container {
+/* /* Container */
+.custom-carousel-container {
   width: 100%;
-  max-width: 900px;
-  margin: 40px auto;
-  border-radius: 15px;
+  /* max-width: 1100px; */
+  /* margin: 40px auto; */
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 12px 35px rgba(0, 0, 0, 0.25);
+  position: relative;
 }
 
-.carousel-container {
-  width: 100%;
-  max-width: 900px;
-  margin: 40px auto;
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.2);
-}
-
-.carousel-img,
-.carousel-video {
-  height: 800px;           /* Default height for desktop */
+/* Slide Images & Videos */
+.slide-img {
+  height: 800px;
   width: 100%;
   object-fit: cover;
+  animation: zoomIn 8s ease-in-out infinite;
 }
 
-/* 📱 Mobile View - Auto Height */
-@media (max-width: 768px) {
-  .carousel-img,
-  .carousel-video {
-    height: auto;
+/* Zoom Animation */
+@keyframes zoomIn {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 
-.carousel-caption {
+/* Caption */
+.slide-caption {
   position: absolute;
   bottom: 0;
   width: 100%;
-  background: rgba(190, 158, 115, 0.9);
+  background: rgba(190, 158, 115, 0.92);
   color: #fff;
-  padding: 25px 0;
   text-align: center;
+  padding: 10px 0 0 0;
   font-family: "Poppins", sans-serif;
 }
 
-.carousel-caption h2 {
-  font-size: 2rem;
-  margin-bottom: 8px;
+/* Text Animations */
+.fade-text {
+  font-size: 2.2rem;
   font-weight: 600;
+  animation: fadeInUp 1.3s ease;
 }
 
-.carousel-caption p {
-  font-size: 1.1rem;
-  margin: 0;
-  letter-spacing: 0.5px;
+.fade-text-small {
+  font-size: 1.15rem;
+  letter-spacing: 0.7px;
+  animation: fadeInUp 1.6s ease;
 }
 
-.carousel-caption {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  background: rgba(190, 158, 115, 0.9);
-  color: #fff;
-  padding: 25px 0;
-  text-align: center;
-  font-family: "Poppins", sans-serif;
+/* Fade and Slide in */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.carousel-caption h2 {
-  font-size: 2rem;
-  margin-bottom: 8px;
-  font-weight: 600;
-}
+/* Responsive */
+@media (max-width: 768px) {
+  .slide-img {
+    height: 350px;
+  }
 
-.carousel-caption p {
-  font-size: 1.1rem;
-  margin: 0;
-  letter-spacing: 0.5px;
+  .fade-text {
+    font-size: 1.5rem;
+  }
+
+  .fade-text-small {
+    font-size: 0.9rem;
+  }
 }
 
 /* Collection Component Styles */
@@ -594,6 +599,13 @@ body {
   color: #a15e3f;
   transform: scale(1.2);
 }
+.footer-contact a {
+  text-decoration: none;
+  color: #a0522d;
+}
+.footer-contact a:hover {
+  text-decoration: underline;
+}
 
 .footer-links h5,
 .footer-contact h5 {
@@ -650,7 +662,8 @@ body {
   box-shadow: 0 10px 25px rgba(90, 56, 37, 0.2);
 }
 
-ul, ol {
+ul,
+ol {
   margin-left: 20px;
 }
 
@@ -664,8 +677,14 @@ a:hover {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(40px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 768px) {
@@ -681,7 +700,6 @@ a:hover {
     font-size: 1.2rem;
   }
 }
-
 
 /* Login Page Specific Styles */
 .Login-font {
@@ -761,6 +779,14 @@ a:hover {
   font-size: 20px;
   text-align: justify;
 }
+@media (max-width: 768px) {
+  .who-text {
+    font-size: 15px;
+  }
+  .who-title {
+    font-size: 1.6rem;
+  }
+}
 .title {
   font-size: 2.5rem;
   font-weight: 600;
@@ -812,6 +838,16 @@ a:hover {
   color: #312625;
   margin-bottom: 20px;
   font-weight: 400;
+  text-align: justify;
+}
+@media (max-width: 768px) {
+  .mission-quote,
+  .mission-text {
+    font-size: 0.95rem;
+  }
+  .mission-title {
+    font-size: 1.6rem;
+  }
 }
 
 /* .mission-text {
@@ -860,7 +896,7 @@ a:hover {
 /* Content Box */
 .about-box {
   background: #f9f5ef; /* Light parchment background */
-  padding: 40px;
+  padding: 15px;
   border-radius: 8px;
 }
 
@@ -878,6 +914,14 @@ a:hover {
   font-weight: 400;
   color: #000000;
   text-align: justify;
+}
+@media (max-width: 768px) {
+  .about-text {
+    font-size: 0.95rem;
+  }
+  .about-title {
+    font-size: 1.6rem;
+  }
 }
 
 /* Image style */
@@ -913,7 +957,7 @@ a:hover {
 
 .values-title {
   font-family: Tenor Sans;
-  font-size: 60px;
+  font-size: 50px;
   font-weight: 400;
   margin-bottom: 20px;
 }
@@ -964,6 +1008,14 @@ a:hover {
   font-weight: 400;
   font-size: 20px;
   line-height: 40px;
+}
+@media (max-width: 768px) {
+  .text {
+    font-size: 0.95rem;
+  }
+  .ethos-heading  {
+    font-size: 1.6rem;
+  }
 }
 /* Contact Us Page Specific Styles */
 .font {
@@ -1267,22 +1319,22 @@ a:hover {
   margin-left: 10px;
 }
 .nav-tabs .nav-link.active {
-  color: #000 !important;    
-  background-color: #fff !important;  
-  border-color: #dee2e6 #dee2e6 #fff; 
+  color: #000 !important;
+  background-color: #fff !important;
+  border-color: #dee2e6 #dee2e6 #fff;
 }
 .nav-tabs .nav-link {
   color: #fff !important;
 }
-.bg-color{
+.bg-color {
   background-color: #312625;
 }
-.nav-font{
+.nav-font {
   font-family: "Raleway";
   font-weight: 500;
   font-size: 24px;
 }
-.tab-content{
+.tab-content {
   font-family: Tenor Sans;
   font-weight: 400;
   font-size: 20px;
@@ -1304,12 +1356,12 @@ a:hover {
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
 }
-.releted-title{
+.releted-title {
   font-family: Tenor Sans;
   font-weight: 400;
   font-size: 24px;
 }
-.product-details{
+.product-details {
   font-family: Tenor Sans;
   font-weight: 400;
   font-size: 16px;
@@ -1322,7 +1374,7 @@ a:hover {
   margin-top: 100px;
 }
 /* confirmation page */
-.oreder-confirm-text{
+.oreder-confirm-text {
   font-family: Tenor Sans;
   font-weight: 400;
   font-size: 21px;

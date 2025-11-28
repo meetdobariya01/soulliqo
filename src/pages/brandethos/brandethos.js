@@ -44,7 +44,7 @@ const sections = [
     title: "Hand Crafted Artisan Chocolates",
     text: "We believe in breaking the mold and changing the game, and the passion is the secret ingredient. We believe that nature is naturally extraordinary, and that handmade is the only way ahead.",
     img: "./images/Brandethos6.png",
-    bg: "#a05252",
+    bg: "#e6b8af",
     reverse: true,
   },
   {
@@ -79,7 +79,7 @@ const AnimatedSection = ({ title, text, img, bg, reverse }) => (
     </div>
 
     {/* TEXT - 75% */}
-    <div className="col-md-9 p-5">
+    <div className="col-md-9 p-3">
       <motion.div
         initial={{ opacity: 0, x: reverse ? -100 : 100 }}
         whileInView={{ opacity: 1, x: 0 }}

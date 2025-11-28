@@ -2,10 +2,8 @@ import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { motion } from "framer-motion";
 import {
-  FaLinkedin,
-  FaFacebookMessenger,
-  FaTwitter,
-  FaInfinity,
+  FaInstagram,
+  FaFacebook,
   FaPhoneAlt,
   FaEnvelope,
 } from "react-icons/fa";
@@ -31,31 +29,33 @@ const Footer = () => {
                   className="footer-logo"
                 />
                 <p className="footer-text">
-                  A305, Aarohi Galleria, Opposite Gala Luxuria, South Bhopal,
-                  Ahmedabad, Gujarat, 380015
+                  A305, Aarohi Galleria, Opposite Gala Luxuria, South Bopal,
+                  Ahmedabad, Gujarat, 380058
                 </p>
                 <div className="footer-social">
                   <a
-                    href="https://linkedin.com"
+                    href="https://www.instagram.com/soulliqo/"
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <FaLinkedin />
+                    <FaInstagram />
                   </a>
-                  <a href="https://m.me" target="_blank" rel="noreferrer">
-                    <FaFacebookMessenger />
-                  </a>
+
                   <a
-                    href="https://twitter.com"
+                    href="https://www.facebook.com/thesoulliqo"
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <FaTwitter />
+                    <FaFacebook />
                   </a>
-                  {/* Example internal route */}
-                  <Link to="/infinity" aria-label="Infinity Page">
-                    <FaInfinity />
-                  </Link>
+
+                  <a
+                    href="mailto:soulliqo@gmail.com"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <FaEnvelope />
+                  </a>
                 </div>
               </motion.div>
             </Col>
@@ -71,7 +71,7 @@ const Footer = () => {
                 <h5>Quick Links</h5>
                 <ul>
                   <li>
-                    <Link to="/login">Login</Link>
+                    <Link to="/shiping">Shiping Policy</Link>
                   </li>
                   <li>
                     <Link to="/terms-and-condition">Terms & Conditions</Link>
@@ -102,7 +102,11 @@ const Footer = () => {
                 <h5>Contact Us</h5>
                 <p>
                   <FaPhoneAlt className="me-2" />
-                  <a href="tel:6576839733">6576839733</a>
+                  <a href="tel:9727716480">9727716480</a>
+                </p>
+                 <p>
+                  <FaPhoneAlt className="me-2" />
+                  <a href="tel:9925587624">9925587624</a>
                 </p>
                 <p>
                   <FaEnvelope className="me-2" />
