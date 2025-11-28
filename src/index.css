@@ -262,6 +262,9 @@ body {
 /* Collection Component Styles */
 .font-collection {
   font-family: "Tenor Sans", sans-serif;
+  text-align: center;
+  font-size: 60px;
+  font-weight: 400;
 }
 /* src/components/CollectionCarousel.css */
 .collection-card {
@@ -948,7 +951,7 @@ a:hover {
 /* Text Box */
 .values-box {
   background: #f9f5ef;
-  padding: 50px;
+  padding: 30px;
   min-height: 100%;
   display: flex;
   flex-direction: column;
@@ -1010,13 +1013,23 @@ a:hover {
   line-height: 40px;
 }
 @media (max-width: 768px) {
-  .text {
+  .text,
+  .lead,
+  .discover-text,
+  .discover-subtitle,
+  .makebox-text {
     font-size: 0.95rem;
   }
-  .ethos-heading  {
+  .ethos-heading,
+  .our-story h2,
+  .discover-title,
+  .makebox-title,
+  .customerlove-title,
+  .font-collection {
     font-size: 1.6rem;
   }
 }
+
 /* Contact Us Page Specific Styles */
 .font {
   font-family: "Raleway";
@@ -1378,4 +1391,92 @@ a:hover {
   font-family: Tenor Sans;
   font-weight: 400;
   font-size: 21px;
+}
+
+/* Gallery Page Specific Styles */
+.gallery-container {
+  width: 100%;
+  padding: 60px 30px;
+  background: #faf6f2; /* light chocolate background */
+  min-height: 100vh;
+}
+
+.gallery-title {
+  text-align: center;
+  font-size: 42px;
+  font-weight: 700;
+  color: #5a3e2b;
+  margin-bottom: 50px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+/* Card Design */
+.gallery-card {
+  background: #fff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.gallery-card:hover {
+  transform: translateY(-8px);
+}
+
+.gallery-image {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+}
+
+.product-name {
+  text-align: center;
+  padding: 15px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #4b2e1a;
+}
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 999;
+}
+
+/* Modal Image */
+.modal-image {
+  max-width: 90%;
+  max-height: 90vh;
+  border-radius: 16px;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .gallery-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .gallery-title{
+    font-size: 1.6rem;
+  }
 }

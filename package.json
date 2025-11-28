@@ -19,6 +19,7 @@
     "crypto-browserify": "^3.12.1",
     "framer-motion": "^12.23.24",
     "https-browserify": "^1.0.0",
+    "lucide-react": "^0.555.0",
     "react": "^19.1.1",
     "react-bootstrap": "^2.10.10",
     "react-bootstrap-icons": "^1.11.6",
