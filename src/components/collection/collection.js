@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import Carousel from "react-bootstrap/Carousel";
 import { Card, Spinner } from "react-bootstrap";
 import axios from "axios";
+import { Cash } from "react-bootstrap-icons";
+
+const API_BASE = "http://localhost:5000";
 
 const Collection = () => {
   const [collections, setCollections] = useState([]);
@@ -12,8 +15,9 @@ const Collection = () => {
   useEffect(() => {
     const fetchCollections = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/products/categories");
-        setCollections(Array.isArray(res.data) ? res.data : []);
+        const res = await axios.get(`${API_BASE}/products/categories`);
+        const data = Array.isArray(res.data) ? res.data : [];
+        setCollections(data);
       } catch (err) {
         console.error("❌ Error fetching categories:", err.message);
       } finally {
@@ -23,40 +27,37 @@ const Collection = () => {
     fetchCollections();
   }, []);
 
-  // Split into slides of 4
+  // ✅ Chunk into slides of 4
   const chunkSize = 4;
   const slides = [];
   for (let i = 0; i < collections.length; i += chunkSize) {
     slides.push(collections.slice(i, i + chunkSize));
   }
 
-  // ✅ Safe helper to get image URL
-  const getImageUrl = (img) => {
-    const API_BASE = "http://localhost:5000";
-
-    // If image field is undefined, null, or empty
-    if (!img) return "https://via.placeholder.com/240x180?text=No+Image";
-
-    // If it's an array, take the first valid item
-    if (Array.isArray(img)) {
-      const validImg = img.find((i) => typeof i === "string" && i.trim() !== "");
-      if (!validImg)
-        return "https://via.placeholder.com/240x180?text=No+Image";
-      img = validImg;
+  // ✅ Custom image selector (PUBLIC FOLDER)
+  const getCollectionImage = (title) => {
+    switch (title.toUpperCase()) {
+      case "BON BON":
+        return "/images/bonbon/Collage Bon Bon.png";
+      case "TRUFFLE":
+        return "/images/bonbon/STYLED TRUFFLE.jpg";
+      case "PRALINE":
+        return "/images/bonbon/STYLED PRALINE.jpg";
+      case "CENTERFILLED TABLET":
+        return "/images/bonbon/Colage Bar.png";
+      default:
+        return "/images/bonbon/default.png";
+      case "INDULGENCE TABLET":
+        return "/images/bonbon/Florentine Collage.png";
+      case "BOXBON BON":
+        return "/images/bonbon/_MG_4598.jpg";
+      case "BOXTRUFFLE":
+        return "/images/bonbon/_MG_4598.jpg";
+      case "BOXPRALINE":
+        return "/images/bonbon/_MG_4598.jpg";
+      case "DRAGEES":
+        return "/images/bonbon/SOULLIQO - Session 12917-Edit-Edit-Edit.jpg";
     }
-
-    // Make sure img is a string
-    if (typeof img !== "string" || img.trim() === "")
-      return "https://via.placeholder.com/240x180?text=No+Image";
-
-    // Remove extra commas
-    if (img.includes(",")) img = img.split(",")[0].trim();
-
-    // Handle missing slashes or relative URLs
-    if (img.startsWith("http")) return img;
-    if (!img.startsWith("/")) img = "/" + img;
-
-    return `${API_BASE}${img}`;
   };
 
   return (
@@ -65,12 +66,12 @@ const Collection = () => {
 
       {loading ? (
         <div className="text-center my-5">
-          <Spinner animation="border" role="status" />
+          <Spinner animation="border" />
           <p>Loading Collections...</p>
         </div>
       ) : collections.length === 0 ? (
         <div className="text-center my-5">
-          <p>No collections found. Check backend route `/products/categories`.</p>
+          <p>No collections found.</p>
         </div>
       ) : (
         <Carousel indicators={false} interval={4000}>
@@ -79,23 +80,41 @@ const Collection = () => {
               <div className="d-flex flex-wrap justify-content-center">
                 {group.map((item) => (
                   <Card
-                    key={item._id || item.id}
+                    key={item._id}
                     className="collection-card m-2 shadow-sm border-0"
-                    style={{ cursor: "pointer", width: "240px" }}
-                    onClick={() => navigate(`/products/${item.title || item.name}`)}
+                    style={{
+                      cursor: "pointer",
+                      width: "240px",
+                      borderRadius: "16px",
+                      overflow: "hidden",
+                      transition: "transform 0.3s ease"
+                    }}
+                    onClick={() =>
+                      navigate(`/products/${encodeURIComponent(item.title)}`)
+                    }
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.transform = "scale(1.05)")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.transform = "scale(1)")
+                    }
                   >
                     <Card.Img
                       variant="top"
-                      src={getImageUrl(item.img || item.image)}
-                      className="collection-img"
+                      src={getCollectionImage(item.title)}
+                      onError={(e) =>
+                        (e.target.src = "/images/bonbon/default.png")
+                      }
                       style={{
                         height: "180px",
-                        objectFit: "cover",
-                        borderRadius: "12px 12px 0 0",
+                        objectFit: "contain",
+                        padding: "15px",
+                        background: "#f7f7f7"
                       }}
                     />
+
                     <Card.Footer className="text-center fw-bold bg-white border-0">
-                      {item.title || item.name}
+                      {item.title}
                     </Card.Footer>
                   </Card>
                 ))}

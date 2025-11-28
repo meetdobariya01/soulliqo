@@ -425,7 +425,20 @@ app.get("/api/store/chocolates/:categoryId", async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+app.get("/api/store/boxes/:id", async (req, res) => {
+  try {
+    const box = await Box.findById(req.params.id);
 
+    if (!box) {
+      return res.status(404).json({ message: "Box not found" });
+    }
+
+    res.json(box);
+  } catch (error) {
+    console.error("Box fetch error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
 // ============================
 //  GLOBAL ERROR HANDLER
 // ============================

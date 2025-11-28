@@ -73,9 +73,10 @@ root.render(
       <Route path="/otpvarification" element={<Otpvarification />} />
       <Route path="/product/:id" element={<Productdetails />} />
       <Route path="/products/:category" element={<Productgrid />} />
+
       <Route path="/collection/:category" element={<Productgrid />} />
       <Route path="/collection" element={<Collection />} />
-       <Route path="/boxproduct/:categoryId/:boxId" element={<Boxproduct />} />
+       <Route path="/product/:categoryId/:boxId" element={<Boxproduct />} />
        <Route path="/cart" element={<Cart />} />
        <Route path="/terms-and-condition" element={<Termsandcondition />} />
        <Route path="/privacy-policy" element={<Privacypolicy />} />

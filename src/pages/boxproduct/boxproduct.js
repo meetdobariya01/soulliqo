@@ -1,342 +1,250 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import {
-Container,
-Row,
-Col,
-Button,
-ProgressBar,
-Breadcrumb,
-Spinner,
+  Container,
+  Row,
+  Col,
+  Button,
+  Spinner,
+  Nav,
+  Tab
 } from "react-bootstrap";
-import { NavLink, useParams, useLocation } from "react-router-dom";
-import axios from "axios";
+import { Heart } from "react-bootstrap-icons";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
-const Boxproduct = () => {
-const params = useParams();
-const location = useLocation();
-const rawCategoryId = params.categoryId;
-const rawBoxId = params.boxId;
-const fallbackCategoryId =
-location?.state?.categoryId ||
-location?.state?.category?.id ||
-location?.state?.category?._id ||
-location?.state?.box?.category?.id ||
-location?.state?.box?.category?._id ||
-null;
-const categoryId =
-rawCategoryId && rawCategoryId !== "undefined"
-? rawCategoryId
-: fallbackCategoryId;
-const boxId =
-rawBoxId && rawBoxId !== "undefined"
-? rawBoxId
-: location?.state?.box?._id || rawBoxId;
-const [products, setProducts] = useState([]);
-const [cart, setCart] = useState({});
-const [box, setBox] = useState({});
-const [boxLimit, setBoxLimit] = useState(16);
-const [typeLimits, setTypeLimits] = useState({});
-const [loading, setLoading] = useState(true);
-const [error, setError] = useState(null);
+import axios from "axios";
+
+const API_BASE = "http://localhost:5000/api/store";
+
+const BoxProduct = () => {
+  const { boxId } = useParams();
+  const navigate = useNavigate();
+
+  const [product, setProduct] = useState(null);
+  const [mainImage, setMainImage] = useState("");
+  const [qty, setQty] = useState(1);
+  const [pincode, setPincode] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/boxes/${boxId}`);
+        if (!res.ok) throw new Error("Product not found");
+
+        const data = await res.json();
+        setProduct(data);
+
+        const images = Array.isArray(data.image)
+          ? data.image
+          : data.image?.split(",") || [];
+
+        if (images.length > 0) {
+          setMainImage(resolveImage(images[0]));
+        }
+      } catch (error) {
+        console.error("Product load error:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [boxId]);
+
   const resolveImage = (img) => {
-    if (!img) return "./images/product-grid.png";
-    if (/^(https?:)?\/\//i.test(img) || /^data:/i.test(img)) return img;
-    const base = process.env.REACT_APP_API_URL || "http://localhost:5000";
-    if (img.startsWith("/")) return `${base}${img}`;
-    return `${base}/${img}`;
+    if (!img) return "https://via.placeholder.com/500";
+    if (img.startsWith("http")) return img;
+    return `http://localhost:5000/${img}`;
   };
-useEffect(() => {
-const fetchChocolates = async () => {
-if (!categoryId || !boxId) {
-setError(
-"Missing categoryId or boxId. Please navigate from the category/box selection page."
-);
-setProducts([]);
-setBox({});
-setBoxLimit(16);
-setTypeLimits({});
-setLoading(false);
-setCart({});
-return;
-}
 
-  setLoading(true);
-  setError(null);
+  // ✅ ADD TO CART FUNCTION
+  const handleAddToCart = async () => {
+    const token = localStorage.getItem("token");
 
-  try {
-    const base = process.env.REACT_APP_API_URL || "http://localhost:5000";
-    const url = `${base}/api/store/chocolates/${categoryId}/${boxId}`;
-    const res = await axios.get(url);
-
-    const data = Array.isArray(res.data) ? res.data : [];
-    setProducts(data);
-
-    if (data.length > 0) {
-      const fetchedBox = data[0].box || {};
-      setBox(fetchedBox);
-      setBoxLimit(fetchedBox.totalLimit || fetchedBox.size || 16);
-
-      const normalizedTypeLimits = Object.fromEntries(
-        Object.entries(fetchedBox.typeLimits || {}).map(([k, v]) => [
-          k.toLowerCase(),
-          v,
-        ])
-      );
-      setTypeLimits(normalizedTypeLimits);
-    } else {
-      setBox({});
-      setBoxLimit(16);
-      setTypeLimits({});
+    if (!token) {
+      alert("Please login to add item to cart");
+      navigate("/login");
+      return;
     }
-    setError(null);
-  } catch (err) {
-    console.error("Error fetching chocolates:", err);
-    const serverMessage = err?.response?.data?.message;
-    setError(
-      serverMessage || "Unable to load products. Please try again later."
-    );
-    setProducts([]);
-    setBox({});
-    setBoxLimit(16);
-    setTypeLimits({});
-  } finally {
-    setLoading(false);
-    setCart({});
-  }
-};
 
-fetchChocolates();
-
-
-}, [categoryId, boxId]);
-
-const typeCounts = products.reduce((acc, p) => {
-const id = p._id;
-const qty = cart[id] || 0;
-const type = (p.chocolateType || p.type || "").toLowerCase();
-if (!type) return acc;
-acc[type] = (acc[type] || 0) + qty;
-return acc;
-}, {});
-
-const updateQuantity = (id, change) => {
-setCart((prev) => {
-const product = products.find((p) => p._id === id);
-if (!product) return prev;
-
-  const currentQty = prev[id] || 0;
-  const newQty = Math.max(0, currentQty + change);
-
-  const prevTotal = Object.values(prev).reduce((a, b) => a + b, 0);
-  const delta = Math.max(0, newQty - currentQty);
-  const newTotal = prevTotal + delta;
-
-  if (change > 0 && newTotal > boxLimit) {
-    alert(
-      `Total limit reached: you can only select up to ${boxLimit} chocolates.`
-    );
-    return prev;
-  }
-
-  const type = (product.chocolateType || product.type || "").toLowerCase();
-  if (change > 0 && type && typeLimits[type] !== undefined) {
-    const prevTypeCount =
-      products.reduce((acc, p) => {
-        const pid = p._id;
-        const ptype = (p.chocolateType || p.type || "").toLowerCase();
-        if (!ptype) return acc;
-        acc[ptype] = (acc[ptype] || 0) + (prev[pid] || 0);
-        return acc;
-      }, {})[type] || 0;
-
-    if (prevTypeCount + delta > typeLimits[type]) {
-      alert(
-        `You can only add up to ${typeLimits[type]} ${type.toUpperCase()} chocolates.`
+    try {
+      await axios.post(
+        `/cart/add`,
+        {
+          productId: product._id,
+          quantity: qty,
+          type: "box"
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
-      return prev;
+
+      // ✅ Redirect to Cart page
+      navigate("/cart");
+    } catch (error) {
+      console.error("Add to cart error:", error);
+      alert("Failed to add to cart");
     }
-  }
+  };
 
-  const updated = { ...prev, [id]: newQty };
-  if (updated[id] === 0) delete updated[id];
-  return updated;
-});
-
-
-};
-
-return ( <div> <Header />
-
-  <Container fluid className="py-4 container">
-    <Breadcrumb>
-      <Breadcrumb.Item className="box-title" href="/ownbox">
-        BUILD YOUR OWN BOX
-      </Breadcrumb.Item>
-      <Breadcrumb.Item className="box-header" active>
-        {box?.size ? `BOX OF ${box.size}` : "BOX"}
-      </Breadcrumb.Item>
-    </Breadcrumb>
-
-    <h5
-      className="text-center mb-4 boxproduct-title"
-      style={{ color: "#8B6F4E" }}
-    >
-      CHOOSE YOUR CHOCOLATES
-    </h5>
-
-    {loading ? (
-      <div className="text-center my-5">
-        <Spinner animation="border" variant="warning" />
-        <p className="mt-2 text-muted">Loading chocolates...</p>
-      </div>
-    ) : error ? (
-      <div className="text-center my-5">
-        <p className="text-danger">{error}</p>
-        <div className="mt-2">
-          <NavLink to="/sweetindulgence" style={{ textDecoration: "none" }}>
-            <Button variant="outline-dark">Back to Categories</Button>
-          </NavLink>
-        </div>
-      </div>
-    ) : products.length === 0 ? (
-      <div className="text-center my-5 text-muted">
-        No products found for this category.
-      </div>
-    ) : (
+  if (loading) {
+    return (
       <>
-        {Object.values(typeLimits).some((limit) => limit === 0) && (
-          <div className="text-center text-muted mb-3">
-            Some chocolates are not available in this box.
-          </div>
-        )}
-
-        <Row>
-          {products
-            .filter((product) => {
-              const type = (product.type || product.chocolateType || "").toLowerCase();
-              // Hide chocolates that have limit 0
-              if (typeLimits && typeLimits[type] === 0) return false;
-              return true;
-            })
-            .map((product) => {
-              const id = product._id;
-              const name =
-                product.name || product.chocolateName || "Chocolate";
-              const type = product.type || product.chocolateType || "";
-              const img = resolveImage(product.image);
-              return (
-                <Col key={id} xs={6} sm={4} md={3} lg={2} className="mb-4">
-                  <div className="text-center">
-                    <img
-                      src={img}
-                      alt={name}
-                      className="img-fluid mb-2"
-                      style={{
-                        maxHeight: 150,
-                        objectFit: "cover",
-                        borderRadius: 8,
-                      }}
-                      onError={(e) => {
-                        e.currentTarget.onerror = null;
-                        e.currentTarget.src = "/images/product-grid.png";
-                      }}
-                    />
-                    <p className="small fw-semibold boxproduct-name">
-                      {name}
-                    </p>
-                    {type && (
-                      <p className="text-muted small">{type} Chocolate</p>
-                    )}
-                    <div className="d-flex justify-content-center align-items-center">
-                      <Button
-                        variant="light"
-                        className="border rounded-0"
-                        onClick={() => updateQuantity(id, -1)}
-                      >
-                        -
-                      </Button>
-                      <span
-                        className="px-3 py-1 border-top border-bottom"
-                        style={{ minWidth: 30, textAlign: "center" }}
-                      >
-                        {cart[id] || 0}
-                      </span>
-                      <Button
-                        variant="light"
-                        className="border rounded-0"
-                        onClick={() => updateQuantity(id, 1)}
-                      >
-                        +
-                      </Button>
-                    </div>
-                  </div>
-                </Col>
-              );
-            })}
-        </Row>
+        <Header />
+        <Container className="py-5 text-center">
+          <Spinner animation="border" />
+        </Container>
+        <Footer />
       </>
-    )}
+    );
+  }
 
-    {Object.values(cart).reduce((a, b) => a + b, 0) > 0 && (
-      <div
-        className="position-fixed bottom-0 start-0 w-100 bg-dark shadow-lg p-3 d-flex justify-content-between align-items-center"
-        style={{ zIndex: 999 }}
-      >
-        <div className="flex-grow-1 me-3 text-light">
-          <p className="mb-1 small">
-            Select up to {boxLimit} total &nbsp; | &nbsp;
-            <strong>
-              {Object.values(cart).reduce((a, b) => a + b, 0)} selected
-            </strong>
-          </p>
+  if (!product) {
+    return (
+      <>
+        <Header />
+        <Container className="py-5 text-center">
+          <h5>Product not found</h5>
+        </Container>
+        <Footer />
+      </>
+    );
+  }
 
-          <ProgressBar
-            now={
-              (Object.values(cart).reduce((a, b) => a + b, 0) / boxLimit) *
-              100
-            }
-            variant="warning"
-            style={{ height: 6 }}
-          />
+  const images = Array.isArray(product.image)
+    ? product.image
+    : product.image?.split(",") || [];
 
-          <div className="mt-2 small">
-            {Object.keys(typeLimits).length === 0 ? (
-              <div className="text-muted small">No per-type limits</div>
-            ) : (
-              Object.entries(typeLimits).map(([t, limit]) => (
-                <div key={t}>
-                  {t.toUpperCase()}: {typeCounts[t] || 0}/{limit}
+  return (
+    <>
+      <Header />
+
+      <Container className="py-5" style={{ fontFamily: "Poppins, sans-serif" }}>
+        <Row>
+          {/* LEFT IMAGE AREA */}
+          <Col md={6} className="d-flex">
+            <div className="me-3 d-flex flex-column">
+              {images.map((img, i) => (
+                <img
+                  key={i}
+                  src={resolveImage(img)}
+                  alt="thumb"
+                  onClick={() => setMainImage(resolveImage(img))}
+                  style={{
+                    width: 70,
+                    height: 70,
+                    objectFit: "contain",
+                    border: "1px solid #ddd",
+                    marginBottom: 10,
+                    cursor: "pointer"
+                  }}
+                />
+              ))}
+            </div>
+
+            <div className="flex-grow-1">
+              <img
+                src={mainImage}
+                alt={product.name}
+                style={{
+                  width: "100%",
+                  height: 420,
+                  objectFit: "contain",
+                  background: "#f5f5f5"
+                }}
+              />
+            </div>
+          </Col>
+
+          {/* RIGHT INFO AREA */}
+          <Col md={6}>
+            <h2 className="fw-semibold">{product.name}</h2>
+            <p className="text-muted">{product.weight || "100gm"}</p>
+
+            <h4 className="mb-3">
+              ₹{product.price}{" "}
+              {product.oldPrice && (
+                <small className="text-decoration-line-through text-muted ms-2">
+                  ₹{product.oldPrice}
+                </small>
+              )}
+            </h4>
+
+            <div className="d-flex align-items-center gap-2 mb-3">
+              <Heart /> <span>Add to Wish List</span>
+            </div>
+
+            {/* Pincode */}
+            <div className="d-flex align-items-center gap-2 mb-3">
+              <input
+                type="text"
+                className="form-control"
+                style={{ maxWidth: 200 }}
+                placeholder="Enter pincode"
+                value={pincode}
+                onChange={(e) => setPincode(e.target.value)}
+              />
+              <Button variant="link" className="fw-semibold">
+                CHECK
+              </Button>
+            </div>
+
+            {/* Quantity & Add to Cart */}
+            <div className="d-flex align-items-center gap-3 mt-3">
+              <div className="d-flex border">
+                <Button
+                  variant="light"
+                  onClick={() => setQty(qty > 1 ? qty - 1 : 1)}
+                >
+                  -
+                </Button>
+
+                <div className="px-4 d-flex align-items-center">
+                  {qty}
                 </div>
-              ))
-            )}
-          </div>
-        </div>
 
-        <NavLink
-          to="/boxcheckout"
-          state={{ cart, products, box }}
-          style={{ textDecoration: "none" }}
-        >
-          <Button
-            variant="dark"
-            className="px-4 py-2 rounded-0"
-            style={{
-              backgroundColor: "#fff",
-              border: "none",
-              color: "#6F524C",
-            }}
-          >
-            Review Your Order
-          </Button>
-        </NavLink>
-      </div>
-    )}
-  </Container>
+                <Button variant="light" onClick={() => setQty(qty + 1)}>
+                  +
+                </Button>
+              </div>
 
-  <Footer />
-</div>
+              <Button className="px-4" variant="dark" onClick={handleAddToCart}>
+                Add to Cart
+              </Button>
+            </div>
+          </Col>
+        </Row>
 
-);
+        {/* TABS SECTION */}
+        <Tab.Container defaultActiveKey="details">
+          <Nav variant="tabs" className="mt-5">
+            <Nav.Item>
+              <Nav.Link eventKey="details">Product Details</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="reviews">Reviews</Nav.Link>
+            </Nav.Item>
+          </Nav>
+
+          <Tab.Content className="border p-4 bg-white">
+            <Tab.Pane eventKey="details">
+              <p>{product.description || "No description available."}</p>
+            </Tab.Pane>
+
+            <Tab.Pane eventKey="reviews">
+              <p>No reviews yet.</p>
+            </Tab.Pane>
+          </Tab.Content>
+        </Tab.Container>
+      </Container>
+
+      <Footer />
+    </>
+  );
 };
-export default Boxproduct;
+
+export default BoxProduct;
