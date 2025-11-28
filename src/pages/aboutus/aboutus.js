@@ -11,7 +11,7 @@ const Aboutus = () => {
       <Header />
 
       {/* About Us Section */}
-      <section className="about-us-section py-5 container">
+      <section className="about-us-section mt-5 container">
         <Container fluid>
           <Row className="align-items-center">
             {/* Left Side - Image */}

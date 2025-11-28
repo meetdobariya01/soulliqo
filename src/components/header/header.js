@@ -36,56 +36,49 @@ const Header = () => {
           fluid
           className="d-flex justify-content-between align-items-center"
         >
-          {/* Left side (Mobile Hamburger + Search) */}
+          {/* Mobile Left Icons */}
           <div className="d-lg-none d-flex align-items-center">
-            <FaBars
-              className="icon-btn me-3"
-              onClick={() => setMenuOpen(!menuOpen)}
-            />
-            <FaSearch
-              className="icon-btn"
-              onClick={() => setSearchOpen(!searchOpen)}
-            />
+            <FaBars className="icon-btn me-3" onClick={() => setMenuOpen(!menuOpen)} />
+            <FaSearch className="icon-btn" onClick={() => setSearchOpen(!searchOpen)} />
           </div>
 
           {/* Logo */}
-          <Navbar.Brand
-            href="/"
-            className="mx-auto mx-lg-0 d-flex align-items-center"
-          >
+          <Navbar.Brand href="/" className="mx-auto mx-lg-0 d-flex align-items-center">
             <img src="/images/logo.jpg" alt="Logo" className="logo" />
           </Navbar.Brand>
 
           {/* Desktop Navigation */}
           <Nav className="mx-auto d-none d-lg-flex navbar-font">
+
             {/* SHOP Dropdown */}
-            <NavDropdown title="SHOP" id="brand-dropdown" className="custom-dropdown">
-              {categories.map((category) => (
-                <NavDropdown.Item key={category.id} href={category.link}>
-                  {category.title}
-                </NavDropdown.Item>
-              ))}
+            <NavDropdown title="SHOP" id="shop-dropdown" className="custom-dropdown">
+              {categories.length > 0 ? (
+                categories.map((category) => (
+                  <NavDropdown.Item key={category.id} href={category.link}>
+                    {category.title}
+                  </NavDropdown.Item>
+                ))
+              ) : (
+                <NavDropdown.Item href="#">Loading...</NavDropdown.Item>
+              )}
             </NavDropdown>
 
             {/* BRAND JOURNEY */}
             <NavDropdown title="BRAND JOURNEY" id="brand-dropdown" className="custom-dropdown">
               <NavDropdown.Item href="/whoweare">Who we Are</NavDropdown.Item>
-              <NavDropdown.Item href="/ourmission">Our Mission</NavDropdown.Item>
+              <NavDropdown.Item href="/ourmission">Our Mission and Values</NavDropdown.Item>
               <NavDropdown.Item href="/aboutus">All about SOULLIQO</NavDropdown.Item>
-              <NavDropdown.Item href="/ourvalues">Our Values</NavDropdown.Item>
               <NavDropdown.Item href="/brandethos">Brand Ethos</NavDropdown.Item>
             </NavDropdown>
 
             <Nav.Link href="/contactus">CONTACT US</Nav.Link>
+            <Nav.Link href="/gallery">Gallery</Nav.Link>
           </Nav>
 
-          {/* Right side icons */}
+          {/* Right Icons */}
           <div className="d-flex align-items-center gap-3">
-            <FaSearch
-              className="icon-btn d-none d-lg-block"
-              onClick={() => setSearchOpen(!searchOpen)}
-            />
-            <Link to="/cart" className="icon-btn position-relative ms-3">
+            <FaSearch className="icon-btn d-none d-lg-block" onClick={() => setSearchOpen(!searchOpen)} />
+            <Link to="/boxcheckout" className="icon-btn position-relative ms-3">
               <FaShoppingBag />
               <span className="cart-count">1</span>
             </Link>
@@ -98,10 +91,9 @@ const Header = () => {
           </div>
         </Container>
 
-        {/* Mobile Menu Overlay */}
+        {/* Mobile Menu */}
         <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
           <Nav className="flex-column text-center">
-            {/* Mobile SHOP */}
             <NavDropdown title="SHOP" id="mobile-shop-dropdown" className="custom-dropdown">
               {categories.map((category) => (
                 <NavDropdown.Item
@@ -114,34 +106,26 @@ const Header = () => {
               ))}
             </NavDropdown>
 
-            {/* Mobile BRAND JOURNEY */}
             <NavDropdown title="BRAND JOURNEY" id="mobile-brand-dropdown" className="custom-dropdown">
               <NavDropdown.Item href="/whoweare" onClick={() => setMenuOpen(false)}>Who we Are</NavDropdown.Item>
-              <NavDropdown.Item href="/ourmission" onClick={() => setMenuOpen(false)}>Our Mission</NavDropdown.Item>
+              <NavDropdown.Item href="/ourmission" onClick={() => setMenuOpen(false)}>Our Mission and Values</NavDropdown.Item>
               <NavDropdown.Item href="/aboutus" onClick={() => setMenuOpen(false)}>All about SOULLIQO</NavDropdown.Item>
-              <NavDropdown.Item href="/ourvalues" onClick={() => setMenuOpen(false)}>Our Values</NavDropdown.Item>
               <NavDropdown.Item href="/brandethos" onClick={() => setMenuOpen(false)}>Brand Ethos</NavDropdown.Item>
             </NavDropdown>
 
             <Nav.Link href="/contactus" onClick={() => setMenuOpen(false)}>CONTACT US</Nav.Link>
+            <Nav.Link href="/gallery" onClick={() => setMenuOpen(false)}>Gallery</Nav.Link>
           </Nav>
         </div>
       </Navbar>
 
-      {/* Search Bar Overlay */}
+      {/* Search Overlay */}
       <div className={`search-overlay ${searchOpen ? "open" : ""}`}>
         <div className="search-box">
           <InputGroup>
-            <Form.Control
-              type="text"
-              placeholder="Search products..."
-              className="search-input"
-            />
+            <Form.Control type="text" placeholder="Search products..." className="search-input" />
             <button className="btn-search">Search</button>
-            <FaTimes
-              className="icon-btn close-search"
-              onClick={() => setSearchOpen(false)}
-            />
+            <FaTimes className="icon-btn close-search" onClick={() => setSearchOpen(false)} />
           </InputGroup>
         </div>
       </div>

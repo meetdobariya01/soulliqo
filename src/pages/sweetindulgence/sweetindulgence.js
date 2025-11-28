@@ -6,6 +6,32 @@ import Footer from "../../components/footer/footer";
 import axios from "axios";
 
 const Sweetindulgence = () => {
+  const products = [
+    {
+      id: 1,
+      title: "Bon Bon",
+      image: "./images/bon-bon.jpg", // replace with real image
+      link: "/ownbox",
+    },
+    {
+      id: 2,
+      title: "Truffle",
+      image: "./images/truffle.png", // replace with real image
+      link: "/boxcollection",
+    },
+    {
+      id: 3,
+      title: "Pralines",
+      image: "./images/pralines.png", // replace with real image
+      link: "/boxcollection",
+    },
+    {
+      id: 4,
+      title: "Dragees",
+      image: "./images/dragees.jpg", // replace with real image
+      link: "/boxcollection",
+    },
+  ];
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -47,6 +73,7 @@ const Sweetindulgence = () => {
           fontWeight: "600",
         }}
       >
+        Sweet Indulgence
       </div>
 
       {/* Categories */}

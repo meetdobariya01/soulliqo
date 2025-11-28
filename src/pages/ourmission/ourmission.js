@@ -13,15 +13,7 @@ const Ourmission = () => {
       <section className="our-mission-section py-5">
         <Container>
           <Row className="align-items-center">
-            {/* Left side image */}
-            <Col md={6} className="mb-4 mb-md-0">
-              <img
-                src="./images/mission.png"
-                alt="Our Mission"
-                className="img-fluid rounded shadow"
-              />
-            </Col>
-            {/* Right side content */}
+            {/* left side content */}
             <Col md={6} className="position-relative">
               <div className="floral-bg-right"></div>
               <h2 className="mission-title">Our Mission</h2>
@@ -40,6 +32,48 @@ const Ourmission = () => {
                 continuously strive to create premium chocolate and moments of
                 delight that put smiles on our customer’s face…
               </p>
+            </Col>
+            {/* Right side image */}
+            <Col
+              md={6}
+              className="mb-4 mb-md-0 d-flex justify-content-center align-items-center"
+            >
+              <img
+                src="./images/mission.png"
+                alt="Our Mission"
+                className="img-fluid rounded shadow w-75"
+              />
+            </Col>
+          </Row>
+        </Container>
+      </section>
+
+      <section className="values-section container py-5">
+        <Container fluid className="p-0">
+          <Row className="g-0 align-items-stretch">
+            {/* Left Side - Image */}
+            <Col md={6} className="values-img-col">
+              <img
+                src="./images/value.png" // change to your image path
+                alt="Our Values"
+                className="values-img"
+              />
+            </Col>
+
+            {/* Right Side - Content */}
+            <Col md={6} className="d-flex align-items-center">
+              <div className="values-box">
+                <h2 className="values-title">Our Values</h2>
+                <p className="values-text">
+                  All our chocolates are hand crafted in India with more Cocoa &
+                  Chocolate and negligible to no added sugar and 100% pure Cocoa
+                  Butter, with finest quality ingredients from Europe, Africa
+                  and India. Our Artisan Chocolatiers keep utmost care of
+                  Aesthetic Appeal, Aromatic Intrigue, Textural Delight,
+                  Seduction of Taste and above all Adventurous flavor pairing
+                  inspired by Ingredients from around the Globe.
+                </p>
+              </div>
             </Col>
           </Row>
         </Container>

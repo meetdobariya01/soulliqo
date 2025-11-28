@@ -8,14 +8,14 @@ const sections = [
   {
     title: "Quality",
     text: "Bespoke Chocolates with importance to handmade craftsmanship with perfect chocolate and strict operational measures. We use finest, fresh and best quality ingredients sourced from across the globe.",
-    img: "./images/Brandethos1.png", // replace with real image
+    img: "./images/Brandethos3.png", // replace with real image
     bg: "#fef9e7",
     reverse: false,
   },
   {
     title: "Coverture",
     text: "Passionate about art of chocolate making. Higher % of cocoa butter in all our products. Our chocolates has more sheen a firmer snap when broken and above all creamy with enhanced explosion of flavor.",
-    img: "./images/Brandethos2.jpg",
+    img: "./images/Brandethos3.png",
     bg: "#f5ebe7",
     reverse: true,
   },

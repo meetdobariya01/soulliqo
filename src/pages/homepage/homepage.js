@@ -7,41 +7,17 @@ import Collection from "../../components/collection/collection";
 import Discover from "../../components/discover/discover";
 import Custmerlove from "../../components/custmerlove/custmerlove";
 import Footer from "../../components/footer/footer";
+import Carousel from "../../components/carousel/carousel";
+import Mycarousel from "../../components/carousel/carousel";
 const Homepage = () => {
   return (
     <div>
       {/* Header */}
       <Header />
       {/* Desktop View Section */}
-      <div className="d-none d-md-block choco-banner">
-        <Container>
-          <Row className="align-items-center">
-            {/* <Col md={12} className="text-center choco-text">
-                <h2 className="title">Slice of Heaven</h2>
-                <h3 className="brand">
-                  <span className="highlight">SOULLIQO</span>{" "}
-                  <span className="script">chocolate poetry</span>
-                </h3>
-              </Col> */}
-          </Row>
-        </Container>
-      </div>
-      {/* Mobile View Section */}
-      <div className="d-block d-md-none choco-location text-center">
-        <Container>
-          <Row>
-            <Col>
-              <div className="choco-mobile-box">
-                <h3 className="loc-title">New in Ahmedabad</h3>
-                <p className="loc-sub">
-                  Aarohi Galleria, South Bhopal, Ahmedabad
-                </p>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </div>
-      <div className="choco-text-section d-none d-md-block">
+      <Mycarousel />
+     
+      {/* <div className="choco-text-section d-none d-md-block">
         <Container fluid>
           <Row className="align-items-center">
             <Col md={8} className="text-center">
@@ -58,7 +34,7 @@ const Homepage = () => {
             </Col>
           </Row>
         </Container>
-      </div>
+      </div> */}
       {/* collection component */}
       <Collection />
       {/* Video Section */}
@@ -106,7 +82,7 @@ const Homepage = () => {
                 Make the gift of Soulliqo that little bit sweeter by adding a
                 free personalized message.
               </p>
-              <Button as={NavLink} to="/sweetindulgence" className="makebox-btn">
+              <Button as={NavLink} to="/ownbox" className="makebox-btn">
                 Shop Now
               </Button>
             </div>

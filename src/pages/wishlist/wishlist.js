@@ -426,7 +426,7 @@ const Wishlist = () => {
   };
 
   // ✅ Fetch wishlist from backend
-  useEffect(() => {
+  useEffect(() => {                                                                                                                   
     const fetchWishlist = async () => {
       if (userId.startsWith("DEMO") || !token) {
         setLoading(false);

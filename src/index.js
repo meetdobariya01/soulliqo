@@ -13,7 +13,7 @@ import Afterlogin from "./pages/afterlogin/afterlogin";
 import Whoweare from "./pages/whoweare/whoweare";
 import Ourmission from "./pages/ourmission/ourmission";
 import Aboutus from "./pages/aboutus/aboutus";
-import Ourvalues from "./pages/ourvalues/ourvalues";
+// import Ourvalues from "./pages/ourvalues/ourvalues";
 import Brandethos from "./pages/brandethos/brandethos";
 import Contactus from "./pages/contactus/contactus";
 import Wishlist from "./pages/wishlist/wishlist";
@@ -26,8 +26,17 @@ import Chocoblock from "./pages/chocoblock/chocoblock";
 import Productgrid from "./pages/product-grid/productgrid";
 import Productdetails from "./pages/productdetails/productdetails";
 import Sweetindulgence from "./pages/sweetindulgence/sweetindulgence";
+import Boxcollection from "./pages/boxcollection/boxcollection";
+import Orderconfrimed from "./pages/orderconfrimed/orderconfrimed";
+import Forgotpassword from "./pages/forgotpassword/forgotpassword";
+import Otppage from "./pages/otppage/otppage";
+import Otpvarification from "./pages/otpvarification/otpvarification";
 import Collection from "./components/collection/collection";
 import Cart from "./components/Cart/Cart";
+import Termsandcondition from "./pages/termsandcondition/termsandcondition";
+import Privacypolicy from "./pages/privacypolicy/privacypolicy";
+import Refundandcancellation from "./pages/refund&cancellationpolicy/refundandcancellation";
+import Gallery from "./pages/gallery/gallery";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -41,7 +50,7 @@ root.render(
       <Route path="/whoweare" element={<Whoweare />} />
       <Route path="/ourmission" element={<Ourmission />} />
       <Route path="/aboutus" element={<Aboutus />} />
-      <Route path="/ourvalues" element={<Ourvalues />} />
+      {/* <Route path="/ourvalues" element={<Ourvalues />} /> */}
       <Route path="/brandethos" element={<Brandethos />} />
       <Route path="/contactus" element={<Contactus />} />
       <Route path="/wishlist" element={<Wishlist />} />
@@ -52,12 +61,24 @@ root.render(
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/chocolateblock" element={<Chocoblock />} />
       <Route path="/product" element={<Productgrid />} />
+      <Route path="/productdetails" element={<Productdetails />} />
+      <Route path="/sweetindulgence" element={<Sweetindulgence />} />
+      <Route path="/boxcollection" element={<Boxcollection />} />
+      <Route path="/orderconfrimed" element={<Orderconfrimed />} />
+      <Route path="/forgotpassword" element={<Forgotpassword />} />
+      <Route path="/otppage" element={<Otppage />} />
+      <Route path="/otpvarification" element={<Otpvarification />} />
       <Route path="/product/:id" element={<Productdetails />} />
       <Route path="/products/:category" element={<Productgrid />} />
       <Route path="/collection/:category" element={<Productgrid />} />
       <Route path="/collection" element={<Collection />} />
        <Route path="/boxproduct/:categoryId/:boxId" element={<Boxproduct />} />
        <Route path="/cart" element={<Cart />} />
+       <Route path="/terms-and-condition" element={<Termsandcondition />} />
+       <Route path="/privacy-policy" element={<Privacypolicy />} />
+       <Route path="/refund-and-cancellation" element={<Refundandcancellation />} />
+       <Route path="/gallery" element={<Gallery />} />
+       <Route path="*" element={<h1>404 Not Found</h1>} />
     </Routes>
   </Router>
 );

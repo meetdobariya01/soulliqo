@@ -30,21 +30,27 @@ const Whoweare = () => {
               className="order-2 order-md-1 animate_animated animate_fadeInLeft"
             >
               <h2 className="who-title">Who we are</h2>
-              <p className="who-subtitle">Chocolate is like poetry,</p>
+              <p className="who-subtitle">" Chocolate is like poetry,</p>
               <p className="who-text">
                 From the elegant rhythm of its making to the enchanting duet of
                 sharing it with loved ones. The essence of chocolate is a living
-                verse in every bite... Immersed in a world of art and music, our
-                chocolates are a reflection of our inspiration.
+                verse in every bite..."
               </p>
               <p className="who-text">
-                Crafted with traditional European techniques and equipment, they
-                embody the essence of our creative journey... From the first
-                cacao tree... Since the Aztecs used it as currency... From
-                'xocolatl' to improvised Aztec's brew... To the recent
-                'chocolates' of England and the Dutch mixes... To the first
-                solid chocolate mixing of cocoa powder with cocoa butter and
-                sugar and milk in 1847...
+                Immersed in a world of art and music, our chocolates are a
+                reflection of our inspiration. Crafted with traditional European
+                techniques and equipment, they embody the essence of our
+                creative journey...
+              </p>
+              <p className="who-text">From the first cacao tree...</p>
+              <p className="who-text">Since the Aztecs used it as currency...</p>
+              <p className="who-text">From 'xocolatl' to improvised Aztec's brew...</p>
+              <p>
+                To the recent 'chocolates' of England and the Dutch mixes...
+              </p>
+              <p className="who-text">
+                To the first solid chocolate mixing of cocoa powder with cocoa
+                butter and sugar and milk in 1847...
               </p>
               <p className="who-text">
                 Uncovering a modern day legend, SOULLIQO. Born out of sheer hard
@@ -55,8 +61,8 @@ const Whoweare = () => {
         </Container>
       </section>
       {/* Footer Section */}
-      <Footer/>
-    </div>  
+      <Footer />
+    </div>
   );
 };
 export default Whoweare;

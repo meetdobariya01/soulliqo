@@ -9,7 +9,7 @@ import {
   FaPhoneAlt,
   FaEnvelope,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";  
+import { Link } from "react-router-dom";
 import "../../index.css";
 const Footer = () => {
   return (
@@ -42,11 +42,7 @@ const Footer = () => {
                   >
                     <FaLinkedin />
                   </a>
-                  <a
-                    href="https://m.me"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                  <a href="https://m.me" target="_blank" rel="noreferrer">
                     <FaFacebookMessenger />
                   </a>
                   <a
@@ -76,7 +72,7 @@ const Footer = () => {
                 <ul>
                   <li><Link to="/login">Login</Link></li>
                   <li><Link to="/signup">Sign Up</Link></li>
-                  <li><Link to="/">Shop</Link></li>
+                  <li><Link to="/shop">Shop</Link></li>
                   <li><Link to="/brand-journey">Brand Journey</Link></li>
                   <li><Link to="/contact">Contact Us</Link></li>
                 </ul>

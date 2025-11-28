@@ -1,3 +1,17 @@
+// import React, { useState } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Form,
+  Carousel,
+  Tab,
+  Nav,
+} from "react-bootstrap";
+import { NavLink } from "react-router-dom";
+// import { Heart, HeartFill } from "react-bootstrap-icons";
+import "../../index.css";
 // import React, { useEffect, useState } from "react";
 // import { useParams } from "react-router-dom";
 // import { Container, Row, Col, Button, Form, Carousel, Tab, Nav } from "react-bootstrap";
@@ -332,7 +346,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Container, Row, Col, Button, Form, Carousel, Tab, Nav } from "react-bootstrap";
+// import { Container, Row, Col, Button, Form, Carousel, Tab, Nav } from "react-bootstrap";
 import { Heart, HeartFill, StarFill } from "react-bootstrap-icons";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
@@ -598,6 +612,17 @@ const Productdetails = () => {
                 +
               </Button>
               <Button
+                as={NavLink}
+                to="/boxcheckout"
+                className="ms-3 py-2 cart-btn font-light"
+                style={{
+                  backgroundColor: "#7B4B3A",
+                  border: "none",
+                  fontWeight: "400",
+                  fontFamily: "Poppins",
+                  fontSize: "20px",
+                  padding: "10px 30px",
+                }}
                 className="ms-3"
                 style={{ backgroundColor: "#7B4B3A", border: "none", color: "#fff" }}
                 onClick={handleAddToCart}
@@ -611,6 +636,88 @@ const Productdetails = () => {
 
         {/* Tabs for details and reviews */}
         <section className="py-5">
+          <Container>
+            {/* Tabs */}
+            <Tab.Container defaultActiveKey="details">
+              <Nav variant="tabs" className="mb-3 bg-color text-white p-2">
+                <Nav.Item>
+                  <Nav.Link eventKey="details" className="text-white nav-font">
+                    Product Details
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link
+                    eventKey="ingredients"
+                    className="text-white nav-font"
+                  >
+                    Ingredients
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="reviews" className="text-white nav-font">
+                    Reviews
+                  </Nav.Link>
+                </Nav.Item>
+              </Nav>
+              {/* Tab Content */}
+              <Tab.Content>
+                {/* Product Details */}
+                <Tab.Pane
+                  eventKey="details"
+                  className="animate_animated animate_fadeIn tab-content"
+                >
+                  <p>
+                    Step into a realm of unparalleled off-duty style with these
+                    grey acid wash joggers that effortlessly marry fashion with
+                    comfort. Crafted for those committed to style even on their
+                    days off, these joggers feature a chic drawstring waist and
+                    a wide leg cut. The distinctive acid wash adds a touch of
+                    urban edge, making these joggers a versatile choice for
+                    leisurely pursuits and relaxed outings. Elevate your casual
+                    wardrobe with the perfect blend of fashion-forward design
+                    and comfort-driven details, redefining off-duty elegance
+                    with every step.
+                  </p>
+                  <p>
+                    Step into a realm of unparalleled off-duty style with these
+                    grey acid wash joggers that effortlessly marry fashion with
+                    comfort. Crafted for those committed to style even on their
+                    days off, these joggers feature a chic drawstring waist and
+                    a wide leg cut. The distinctive acid wash adds a touch of
+                    urban edge, making these joggers a versatile choice for
+                    leisurely pursuits and relaxed outings. Elevate your casual
+                    wardrobe with the perfect blend of fashion-forward design
+                    and comfort-driven details, redefining off-duty elegance
+                    with every step.
+                  </p>
+                  <ul>
+                    <li>Dark grey</li>
+                    <li>Acid wash finish</li>
+                    <li>Drawstring waist</li>
+                    <li>Side slit pockets</li>
+                    <li>Pin tuck pleat</li>
+                    <li>Wide leg</li>
+                    <li>Model is 5’9”/175cm and wears UK 10/EU 38/US 6</li>
+                    <li>Product Code: 891545603</li>
+                  </ul>
+                </Tab.Pane>
+                {/* Ingredients */}
+                <Tab.Pane
+                  eventKey="ingredients"
+                  className="animate_animated animate_fadeIn"
+                >
+                  <p>Ingredient details will go here...</p>
+                </Tab.Pane>
+                {/* Reviews */}
+                <Tab.Pane
+                  eventKey="reviews"
+                  className="animate_animated animate_fadeIn"
+                >
+                  <p>Customer reviews will go here...</p>
+                </Tab.Pane>
+              </Tab.Content>
+            </Tab.Container>
+          </Container>
           <Tab.Container defaultActiveKey="details">
             <Nav variant="tabs" className="mb-3 bg-color text-white p-2">
               <Nav.Item>
