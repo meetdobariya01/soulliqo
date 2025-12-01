@@ -1,250 +1,425 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Row,
   Col,
   Button,
+  ProgressBar,
+  Breadcrumb,
   Spinner,
-  Nav,
-  Tab
+  Dropdown,
+  DropdownButton,
 } from "react-bootstrap";
-import { Heart } from "react-bootstrap-icons";
+import { NavLink, useParams, useLocation } from "react-router-dom";
+import axios from "axios";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
-import axios from "axios";
 
-const API_BASE = "http://localhost:5000/api/store";
+const Boxproduct = () => {
+  const params = useParams();
+  const location = useLocation();
 
-const BoxProduct = () => {
-  const { boxId } = useParams();
-  const navigate = useNavigate();
+  const rawCategoryId = params.categoryId;
+  const rawBoxId = params.boxId;
 
-  const [product, setProduct] = useState(null);
-  const [mainImage, setMainImage] = useState("");
-  const [qty, setQty] = useState(1);
-  const [pincode, setPincode] = useState("");
+  const fallbackCategoryId =
+    location?.state?.categoryId ||
+    location?.state?.category?.id ||
+    location?.state?.category?._id ||
+    location?.state?.box?.category?.id ||
+    location?.state?.box?.category?._id ||
+    null;
+
+  const categoryId =
+    rawCategoryId && rawCategoryId !== "undefined"
+      ? rawCategoryId
+      : fallbackCategoryId;
+
+  const boxId =
+    rawBoxId && rawBoxId !== "undefined"
+      ? rawBoxId
+      : location?.state?.box?._id || rawBoxId;
+
+  const [products, setProducts] = useState([]);
+  const [cart, setCart] = useState({});
+  const [box, setBox] = useState({});
+  const [boxLimit, setBoxLimit] = useState(16);
+  const [typeLimits, setTypeLimits] = useState({});
+  const [selectedType, setSelectedType] = useState("all");
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const resolveImage = (img) => {
+    if (!img) return "./images/product-grid.png";
+    if (/^(https?:)?\/\//i.test(img) || /^data:/i.test(img)) return img;
+    const base =
+      process.env.REACT_APP_API_URL || "http://localhost:5000";
+    if (img.startsWith("/")) return `${base}${img}`;
+    return `${base}/${img}`;
+  };
 
   useEffect(() => {
-    const fetchProduct = async () => {
+    const fetchChocolates = async () => {
+      if (!categoryId || !boxId) {
+        setError(
+          "Missing categoryId or boxId. Please navigate from the category/box selection page."
+        );
+        setProducts([]);
+        setBox({});
+        setBoxLimit(16);
+        setTypeLimits({});
+        setLoading(false);
+        setCart({});
+        return;
+      }
+
+      setLoading(true);
+      setError(null);
+
       try {
-        const res = await fetch(`${API_BASE}/boxes/${boxId}`);
-        if (!res.ok) throw new Error("Product not found");
+        const base =
+          process.env.REACT_APP_API_URL || "http://localhost:5000";
+        const url = `${base}/api/store/chocolates/${categoryId}/${boxId}`;
+        const res = await axios.get(url);
 
-        const data = await res.json();
-        setProduct(data);
+        const data = Array.isArray(res.data) ? res.data : [];
+        setProducts(data);
 
-        const images = Array.isArray(data.image)
-          ? data.image
-          : data.image?.split(",") || [];
+        if (data.length > 0) {
+          const fetchedBox = data[0].box || {};
+          setBox(fetchedBox);
+          setBoxLimit(fetchedBox.totalLimit || fetchedBox.size || 16);
 
-        if (images.length > 0) {
-          setMainImage(resolveImage(images[0]));
+          const normalizedTypeLimits = Object.fromEntries(
+            Object.entries(
+              fetchedBox.typeLimits || {}
+            ).map(([k, v]) => [k.toLowerCase(), v])
+          );
+
+          setTypeLimits(normalizedTypeLimits);
+        } else {
+          setBox({});
+          setBoxLimit(16);
+          setTypeLimits({});
         }
-      } catch (error) {
-        console.error("Product load error:", error);
+
+        setError(null);
+      } catch (err) {
+        console.error("Error fetching chocolates:", err);
+        const serverMessage = err?.response?.data?.message;
+        setError(
+          serverMessage ||
+            "Unable to load products. Please try again later."
+        );
+        setProducts([]);
+        setBox({});
+        setBoxLimit(16);
+        setTypeLimits({});
       } finally {
         setLoading(false);
+        setCart({});
       }
     };
 
-    fetchProduct();
-  }, [boxId]);
+    fetchChocolates();
+  }, [categoryId, boxId]);
 
-  const resolveImage = (img) => {
-    if (!img) return "https://via.placeholder.com/500";
-    if (img.startsWith("http")) return img;
-    return `http://localhost:5000/${img}`;
-  };
+  const typeCounts = products.reduce((acc, p) => {
+    const id = p._id;
+    const qty = cart[id] || 0;
+    const type = (p.chocolateType || p.type || "").toLowerCase();
+    if (!type) return acc;
+    acc[type] = (acc[type] || 0) + qty;
+    return acc;
+  }, {});
 
-  // ✅ ADD TO CART FUNCTION
-  const handleAddToCart = async () => {
-    const token = localStorage.getItem("token");
+  const chocolateTypes = [
+    "all",
+    ...new Set(
+      products
+        .map((p) =>
+          (p.chocolateType || p.type || "").toLowerCase()
+        )
+        .filter(Boolean)
+    ),
+  ];
 
-    if (!token) {
-      alert("Please login to add item to cart");
-      navigate("/login");
-      return;
-    }
+  const updateQuantity = (id, change) => {
+    setCart((prev) => {
+      const product = products.find((p) => p._id === id);
+      if (!product) return prev;
 
-    try {
-      await axios.post(
-        `/cart/add`,
-        {
-          productId: product._id,
-          quantity: qty,
-          type: "box"
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+      const currentQty = prev[id] || 0;
+      const newQty = Math.max(0, currentQty + change);
+
+      const prevTotal = Object.values(prev).reduce(
+        (a, b) => a + b,
+        0
       );
+      const delta = Math.max(0, newQty - currentQty);
+      const newTotal = prevTotal + delta;
 
-      // ✅ Redirect to Cart page
-      navigate("/cart");
-    } catch (error) {
-      console.error("Add to cart error:", error);
-      alert("Failed to add to cart");
-    }
+      if (change > 0 && newTotal > boxLimit) {
+        alert(
+          `Total limit reached: you can only select up to ${boxLimit} chocolates.`
+        );
+        return prev;
+      }
+
+      const type = (
+        product.chocolateType || product.type || ""
+      ).toLowerCase();
+
+      if (change > 0 && type && typeLimits[type] !== undefined) {
+        const prevTypeCount =
+          products.reduce((acc, p) => {
+            const pid = p._id;
+            const ptype = (
+              p.chocolateType || p.type || ""
+            ).toLowerCase();
+
+            if (!ptype) return acc;
+            acc[ptype] =
+              (acc[ptype] || 0) + (prev[pid] || 0);
+            return acc;
+          }, {})[type] || 0;
+
+        if (prevTypeCount + delta > typeLimits[type]) {
+          alert(
+            `You can only add up to ${
+              typeLimits[type]
+            } ${type.toUpperCase()} chocolates.`
+          );
+          return prev;
+        }
+      }
+
+      const updated = { ...prev, [id]: newQty };
+      if (updated[id] === 0) delete updated[id];
+      return updated;
+    });
   };
-
-  if (loading) {
-    return (
-      <>
-        <Header />
-        <Container className="py-5 text-center">
-          <Spinner animation="border" />
-        </Container>
-        <Footer />
-      </>
-    );
-  }
-
-  if (!product) {
-    return (
-      <>
-        <Header />
-        <Container className="py-5 text-center">
-          <h5>Product not found</h5>
-        </Container>
-        <Footer />
-      </>
-    );
-  }
-
-  const images = Array.isArray(product.image)
-    ? product.image
-    : product.image?.split(",") || [];
 
   return (
-    <>
+    <div>
       <Header />
 
-      <Container className="py-5" style={{ fontFamily: "Poppins, sans-serif" }}>
-        <Row>
-          {/* LEFT IMAGE AREA */}
-          <Col md={6} className="d-flex">
-            <div className="me-3 d-flex flex-column">
-              {images.map((img, i) => (
-                <img
-                  key={i}
-                  src={resolveImage(img)}
-                  alt="thumb"
-                  onClick={() => setMainImage(resolveImage(img))}
-                  style={{
-                    width: 70,
-                    height: 70,
-                    objectFit: "contain",
-                    border: "1px solid #ddd",
-                    marginBottom: 10,
-                    cursor: "pointer"
-                  }}
-                />
-              ))}
+      <Container fluid className="py-4 container">
+        <Breadcrumb>
+          <Breadcrumb.Item
+            className="box-title"
+            href="/ownbox"
+          >
+            BUILD YOUR OWN BOX
+          </Breadcrumb.Item>
+          <Breadcrumb.Item
+            className="box-header"
+            active
+          >
+            {box?.size ? `BOX OF ${box.size}` : "BOX"}
+          </Breadcrumb.Item>
+        </Breadcrumb>
+
+        <h5
+          className="text-center mb-4 boxproduct-title"
+          style={{ color: "#8B6F4E" }}
+        >
+          CHOOSE YOUR CHOCOLATES
+        </h5>
+
+        {/* ✅ TYPE DROPDOWN */}
+        <div className="d-flex justify-content-end mb-3">
+          <DropdownButton
+            title={
+              selectedType === "all"
+                ? "All Types"
+                : selectedType.toUpperCase()
+            }
+            variant="outline-dark"
+            size="sm"
+          >
+            {chocolateTypes.map((type) => (
+              <Dropdown.Item
+                key={type}
+                onClick={() => setSelectedType(type)}
+                active={selectedType === type}
+              >
+                {type === "all"
+                  ? "All Types"
+                  : type.toUpperCase()}
+              </Dropdown.Item>
+            ))}
+          </DropdownButton>
+        </div>
+
+        {loading ? (
+          <div className="text-center my-5">
+            <Spinner animation="border" variant="warning" />
+            <p className="mt-2 text-muted">
+              Loading chocolates...
+            </p>
+          </div>
+        ) : error ? (
+          <div className="text-center my-5">
+            <p className="text-danger">{error}</p>
+            <div className="mt-2">
+              <NavLink
+                to="/sweetindulgence"
+                style={{ textDecoration: "none" }}
+              >
+                <Button variant="outline-dark">
+                  Back to Categories
+                </Button>
+              </NavLink>
+            </div>
+          </div>
+        ) : products.length === 0 ? (
+          <div className="text-center my-5 text-muted">
+            No products found for this category.
+          </div>
+        ) : (
+          <Row>
+            {products
+              .filter((product) => {
+                const type = (
+                  product.type ||
+                  product.chocolateType ||
+                  ""
+                ).toLowerCase();
+
+                if (typeLimits && typeLimits[type] === 0)
+                  return false;
+
+                if (
+                  selectedType !== "all" &&
+                  type !== selectedType
+                )
+                  return false;
+
+                return true;
+              })
+              .map((product) => {
+                const id = product._id;
+                const name =
+                  product.name ||
+                  product.chocolateName ||
+                  "Chocolate";
+                const type =
+                  product.type ||
+                  product.chocolateType ||
+                  "";
+                const img = resolveImage(product.image);
+
+                return (
+                  <Col
+                    key={id}
+                    xs={6}
+                    sm={4}
+                    md={3}
+                    lg={2}
+                    className="mb-4"
+                  >
+                    <div className="text-center">
+                      <p className="small fw-semibold boxproduct-name">
+                        {name}
+                      </p>
+                      {type && (
+                        <p className="text-muted small">
+                          {type} Chocolate
+                        </p>
+                      )}
+                      <div className="d-flex justify-content-center align-items-center">
+                        <Button
+                          variant="light"
+                          className="border rounded-0"
+                          onClick={() =>
+                            updateQuantity(id, -1)
+                          }
+                        >
+                          -
+                        </Button>
+                        <span
+                          className="px-3 py-1 border-top border-bottom"
+                          style={{
+                            minWidth: 30,
+                            textAlign: "center",
+                          }}
+                        >
+                          {cart[id] || 0}
+                        </span>
+                        <Button
+                          variant="light"
+                          className="border rounded-0"
+                          onClick={() =>
+                            updateQuantity(id, 1)
+                          }
+                        >
+                          +
+                        </Button>
+                      </div>
+                    </div>
+                  </Col>
+                );
+              })}
+          </Row>
+        )}
+
+        {Object.values(cart).reduce((a, b) => a + b, 0) >
+          0 && (
+          <div
+            className="position-fixed bottom-0 start-0 w-100 bg-dark shadow-lg p-3 d-flex justify-content-between align-items-center"
+            style={{ zIndex: 999 }}
+          >
+            <div className="flex-grow-1 me-3 text-light">
+              <p className="mb-1 small">
+                Select up to {boxLimit} total |{" "}
+                <strong>
+                  {Object.values(cart).reduce(
+                    (a, b) => a + b,
+                    0
+                  )}{" "}
+                  selected
+                </strong>
+              </p>
+
+              <ProgressBar
+                now={
+                  (Object.values(cart).reduce(
+                    (a, b) => a + b,
+                    0
+                  ) /
+                    boxLimit) *
+                  100
+                }
+                variant="warning"
+                style={{ height: 6 }}
+              />
             </div>
 
-            <div className="flex-grow-1">
-              <img
-                src={mainImage}
-                alt={product.name}
+            <NavLink
+              to="/boxcheckout"
+              state={{ cart, products, box }}
+              style={{ textDecoration: "none" }}
+            >
+              <Button
+                variant="dark"
+                className="px-4 py-2 rounded-0"
                 style={{
-                  width: "100%",
-                  height: 420,
-                  objectFit: "contain",
-                  background: "#f5f5f5"
+                  backgroundColor: "#fff",
+                  border: "none",
+                  color: "#6F524C",
                 }}
-              />
-            </div>
-          </Col>
-
-          {/* RIGHT INFO AREA */}
-          <Col md={6}>
-            <h2 className="fw-semibold">{product.name}</h2>
-            <p className="text-muted">{product.weight || "100gm"}</p>
-
-            <h4 className="mb-3">
-              ₹{product.price}{" "}
-              {product.oldPrice && (
-                <small className="text-decoration-line-through text-muted ms-2">
-                  ₹{product.oldPrice}
-                </small>
-              )}
-            </h4>
-
-            <div className="d-flex align-items-center gap-2 mb-3">
-              <Heart /> <span>Add to Wish List</span>
-            </div>
-
-            {/* Pincode */}
-            <div className="d-flex align-items-center gap-2 mb-3">
-              <input
-                type="text"
-                className="form-control"
-                style={{ maxWidth: 200 }}
-                placeholder="Enter pincode"
-                value={pincode}
-                onChange={(e) => setPincode(e.target.value)}
-              />
-              <Button variant="link" className="fw-semibold">
-                CHECK
+              >
+                Review Your Order
               </Button>
-            </div>
-
-            {/* Quantity & Add to Cart */}
-            <div className="d-flex align-items-center gap-3 mt-3">
-              <div className="d-flex border">
-                <Button
-                  variant="light"
-                  onClick={() => setQty(qty > 1 ? qty - 1 : 1)}
-                >
-                  -
-                </Button>
-
-                <div className="px-4 d-flex align-items-center">
-                  {qty}
-                </div>
-
-                <Button variant="light" onClick={() => setQty(qty + 1)}>
-                  +
-                </Button>
-              </div>
-
-              <Button className="px-4" variant="dark" onClick={handleAddToCart}>
-                Add to Cart
-              </Button>
-            </div>
-          </Col>
-        </Row>
-
-        {/* TABS SECTION */}
-        <Tab.Container defaultActiveKey="details">
-          <Nav variant="tabs" className="mt-5">
-            <Nav.Item>
-              <Nav.Link eventKey="details">Product Details</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link eventKey="reviews">Reviews</Nav.Link>
-            </Nav.Item>
-          </Nav>
-
-          <Tab.Content className="border p-4 bg-white">
-            <Tab.Pane eventKey="details">
-              <p>{product.description || "No description available."}</p>
-            </Tab.Pane>
-
-            <Tab.Pane eventKey="reviews">
-              <p>No reviews yet.</p>
-            </Tab.Pane>
-          </Tab.Content>
-        </Tab.Container>
+            </NavLink>
+          </div>
+        )}
       </Container>
 
       <Footer />
-    </>
+    </div>
   );
 };
 
-export default BoxProduct;
+export default Boxproduct;

@@ -101,12 +101,12 @@ import "../../index.css";
 //     if (!res.ok) return alert(data.message || "Failed to add to cart.");
 
 //     alert(`✅ Added ${qty} ${product.name} to cart`);
-    
+
 //     // ✅ Redirect to cart page after successful add
 //     window.location.href = "/cart";
 //     // or use navigate("/cart") if using React Router hook
 //     // navigate("/cart");
-    
+
 //   } catch (err) {
 //     console.error(err);
 //     alert("Error adding to cart");
@@ -346,7 +346,6 @@ import "../../index.css";
 
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-// import { Container, Row, Col, Button, Form, Carousel, Tab, Nav } from "react-bootstrap";
 import { Heart, HeartFill, StarFill } from "react-bootstrap-icons";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
@@ -355,7 +354,6 @@ import Reletedproduct from "../../components/reletedproduct/reletedproduct";
 const Productdetails = () => {
   const { id } = useParams();
   const Api = "http://localhost:5000";
-
   const [product, setProduct] = useState(null);
   const [qty, setQty] = useState(1);
   const [wishlist, setWishlist] = useState(false);
@@ -368,7 +366,6 @@ const Productdetails = () => {
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [loadingCart, setLoadingCart] = useState(false);
   const [loadingWishlist, setLoadingWishlist] = useState(false);
-
   const token = localStorage.getItem("token");
   const userId = localStorage.getItem("userId") || "DEMO_USER_ID_123";
 
@@ -618,28 +615,24 @@ const Productdetails = () => {
                 style={{
                   backgroundColor: "#7B4B3A",
                   border: "none",
+                  color: "#fff",
                   fontWeight: "400",
                   fontFamily: "Poppins",
                   fontSize: "20px",
                   padding: "10px 30px",
                 }}
-                className="ms-3"
-                style={{ backgroundColor: "#7B4B3A", border: "none", color: "#fff" }}
                 onClick={handleAddToCart}
                 disabled={loadingCart}
               >
                 {loadingCart ? "Adding..." : "Add to Cart"}
               </Button>
+
             </div>
           </Col>
         </Row>
 
         {/* Tabs for details and reviews */}
         <section className="py-5">
-          <Container>
-            {/* Tabs */}
-         
-          </Container>
           <Tab.Container defaultActiveKey="details">
             <Nav variant="tabs" className="mb-3 bg-color text-white p-2">
               <Nav.Item>

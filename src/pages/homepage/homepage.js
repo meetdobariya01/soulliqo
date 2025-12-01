@@ -7,7 +7,6 @@ import Collection from "../../components/collection/collection";
 import Discover from "../../components/discover/discover";
 import Custmerlove from "../../components/custmerlove/custmerlove";
 import Footer from "../../components/footer/footer";
-import Carousel from "../../components/carousel/carousel";
 import Mycarousel from "../../components/carousel/carousel";
 const Homepage = () => {
   return (
@@ -82,7 +81,7 @@ const Homepage = () => {
                 Make the gift of Soulliqo that little bit sweeter by adding a
                 free personalized message.
               </p>
-              <Button as={NavLink} to="/ownbox" className="makebox-btn">
+              <Button as={NavLink} to="/boxcollection" className="makebox-btn">
                 Shop Now
               </Button>
             </div>

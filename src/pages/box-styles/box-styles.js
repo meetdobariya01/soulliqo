@@ -101,12 +101,18 @@ const BoxStyles = () => {
                     <p className="small text-muted">{box.description}</p>
                     <p className="fw-bold">₹{box.price}</p>
 
-                
+
                     <Button
                       variant="dark"
                       className="w-100"
                       onClick={() =>
-                        navigate(`/product/${category?._id}/${box._id}`)
+                        navigate(`/boxproduct/${box.category}/${box._id}`, {
+                          state: {
+                            categoryId: box.category,
+                            box: box,
+                            category: category
+                          }
+                        })
                       }
                     >
                       Build This Box

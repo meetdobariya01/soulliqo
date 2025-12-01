@@ -39,7 +39,7 @@ import Refundandcancellation from "./pages/refund&cancellationpolicy/refundandca
 import Gallery from "./pages/gallery/gallery";
 import Order from "./pages/orders/order";
 import Shiping from "./pages/shiping/shiping";
-import Error from "./pages/error/error";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

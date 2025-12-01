@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Carousel from "react-bootstrap/Carousel";
 import { Card, Spinner } from "react-bootstrap";
 import axios from "axios";
-import { Cash } from "react-bootstrap-icons";
+
 
 const API_BASE = "http://localhost:5000";
 
