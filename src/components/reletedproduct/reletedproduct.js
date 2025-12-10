@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const Reletedproduct = ({ category, currentProductId }) => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
-  const Api = "http://localhost:5000"; // ✅ base API path
+  const Api = process.env.REACT_APP_API_URL; // ✅ base API path
 
   useEffect(() => {
     const fetchProducts = async () => {

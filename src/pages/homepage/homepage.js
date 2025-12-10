@@ -2,51 +2,38 @@ import React from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import "../../index.css";
+
 import Header from "../../components/header/header";
 import Collection from "../../components/collection/collection";
 import Discover from "../../components/discover/discover";
 import Custmerlove from "../../components/custmerlove/custmerlove";
 import Footer from "../../components/footer/footer";
 import Mycarousel from "../../components/carousel/carousel";
+
 const Homepage = () => {
   return (
     <div>
       {/* Header */}
       <Header />
-      {/* Desktop View Section */}
+
+      {/* Carousel Section */}
       <Mycarousel />
-     
-      {/* <div className="choco-text-section d-none d-md-block">
-        <Container fluid>
-          <Row className="align-items-center">
-            <Col md={8} className="text-center">
-              <h2 className="choco-title slice-of-heaven">Slice of Heaven</h2>
-              <h3 className="choco-brand">
-                <span className="highlight">SOULLIQO</span>{" "}
-                <span className="script the-nautigal-bold">
-                  chocolate poetry
-                </span>
-              </h3>
-            </Col>
-            <Col md={4} className="flower-col">
-              <div className="flower-img"></div>
-            </Col>
-          </Row>
-        </Container>
-      </div> */}
-      {/* collection component */}
+
+      {/* Collection Component */}
       <Collection />
-      {/* Video Section */}
+
+      {/* Our Story Section */}
       <section className="our-story">
         <div className="container text-center">
           <h2 className="mb-4 montserrat-font text-uppercase">Our Story</h2>
-          <p className=" mx-auto mb-4 story-text figtree-font">
+          <p className="mx-auto mb-4 story-text figtree-font">
             We are farmers, fermenters, chocolate makers, chocolatiers and
             storytellers from India, in search of a distinct identity for
             chocolate that we can proudly call our own. In our pursuit, we are
             expressing the true flavours of Indian Cacao in endless
             interpretations of chocolate, like never before.
           </p>
+
           <div className="video-container">
             <video
               className="story-video"
@@ -62,29 +49,30 @@ const Homepage = () => {
           </div>
         </div>
       </section>
+
       {/* Discover Component */}
       <Discover />
-      {/* Make your own Box */}
+
+      {/* Make Your Own Box Section */}
       <Container fluid className="makebox-section py-5 container">
         <Row className="align-items-center">
+
           {/* Left Content */}
-          <Col
-            lg={6}
-            md={12}
-            className="text-center text-lg-start mb-4 mb-lg-0"
-          >
+          <Col lg={6} md={12} className="text-center text-lg-start mb-4 mb-lg-0">
             <div className="flower-bg">
               <h2 className="makebox-title montserrat-font text-uppercase text-center text-lg-end mb-4 mb-lg-0">
                 Make your own Box
               </h2>
+
               <p className="makebox-text figtree-font text-center text-lg-end mb-4 mb-lg-0">
                 Make the gift of Soulliqo that little bit sweeter by adding a
                 free personalized message.
               </p>
+
               <div className="d-flex justify-content-lg-end justify-content-center mt-3">
                 <Button
                   as={NavLink}
-                  to="/ownbox"
+                  to="/ownbox"  
                   style={{
                     backgroundColor: "#7B5B54",
                     color: "#fff",
@@ -100,6 +88,7 @@ const Homepage = () => {
               </div>
             </div>
           </Col>
+
           {/* Right Image */}
           <Col lg={6} md={12} className="text-center">
             <img
@@ -110,7 +99,8 @@ const Homepage = () => {
           </Col>
         </Row>
       </Container>
-      {/* Customer Love Component */}
+
+      {/* Customer Love */}
       <Custmerlove />
 
       {/* Footer */}
@@ -118,4 +108,5 @@ const Homepage = () => {
     </div>
   );
 };
+
 export default Homepage;

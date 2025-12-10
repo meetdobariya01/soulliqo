@@ -6,7 +6,7 @@ import axios from "axios";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
 
-const API_BASE = "http://localhost:5000/api/store";
+const API_BASE = process.env.REACT_APP_API_URL + "/api/store";
 
 const BoxStyles = () => {
   const { collectionId, size } = useParams();
