@@ -54,7 +54,7 @@ const Header = () => {
           <Nav className="mx-auto d-none d-lg-flex navbar-font">
 
             {/* SHOP Dropdown */}
-            <NavDropdown title="SHOP" id="shop-dropdown" className="custom-dropdown">
+            <NavDropdown title="SHOP" id="shop-dropdown" className="custom-dropdown figtree-font ">
               {categories.length > 0 ? (
                 categories.map((category) => (
                   <NavDropdown.Item key={category.id} href={category.link}>
@@ -68,16 +68,16 @@ const Header = () => {
             </NavDropdown>
 
             {/* BRAND JOURNEY */}
-            <NavDropdown title="THE SOULLIQO STORY" id="brand-dropdown" className="custom-dropdown">
+            <NavDropdown title="THE SOULLIQO STORY" id="brand-dropdown" className="custom-dropdown figtree-font ">
               <NavDropdown.Item href="/whoweare">Who we Are</NavDropdown.Item>
               <NavDropdown.Item href="/ourmission">Our Mission and Values</NavDropdown.Item>
               <NavDropdown.Item href="/aboutus">All about SOULLIQO</NavDropdown.Item>
               <NavDropdown.Item href="/brandethos">Brand Ethos</NavDropdown.Item>
             </NavDropdown>
 
-            <Nav.Link href="/contactus">CONTACT US</Nav.Link>
+            <Nav.Link className="figtree-font" href="/contactus">CONTACT US</Nav.Link>
 
-              <Nav.Link href="/gallery">Gallery</Nav.Link>  
+              <Nav.Link className="figtree-font" href="/gallery">LOOKBOOK</Nav.Link>  
           </Nav>
 
           {/* Right Icons */}
@@ -99,7 +99,7 @@ const Header = () => {
         {/* Mobile Menu */}
         <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
           <Nav className="flex-column text-center">
-            <NavDropdown title="SHOP" id="mobile-shop-dropdown" className="custom-dropdown">
+            <NavDropdown title="SHOP" id="mobile-shop-dropdown" className="custom-dropdown figtree-font ">
               {categories.map((category) => (
                 <NavDropdown.Item
                   key={category.id}
@@ -112,16 +112,16 @@ const Header = () => {
             </NavDropdown>
 
             {/* Mobile BRAND JOURNEY */}
-            <NavDropdown title="BRAND JOURNEY" id="mobile-brand-dropdown" className="custom-dropdown">
+            <NavDropdown title="BRAND JOURNEY" id="mobile-brand-dropdown" className="custom-dropdown figtree-font ">
               <NavDropdown.Item href="/whoweare" onClick={() => setMenuOpen(false)}>Who we Are</NavDropdown.Item>
               <NavDropdown.Item href="/ourmission" onClick={() => setMenuOpen(false)}>Our Mission and Values</NavDropdown.Item>
               <NavDropdown.Item href="/aboutus" onClick={() => setMenuOpen(false)}>All about SOULLIQO</NavDropdown.Item>
               <NavDropdown.Item href="/brandethos" onClick={() => setMenuOpen(false)}>Brand Ethos</NavDropdown.Item>
             </NavDropdown>
 
-            <Nav.Link href="/contactus" onClick={() => setMenuOpen(false)}>CONTACT US</Nav.Link>
+            <Nav.Link className="figtree-font" href="/contactus" onClick={() => setMenuOpen(false)}>CONTACT US</Nav.Link>
 
-             <Nav.Link href="/gallery" onClick={() => setMenuOpen(false)}>Gallery</Nav.Link>
+             <Nav.Link className="figtree-font" href="/gallery" onClick={() => setMenuOpen(false)}>LOOKBOOK</Nav.Link>
           </Nav>
         </div>
       </Navbar>
