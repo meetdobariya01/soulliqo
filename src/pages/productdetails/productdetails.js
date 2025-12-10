@@ -101,12 +101,12 @@ import "../../index.css";
 //     if (!res.ok) return alert(data.message || "Failed to add to cart.");
 
 //     alert(`✅ Added ${qty} ${product.name} to cart`);
-    
+
 //     // ✅ Redirect to cart page after successful add
 //     window.location.href = "/cart";
 //     // or use navigate("/cart") if using React Router hook
 //     // navigate("/cart");
-    
+
 //   } catch (err) {
 //     console.error(err);
 //     alert("Error adding to cart");
@@ -344,10 +344,8 @@ import "../../index.css";
 // export default Productdetails;
 
 
-
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-// import { Container, Row, Col, Button, Form, Carousel, Tab, Nav } from "react-bootstrap";
 import { Heart, HeartFill, StarFill } from "react-bootstrap-icons";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
@@ -356,7 +354,6 @@ import Reletedproduct from "../../components/reletedproduct/reletedproduct";
 const Productdetails = () => {
   const { id } = useParams();
   const Api = "http://localhost:5000";
-
   const [product, setProduct] = useState(null);
   const [qty, setQty] = useState(1);
   const [wishlist, setWishlist] = useState(false);
@@ -369,7 +366,6 @@ const Productdetails = () => {
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [loadingCart, setLoadingCart] = useState(false);
   const [loadingWishlist, setLoadingWishlist] = useState(false);
-
   const token = localStorage.getItem("token");
   const userId = localStorage.getItem("userId") || "DEMO_USER_ID_123";
 
@@ -381,7 +377,7 @@ const Productdetails = () => {
     }
   };
 
-  // Fetch product data and reviews whenever id changes
+  // ✅ Fetch product + reviews
   useEffect(() => {
     const fetchProductData = async () => {
       try {
@@ -397,7 +393,7 @@ const Productdetails = () => {
         const reviewsData = await safeJson(reviewsRes);
         setReviews(reviewsData);
 
-        // Wishlist check
+        // Check wishlist
         if (data && data._id) {
           const wishlistRes = await fetch(`${Api}/wishlist/${userId}`, {
             headers: { Authorization: `Bearer ${token}` },
@@ -416,7 +412,7 @@ const Productdetails = () => {
     fetchProductData();
   }, [id, token, userId]);
 
-  // Add to cart
+  // ✅ Add to cart
   const handleAddToCart = async () => {
     if (!token) return alert("Please login to add items to cart.");
     setLoadingCart(true);
@@ -434,8 +430,6 @@ const Productdetails = () => {
       if (!res.ok) return alert(data.message || "Failed to add to cart.");
 
       alert(`✅ Added ${qty} ${product.name} to cart`);
-
-      // Redirect to cart page
       window.location.href = "/cart";
     } catch (err) {
       console.error(err);
@@ -444,7 +438,7 @@ const Productdetails = () => {
     setLoadingCart(false);
   };
 
-  // Wishlist toggle
+  // ✅ Wishlist toggle
   const handleWishlist = async () => {
     if (!token) return alert("Please login to manage your wishlist.");
     setLoadingWishlist(true);
@@ -473,7 +467,7 @@ const Productdetails = () => {
     setLoadingWishlist(false);
   };
 
-  // Pincode check
+  // ✅ Pincode check
   const handleCheckPincode = () => {
     const pincodePattern = /^[1-9][0-9]{5}$/;
     if (pincodePattern.test(pincode)) {
@@ -483,7 +477,7 @@ const Productdetails = () => {
     }
   };
 
-  // Submit review
+  // ✅ Submit review
   const handleSubmitReview = async () => {
     if (!rating || !reviewText) return alert("Please provide rating and review text.");
     if (!token) return alert("Please login to submit a review.");
@@ -508,27 +502,27 @@ const Productdetails = () => {
 
   if (!product) return <div>Loading...</div>;
 
-  // ✅ FIXED IMAGE HANDLING (supports CSV, arrays, URLs)
+  // ✅ FIXED IMAGE HANDLING (handles arrays or comma-separated values)
   const images = (() => {
     if (!product?.image) return [];
 
     if (Array.isArray(product.image)) {
-      return product.image.map((img) =>
-        img.startsWith("http") ? img : `${Api}${img}`
-      );
+      return product.image
+        .flatMap((img) => img.split(",").map((i) => i.trim()))
+        .filter(Boolean)
+        .map((img) => (img.startsWith("http") ? img : `${Api}${img}`));
     }
 
     if (typeof product.image === "string") {
       return product.image
         .split(",")
         .map((img) => img.trim())
+        .filter(Boolean)
         .map((img) => (img.startsWith("http") ? img : `${Api}${img}`));
     }
 
     return [];
   })();
-
-  console.log("✅ Product Images:", images);
 
   const averageRating =
     reviews.length > 0 ? reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length : 0;
@@ -621,106 +615,24 @@ const Productdetails = () => {
                 style={{
                   backgroundColor: "#7B4B3A",
                   border: "none",
+                  color: "#fff",
                   fontWeight: "400",
                   fontFamily: "Poppins",
                   fontSize: "20px",
                   padding: "10px 30px",
                 }}
-                className="ms-3"
-                style={{ backgroundColor: "#7B4B3A", border: "none", color: "#fff" }}
                 onClick={handleAddToCart}
                 disabled={loadingCart}
               >
                 {loadingCart ? "Adding..." : "Add to Cart"}
               </Button>
+
             </div>
           </Col>
         </Row>
 
         {/* Tabs for details and reviews */}
         <section className="py-5">
-          <Container>
-            {/* Tabs */}
-            <Tab.Container defaultActiveKey="details">
-              <Nav variant="tabs" className="mb-3 bg-color text-white p-2">
-                <Nav.Item>
-                  <Nav.Link eventKey="details" className="text-white nav-font">
-                    Product Details
-                  </Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link
-                    eventKey="ingredients"
-                    className="text-white nav-font"
-                  >
-                    Ingredients
-                  </Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="reviews" className="text-white nav-font">
-                    Reviews
-                  </Nav.Link>
-                </Nav.Item>
-              </Nav>
-              {/* Tab Content */}
-              <Tab.Content>
-                {/* Product Details */}
-                <Tab.Pane
-                  eventKey="details"
-                  className="animate_animated animate_fadeIn tab-content"
-                >
-                  <p>
-                    Step into a realm of unparalleled off-duty style with these
-                    grey acid wash joggers that effortlessly marry fashion with
-                    comfort. Crafted for those committed to style even on their
-                    days off, these joggers feature a chic drawstring waist and
-                    a wide leg cut. The distinctive acid wash adds a touch of
-                    urban edge, making these joggers a versatile choice for
-                    leisurely pursuits and relaxed outings. Elevate your casual
-                    wardrobe with the perfect blend of fashion-forward design
-                    and comfort-driven details, redefining off-duty elegance
-                    with every step.
-                  </p>
-                  <p>
-                    Step into a realm of unparalleled off-duty style with these
-                    grey acid wash joggers that effortlessly marry fashion with
-                    comfort. Crafted for those committed to style even on their
-                    days off, these joggers feature a chic drawstring waist and
-                    a wide leg cut. The distinctive acid wash adds a touch of
-                    urban edge, making these joggers a versatile choice for
-                    leisurely pursuits and relaxed outings. Elevate your casual
-                    wardrobe with the perfect blend of fashion-forward design
-                    and comfort-driven details, redefining off-duty elegance
-                    with every step.
-                  </p>
-                  <ul>
-                    <li>Dark grey</li>
-                    <li>Acid wash finish</li>
-                    <li>Drawstring waist</li>
-                    <li>Side slit pockets</li>
-                    <li>Pin tuck pleat</li>
-                    <li>Wide leg</li>
-                    <li>Model is 5’9”/175cm and wears UK 10/EU 38/US 6</li>
-                    <li>Product Code: 891545603</li>
-                  </ul>
-                </Tab.Pane>
-                {/* Ingredients */}
-                <Tab.Pane
-                  eventKey="ingredients"
-                  className="animate_animated animate_fadeIn"
-                >
-                  <p>Ingredient details will go here...</p>
-                </Tab.Pane>
-                {/* Reviews */}
-                <Tab.Pane
-                  eventKey="reviews"
-                  className="animate_animated animate_fadeIn"
-                >
-                  <p>Customer reviews will go here...</p>
-                </Tab.Pane>
-              </Tab.Content>
-            </Tab.Container>
-          </Container>
           <Tab.Container defaultActiveKey="details">
             <Nav variant="tabs" className="mb-3 bg-color text-white p-2">
               <Nav.Item>

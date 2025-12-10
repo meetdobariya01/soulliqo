@@ -4,6 +4,7 @@ const Product = require("../Models/Product");
 const router = express.Router();
 const mongoose = require("mongoose");
 const { authenticate } = require("../Middleware/authenticate");
+const Box = require("../Models/Box");
 
 // GET all products (optional category filter)
 router.get(
@@ -64,18 +65,20 @@ router.get(
 );
 
 // ✅ GET single product by ID
-router.get("/:id", asyncHandler(async (req, res) => {
-  const { id } = req.params;
+router.get("/:id", async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({ message: "Invalid product ID" });
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.json(product);
+  } catch (error) {
+    console.error("Product fetch error:", error);
+    res.status(500).json({ message: "Server error" });
   }
-
-  const product = await Product.findById(id).lean();
-  if (!product) return res.status(404).json({ message: "Product not found" });
-
-  res.json(product);
-}));
+});
 router.post("/:id/review", authenticate, async (req, res) => {
   const { rating, text } = req.body;
   const productId = req.params.id;
@@ -97,5 +100,9 @@ router.post("/:id/review", authenticate, async (req, res) => {
 
   res.status(201).json({ message: "Review & rating submitted successfully", ratings: product.ratings });
 });
+
+
+
+
 
 module.exports = router;

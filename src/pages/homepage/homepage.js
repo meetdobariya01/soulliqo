@@ -7,7 +7,6 @@ import Collection from "../../components/collection/collection";
 import Discover from "../../components/discover/discover";
 import Custmerlove from "../../components/custmerlove/custmerlove";
 import Footer from "../../components/footer/footer";
-import Carousel from "../../components/carousel/carousel";
 import Mycarousel from "../../components/carousel/carousel";
 const Homepage = () => {
   return (
@@ -88,12 +87,12 @@ const Homepage = () => {
                   to="/ownbox"
                   style={{
                     backgroundColor: "#7B5B54",
-                    color: "#f0dfc9",
+                    color: "#fff",
                     fontSize: "16px",
                     padding: "10px 20px",
                     border: "none",
                     textDecoration: "none",
-                    fontFamily: 'Figtree',
+                    fontFamily: "Tenor Sans",
                   }}
                 >
                   Shop Now

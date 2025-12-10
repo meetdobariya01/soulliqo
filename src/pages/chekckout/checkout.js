@@ -193,11 +193,11 @@ const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 const Checkout = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [cart, setCart] = useState(
+
+  const [cart] = useState(
     location.state?.cart || JSON.parse(localStorage.getItem("checkoutCart") || "{}")
   );
 
-  const [totalAmount, setTotalAmount] = useState(0);
   const [address, setAddress] = useState({
     country: "India",
     firstName: "",
@@ -209,13 +209,27 @@ const Checkout = () => {
     email: "",
   });
 
+  const [subtotal, setSubtotal] = useState(0);
+  const [sgst, setSgst] = useState(0);
+  const [cgst, setCgst] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(0);
+
+  // ✅ Calculate totals with tax
   useEffect(() => {
     if (cart?.items?.length) {
-      const total = cart.items.reduce((sum, item) => {
-        const itemPrice = Number(item.price) || Number(item.product?.price) || 0;
+      const sub = cart.items.reduce((sum, item) => {
+        const price = Number(item.price) || Number(item.product?.price) || 0;
         const qty = Number(item.quantity) || 1;
-        return sum + itemPrice * qty;
+        return sum + price * qty;
       }, 0);
+
+      const sgstVal = sub * 0.025;
+      const cgstVal = sub * 0.025;
+      const total = sub + sgstVal + cgstVal;
+
+      setSubtotal(sub);
+      setSgst(sgstVal);
+      setCgst(cgstVal);
       setTotalAmount(total);
     }
   }, [cart]);
@@ -228,40 +242,62 @@ const Checkout = () => {
     );
   }
 
-const handlePlaceOrder = async () => {
-  if (!address.city || !address.pincode) {
-    alert("Please enter city and pincode before placing order.");
-    return;
-  }
+  // ✅ Handle multiple image types
+  const getImageList = (item) => {
+    const rawImage =
+      item.image || item.product?.image || item.box?.image || [];
 
-  try {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      alert("Please log in first.");
-      navigate("/login");
+    if (Array.isArray(rawImage)) {
+      return rawImage
+        .flatMap((img) => img.split(",").map((i) => i.trim()))
+        .filter(Boolean)
+        .map((img) => (img.startsWith("http") ? img : `${API_BASE_URL}${img}`));
+    }
+
+    if (typeof rawImage === "string") {
+      return rawImage
+        .split(",")
+        .map((i) => i.trim())
+        .filter(Boolean)
+        .map((img) => (img.startsWith("http") ? img : `${API_BASE_URL}${img}`));
+    }
+
+    return [`${API_BASE_URL}/images/product-grid.png`];
+  };
+
+  const handlePlaceOrder = async () => {
+    if (!address.city || !address.pincode || !address.email) {
+      alert("Please enter city, pincode, and email before placing order.");
       return;
     }
 
-    const res = await axios.post(
-      `${API_BASE_URL}/orders/place`,
-      { address },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("Please log in first.");
+        navigate("/login");
+        return;
       }
-    );
 
-    alert("✅ Order placed successfully!");
-    localStorage.removeItem("checkoutCart");
-    navigate("/");
-  } catch (err) {
-    console.error("Order placement failed:", err);
-    alert("❌ Failed to place order. Please try again.");
-  }
-};
+      await axios.post(
+        `${API_BASE_URL}/orders/place`,
+        { address },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
+      alert("✅ Order placed successfully!");
+      localStorage.removeItem("checkoutCart");
+      navigate("/");
+    } catch (err) {
+      console.error("Order placement failed:", err);
+      alert(err.response?.data?.message || "❌ Failed to place order. Try again.");
+    }
+  };
 
   return (
     <div>
@@ -269,7 +305,7 @@ const handlePlaceOrder = async () => {
       <Container fluid className="py-4 px-3 container">
         <h5 className="checkout-title mb-4">CHECKOUT</h5>
         <Row>
-          {/* LEFT SIDE - DELIVERY FORM */}
+          {/* LEFT: Address + Payment */}
           <Col md={7} className="mb-4">
             <h6 className="mb-3">Contact</h6>
             <Form.Control
@@ -279,6 +315,7 @@ const handlePlaceOrder = async () => {
               value={address.email}
               onChange={(e) => setAddress({ ...address, email: e.target.value })}
             />
+
             <h6 className="mb-3">Delivery</h6>
             <Row>
               <Col md={12} className="mb-3">
@@ -290,6 +327,7 @@ const handlePlaceOrder = async () => {
                   <option>India</option>
                 </Form.Select>
               </Col>
+
               <Col md={6} className="mb-3">
                 <Form.Control
                   type="text"
@@ -298,6 +336,7 @@ const handlePlaceOrder = async () => {
                   onChange={(e) => setAddress({ ...address, firstName: e.target.value })}
                 />
               </Col>
+
               <Col md={6} className="mb-3">
                 <Form.Control
                   type="text"
@@ -306,14 +345,16 @@ const handlePlaceOrder = async () => {
                   onChange={(e) => setAddress({ ...address, lastName: e.target.value })}
                 />
               </Col>
+
               <Col md={12} className="mb-3">
                 <Form.Control
                   type="text"
-                  placeholder="Address"
+                  placeholder="Street Address"
                   value={address.street}
                   onChange={(e) => setAddress({ ...address, street: e.target.value })}
                 />
               </Col>
+
               <Col md={6} className="mb-3">
                 <Form.Control
                   type="text"
@@ -322,6 +363,7 @@ const handlePlaceOrder = async () => {
                   onChange={(e) => setAddress({ ...address, city: e.target.value })}
                 />
               </Col>
+
               <Col md={3} className="mb-3">
                 <Form.Control
                   type="text"
@@ -330,6 +372,7 @@ const handlePlaceOrder = async () => {
                   onChange={(e) => setAddress({ ...address, state: e.target.value })}
                 />
               </Col>
+
               <Col md={3} className="mb-3">
                 <Form.Control
                   type="text"
@@ -345,7 +388,7 @@ const handlePlaceOrder = async () => {
               <Card.Body>
                 <img
                   src="./images/payment.jpg"
-                  alt="payment options"
+                  alt="payment"
                   className="img-fluid mb-2"
                 />
                 <p className="small mb-0">
@@ -375,63 +418,70 @@ const handlePlaceOrder = async () => {
             </div>
           </Col>
 
-          {/* RIGHT SIDE - ORDER SUMMARY */}
+          {/* RIGHT: ORDER SUMMARY */}
           <Col md={5}>
             <Card className="mb-3">
               <Card.Body>
                 <h6 className="fw-semibold small mb-2">Available Offers</h6>
                 <p className="small mb-0">
-                  10% Instant Discount on RBL Bank Credit Card and Credit Card EMI on a min spend of ₹3,500.
+                  10% Instant Discount on RBL Bank Credit Card and Credit Card EMI on a
+                  min spend of ₹3,500.
                 </p>
               </Card.Body>
             </Card>
 
             <h6 className="fw-semibold mb-3">ORDER SUMMARY</h6>
-            {cart.items.map((item, index) => (
-              <Card className="mb-2 rounded-0" key={index}>
-                <Card.Body className="d-flex align-items-start">
-                  <img
-                    src={
-                      item.product?.image ||
-                      item.box?.image ||
-                      "./images/product-grid.png"
-                    }
-                    alt={item.product?.name || item.name || "Custom Box"}
-                    style={{
-                      width: "60px",
-                      height: "60px",
-                      objectFit: "cover",
-                      borderRadius: "4px",
-                    }}
-                    className="me-3"
-                  />
-                  <div className="flex-grow-1">
-                    <p className="mb-1 small fw-semibold">
-                      {item.product?.name || item.name || "Custom Box"}
-                    </p>
-                    {item.type === "box" && (
-                      <ul className="small mb-1 ps-3">
-                        {item.products?.map((p, idx) => (
-                          <li key={idx}>
-                            {p.chocolate?.name} × {p.quantity}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                    <p className="mb-1 small text-muted">
-                      Qty: {item.quantity || 1}
-                    </p>
-                    <p className="small fw-semibold">
-                      ₹{(item.price || item.product?.price || 0).toFixed(2)}
-                    </p>
-                  </div>
-                </Card.Body>
-              </Card>
-            ))}
+            {cart.items.map((item, index) => {
+              const images = getImageList(item);
+              return (
+                <Card className="mb-2 rounded-0" key={index}>
+                  <Card.Body className="d-flex align-items-start">
+                    <div className="d-flex">
+                      {images.slice(0, 2).map((img, i) => (
+                        <img
+                          key={i}
+                          src={img}
+                          alt={item.product?.name || item.name || "Custom Box"}
+                          style={{
+                            width: "60px",
+                            height: "60px",
+                            objectFit: "cover",
+                            borderRadius: "4px",
+                            marginRight: "4px",
+                          }}
+                        />
+                      ))}
+                    </div>
+                    <div className="flex-grow-1 ms-3">
+                      <p className="mb-1 small fw-semibold">
+                        {item.product?.name || item.name || "Custom Box"}
+                      </p>
+                      <p className="mb-1 small text-muted">Qty: {item.quantity || 1}</p>
+                      <p className="small fw-semibold">
+                        ₹{(item.price || item.product?.price || 0).toFixed(2)}
+                      </p>
+                    </div>
+                  </Card.Body>
+                </Card>
+              );
+            })}
 
             <hr />
+            <div className="d-flex justify-content-between small text-muted">
+              <span>Subtotal</span>
+              <span>₹{subtotal.toFixed(2)}</span>
+            </div>
+            <div className="d-flex justify-content-between small text-muted">
+              <span>SGST (2.5%)</span>
+              <span>₹{sgst.toFixed(2)}</span>
+            </div>
+            <div className="d-flex justify-content-between small text-muted mb-2">
+              <span>CGST (2.5%)</span>
+              <span>₹{cgst.toFixed(2)}</span>
+            </div>
+            <hr />
             <div className="d-flex justify-content-between fw-semibold">
-              <span>Total Amount</span>
+              <span>Total (Incl. Taxes)</span>
               <span>₹{totalAmount.toFixed(2)}</span>
             </div>
           </Col>
