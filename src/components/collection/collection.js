@@ -62,7 +62,7 @@ const Collection = () => {
 
   return (
     <div className="my-5 container">
-      <h2 className="font-collection mb-4">Our Collection</h2>
+      <h2 className="font-collection text-uppercase montserrat-font mb-4">Our Collection</h2>
 
       {loading ? (
         <div className="text-center my-5">

@@ -72,8 +72,7 @@ const Login = () => {
         <Row className="w-100">
           <Col xs={12} md={6} lg={4} className="mx-auto p-4 rounded bg-white">
             <h2
-              className="text-center mb-4 Login-font"
-              style={{ color: "#a18146", fontWeight: 600 }}
+              className="text-center mb-4 Login-font montserrat-font text-uppercase"
             >
               Login
             </h2>
@@ -84,9 +83,9 @@ const Login = () => {
             )}
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="formEmail" className="mb-3">
-                <Form.Label className="form-font">Email</Form.Label>
+                <Form.Label className="form-font figtree-font ">Email</Form.Label>
                 <Form.Control
-                  className="underline-input"
+                  className="underline-input figtree-font"
                   type="email"
                   name="email"
                   placeholder="Enter your Email"
@@ -99,9 +98,9 @@ const Login = () => {
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group controlId="formPassword" className="mb-4">
-                <Form.Label className="form-font">Password</Form.Label>
+                <Form.Label className="form-font figtree-font">Password</Form.Label>
                 <Form.Control
-                  className="underline-input"
+                  className="underline-input figtree-font"
                   type="password"
                   name="password"
                   placeholder="Enter Password"
@@ -115,10 +114,12 @@ const Login = () => {
               </Form.Group>
               <Button
                 type="submit"
-                className="w-100 mb-3"
+                className="w-100 mb-3 figtree-font "
                 style={{
-                  background: "linear-gradient(to right, #b68a4b, #94723b)",
+                  background: "#e2905e",
                   border: "none",
+                  fontWeight: "600",
+                  fontFamily: 'Figtree',
                 }}
               >
                 {loading ? (
@@ -160,7 +161,7 @@ const Login = () => {
               <a
                 href="/signup"
                 className="text-decoration-none"
-                style={{ color: "#a18146" }}
+                style={{ color: "#e2905e", fontFamily: 'Figtree' }}
               >
                 Create one
               </a>

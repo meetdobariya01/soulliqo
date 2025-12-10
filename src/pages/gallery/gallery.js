@@ -33,7 +33,7 @@ const Gallery = () => {
 
       <div className="gallery-container">
         <motion.h1
-          className="gallery-title"
+          className="gallery-title montserrat-font text-uppercase"
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
         >

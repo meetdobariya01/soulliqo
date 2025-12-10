@@ -32,7 +32,9 @@ const Discover = () => {
   return (
     <div>
       <Container fluid className="discover-section py-5">
-        <h2 className="discover-title text-center mb-2 mb-lg-5">DISCOVER</h2>
+        <h2 className="discover-title montserrat-font text-uppercase text-center mb-2 mb-lg-5">
+          DISCOVER
+        </h2>
 
         <Row className="align-items-center">
           {/* Left text (desktop view) */}
@@ -41,14 +43,14 @@ const Discover = () => {
             md={12}
             className="mb-4 mb-lg-0 text-center text-lg-start"
           >
-            <h5 className="discover-subtitle">Top Sellers</h5>
-            <p className="discover-text">
+            <h5 className="discover-subtitle montserrat-font">Top Sellers</h5>
+            <p className="discover-text figtree-font ">
               Crazy enough chocolate originates from a bean just like the coffee
               bean called Cacao. Cacao has been around for thousands of years
               and was first discovered by the Native American tribe called the
               Mayans.
             </p>
-            <a href="/bestsellers" className="discover-link">
+            <a href="/bestsellers" className="discover-link figtree-font ">
               View more about Top Sellers →
             </a>
           </Col>
@@ -68,15 +70,13 @@ const Discover = () => {
               {discoverItems.map((item, index) => (
                 <SwiperSlide key={index}>
                   <a href={item.link} className="discover-card">
-                    <div className="image-box">
+                    <div className="image-box arch-image">
                       <img
                         src={item.img}
                         alt={item.title}
                         className="img-fluid"
                       />
-                      <span className="badge text-dark p-3 discover-title-1">
-                        {item.title}
-                      </span>
+                      <span className="discover-btn figtree-font ">{item.title}</span>
                     </div>
                   </a>
                 </SwiperSlide>

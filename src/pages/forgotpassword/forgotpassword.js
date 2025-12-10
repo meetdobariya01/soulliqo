@@ -65,12 +65,12 @@ const Forgotpassword = () => {
 
           {/* Title */}
           <h2
-            className="mb-4"
+            className="mb-4 text-uppercase"
             style={{
               fontFamily: "Poppins, sans-serif",
               fontWeight: "600",
-              color: "#b68a4b",
-              fontSize: "40px",
+              color: "#e2905e",
+              fontSize: "30px",
             }}
           >
             Forgot password
@@ -79,14 +79,14 @@ const Forgotpassword = () => {
           {/* Form */}
           <Form onSubmit={handleSendOTP}>
             <Form.Group controlId="formEmail" className="text-start mb-4">
-              <Form.Label style={{ fontWeight: "500" }}>Email</Form.Label>
+              <Form.Label className="figtree-font" style={{ fontWeight: "500" }}>Email</Form.Label>
               <Form.Control
                 type="email"
                 placeholder="Enter your Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="py-2 underline-input"
+                className="py-2 underline-input figtree-font"
               />
             </Form.Group>
 
@@ -96,8 +96,7 @@ const Forgotpassword = () => {
               disabled={loading}
               className="w-100 border-0 py-2"
               style={{
-                background:
-                  "linear-gradient(to right, #A58756, #C8A264, #8A7148)",
+                background: "#e2905e",
                 fontWeight: "600",
               }}
             >

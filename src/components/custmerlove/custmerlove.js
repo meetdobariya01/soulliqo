@@ -24,14 +24,14 @@ const Custmerlove = () => {
       name: "Diya Shah",
       image: "/images/review-3.jpg",
       stars: 4,
-      text: "The hazelnuts are fresh, the chocolate is silky, and the aroma is unforgettable.Opens like a luxury gift—tastes even better.",
+      text: "The hazelnuts are fresh, the chocolate is silky, and the aroma is unforgettable. Opens like a luxury gift tastes even better.",
       product: "./images/custmer-love-3.jpg",
     },
   ];
   return (
     <div>
         <Container fluid className="customerlove-section py-5 container">
-      <h2 className="text-center customerlove-title mb-5">Customer Love</h2>
+      <h2 className="text-center customerlove-title montserrat-font text-uppercase mb-5">Customer Love</h2>
 
       <Swiper
         modules={[Pagination]}
@@ -66,7 +66,7 @@ const Custmerlove = () => {
                     </div>
                   </div>
                 </div>
-                <p className="review-text">{review.text}</p>
+                <p className="review-text figtree-font">{review.text}</p>
               </div>
             </div>
           </SwiperSlide>

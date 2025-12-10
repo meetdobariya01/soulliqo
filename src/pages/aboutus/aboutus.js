@@ -27,8 +27,8 @@ const Aboutus = () => {
             {/* Right Side - Content */}
             <Col md={6} className="">
               <div className="about-box shadow">
-                <h2 className="about-title">About us</h2>
-                <p className="about-text">
+                <h2 className="about-title montserrat-font text-uppercase">About us</h2>
+                <p className="about-text figtree-font">
                   Welcome to SOULLIQO Chocolate Poetry, where crafting exquisite
                   chocolates is an art infused with unwavering dedication. Our
                   chocolates are meticulously handcrafted, using the finest

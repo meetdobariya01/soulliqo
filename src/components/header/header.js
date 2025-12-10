@@ -43,8 +43,11 @@ const Header = () => {
           </div>
 
           {/* Logo */}
-          <Navbar.Brand href="/" className="mx-auto mx-lg-0 d-flex align-items-center">
-            <img src="/images/logo.jpg" alt="Logo" className="logo" />
+          <Navbar.Brand
+            href="/"
+            className="mx-auto mx-lg-0 d-flex align-items-center"
+          >
+            <img src="/images/original-logo.png" alt="Logo" className="logo" />
           </Navbar.Brand>
 
           {/* Desktop Navigation */}
@@ -60,11 +63,12 @@ const Header = () => {
                 ))
               ) : (
                 <NavDropdown.Item href="#">Loading...</NavDropdown.Item>
+                
               )}
             </NavDropdown>
 
             {/* BRAND JOURNEY */}
-            <NavDropdown title="BRAND JOURNEY" id="brand-dropdown" className="custom-dropdown">
+            <NavDropdown title="THE SOULLIQO STORY" id="brand-dropdown" className="custom-dropdown">
               <NavDropdown.Item href="/whoweare">Who we Are</NavDropdown.Item>
               <NavDropdown.Item href="/ourmission">Our Mission and Values</NavDropdown.Item>
               <NavDropdown.Item href="/aboutus">All about SOULLIQO</NavDropdown.Item>
@@ -72,7 +76,8 @@ const Header = () => {
             </NavDropdown>
 
             <Nav.Link href="/contactus">CONTACT US</Nav.Link>
-            <Nav.Link href="/gallery">Gallery</Nav.Link>
+
+              <Nav.Link href="/gallery">Gallery</Nav.Link>  
           </Nav>
 
           {/* Right Icons */}
@@ -106,6 +111,7 @@ const Header = () => {
               ))}
             </NavDropdown>
 
+            {/* Mobile BRAND JOURNEY */}
             <NavDropdown title="BRAND JOURNEY" id="mobile-brand-dropdown" className="custom-dropdown">
               <NavDropdown.Item href="/whoweare" onClick={() => setMenuOpen(false)}>Who we Are</NavDropdown.Item>
               <NavDropdown.Item href="/ourmission" onClick={() => setMenuOpen(false)}>Our Mission and Values</NavDropdown.Item>
@@ -114,7 +120,8 @@ const Header = () => {
             </NavDropdown>
 
             <Nav.Link href="/contactus" onClick={() => setMenuOpen(false)}>CONTACT US</Nav.Link>
-            <Nav.Link href="/gallery" onClick={() => setMenuOpen(false)}>Gallery</Nav.Link>
+
+             <Nav.Link href="/gallery" onClick={() => setMenuOpen(false)}>Gallery</Nav.Link>
           </Nav>
         </div>
       </Navbar>
@@ -123,9 +130,16 @@ const Header = () => {
       <div className={`search-overlay ${searchOpen ? "open" : ""}`}>
         <div className="search-box">
           <InputGroup>
-            <Form.Control type="text" placeholder="Search products..." className="search-input" />
+            <Form.Control
+              type="text"
+              placeholder="Search products..."
+              className="search-input"
+            />
             <button className="btn-search">Search</button>
-            <FaTimes className="icon-btn close-search" onClick={() => setSearchOpen(false)} />
+            <FaTimes
+              className="icon-btn close-search"
+              onClick={() => setSearchOpen(false)}
+            />
           </InputGroup>
         </div>
       </div>

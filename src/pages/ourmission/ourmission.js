@@ -16,12 +16,12 @@ const Ourmission = () => {
             {/* left side content */}
             <Col md={6} className="position-relative">
               <div className="floral-bg-right"></div>
-              <h2 className="mission-title">Our Mission</h2>
-              <p className="mission-quote">
+              <h2 className="mission-title montserrat-font text-uppercase">Our Mission</h2>
+              <p className="mission-quote figtree-font">
                 “We believe passionately that a gift of indulgence is one of the
                 best way to express appreciation.”
               </p>
-              <p className="mission-text">
+              <p className="mission-text figtree-font ">
                 Our Mission is simple — to create the most delicious, bespoke
                 chocolate using only the finest ingredients sourced from across
                 the world, especially Europe, Africa & India to be enjoyed by
@@ -63,8 +63,8 @@ const Ourmission = () => {
             {/* Right Side - Content */}
             <Col md={6} className="d-flex align-items-center">
               <div className="values-box">
-                <h2 className="values-title">Our Values</h2>
-                <p className="values-text">
+                <h2 className="values-title montserrat-font text-uppercase">Our Values</h2>
+                <p className="values-text figtree-font">
                   All our chocolates are hand crafted in India with more Cocoa &
                   Chocolate and negligible to no added sugar and 100% pure Cocoa
                   Butter, with finest quality ingredients from Europe, Africa
