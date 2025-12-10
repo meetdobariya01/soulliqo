@@ -10,7 +10,7 @@ const Discover = () => {
   const discoverItems = [
     {
       title: "Bestsellers",
-      img: "/images/discover1.png",
+      img: "/images/default.png",
       link: "/bestsellers",
     },
     {

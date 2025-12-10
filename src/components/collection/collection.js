@@ -75,52 +75,53 @@ const Collection = () => {
         </div>
       ) : (
         <Carousel indicators={false} interval={4000}>
-          {slides.map((group, idx) => (
-            <Carousel.Item key={idx}>
-              <div className="d-flex flex-wrap justify-content-center">
-                {group.map((item) => (
-                  <Card
-                    key={item._id}
-                    className="collection-card m-2 shadow-sm border-0"
-                    style={{
-                      cursor: "pointer",
-                      width: "240px",
-                      borderRadius: "16px",
-                      overflow: "hidden",
-                      transition: "transform 0.3s ease"
-                    }}
-                    onClick={() =>
-                      navigate(`/products/${encodeURIComponent(item.title)}`)
-                    }
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.transform = "scale(1.05)")
-                    }
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.transform = "scale(1)")
-                    }
-                  >
-                    <Card.Img
-                      variant="top"
-                      src={getCollectionImage(item.title)}
-                      onError={(e) =>
-                        (e.target.src = "/images/bonbon/default.png")
-                      }
-                      style={{
-                        height: "180px",
-                        objectFit: "contain",
-                        padding: "15px",
-                        background: "#f7f7f7"
-                      }}
-                    />
+         {slides.map((group, slideIndex) => (
+  <Carousel.Item key={`slide-${slideIndex}`}>
+    <div className="d-flex flex-wrap justify-content-center">
+      {group.map((item, itemIndex) => (
+        <Card
+          key={item._id || `${item.title}-${itemIndex}`}
+          className="collection-card m-2 shadow-sm border-0"
+          style={{
+            cursor: "pointer",
+            width: "240px",
+            borderRadius: "16px",
+            overflow: "hidden",
+            transition: "transform 0.3s ease",
+          }}
+          onClick={() =>
+            navigate(`/products/${encodeURIComponent(item.title)}`)
+          }
+          onMouseEnter={(e) =>
+            (e.currentTarget.style.transform = "scale(1.05)")
+          }
+          onMouseLeave={(e) =>
+            (e.currentTarget.style.transform = "scale(1)")
+          }
+        >
+          <Card.Img
+            variant="top"
+            src={getCollectionImage(item.title)}
+            onError={(e) =>
+              (e.target.src = "/images/bonbon/default.png")
+            }
+            style={{
+              height: "180px",
+              objectFit: "contain",
+              padding: "15px",
+              background: "#f7f7f7",
+            }}
+          />
 
-                    <Card.Footer className="text-center fw-bold bg-white border-0">
-                      {item.title}
-                    </Card.Footer>
-                  </Card>
-                ))}
-              </div>
-            </Carousel.Item>
-          ))}
+          <Card.Footer className="text-center fw-bold bg-white border-0">
+            {item.title}
+          </Card.Footer>
+        </Card>
+      ))}
+    </div>
+  </Carousel.Item>
+))}
+
         </Carousel>
       )}
     </div>
