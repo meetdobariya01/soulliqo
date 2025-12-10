@@ -62,12 +62,12 @@ const Sweetindulgence = () => {
 
       {/* Banner */}
       <div
-        className="banner d-flex align-items-center justify-content-center text-center container mt-2"
+        className="banner d-flex align-items-center justify-content-center text-center  mt-2"
         style={{
           backgroundImage: `url(${process.env.PUBLIC_URL + "/images/sweet.png"})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          height: "400px",
+          height: "600px",
           color: "white",
           fontSize: "2.5rem",
           fontWeight: "600",

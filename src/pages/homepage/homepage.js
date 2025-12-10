@@ -40,8 +40,8 @@ const Homepage = () => {
       {/* Video Section */}
       <section className="our-story">
         <div className="container text-center">
-          <h2 className="mb-4 story-font">Our Story</h2>
-          <p className=" mx-auto mb-4 story-text story-font">
+          <h2 className="mb-4 montserrat-font text-uppercase">Our Story</h2>
+          <p className=" mx-auto mb-4 story-text figtree-font">
             We are farmers, fermenters, chocolate makers, chocolatiers and
             storytellers from India, in search of a distinct identity for
             chocolate that we can proudly call our own. In our pursuit, we are
@@ -75,10 +75,10 @@ const Homepage = () => {
             className="text-center text-lg-start mb-4 mb-lg-0"
           >
             <div className="flower-bg">
-              <h2 className="makebox-title text-center text-lg-end mb-4 mb-lg-0">
+              <h2 className="makebox-title montserrat-font text-uppercase text-center text-lg-end mb-4 mb-lg-0">
                 Make your own Box
               </h2>
-              <p className="makebox-text text-center text-lg-end mb-4 mb-lg-0">
+              <p className="makebox-text figtree-font text-center text-lg-end mb-4 mb-lg-0">
                 Make the gift of Soulliqo that little bit sweeter by adding a
                 free personalized message.
               </p>
@@ -88,12 +88,12 @@ const Homepage = () => {
                   to="/ownbox"
                   style={{
                     backgroundColor: "#7B5B54",
-                    color: "#fff",
+                    color: "#f0dfc9",
                     fontSize: "16px",
                     padding: "10px 20px",
                     border: "none",
                     textDecoration: "none",
-                    fontFamily: "Tenor Sans",
+                    fontFamily: 'Figtree',
                   }}
                 >
                   Shop Now

@@ -56,7 +56,7 @@ const Header = () => {
             href="/"
             className="mx-auto mx-lg-0 d-flex align-items-center"
           >
-            <img src="/images/logo.jpg" alt="Logo" className="logo" />
+            <img src="/images/original-logo.png" alt="Logo" className="logo" />
           </Navbar.Brand>
 
           {/* Desktop Navigation */}
@@ -70,7 +70,7 @@ const Header = () => {
                   </NavDropdown.Item>
                 ))
               ) : (
-                <NavDropdown.Item href="#">Loading...</NavDropdown.Item>
+                <NavDropdown.Item href="#">Loading...</NavDropdown.Item> 
                 
               )}
               {categories.map((category) => (
@@ -81,7 +81,7 @@ const Header = () => {
             </NavDropdown>
 
             {/* BRAND JOURNEY */}
-            <NavDropdown title="BRAND JOURNEY" id="brand-dropdown" className="custom-dropdown">
+            <NavDropdown title="THE SOULLIQO STORY" id="brand-dropdown" className="custom-dropdown">
               <NavDropdown.Item href="/whoweare">Who we Are</NavDropdown.Item>
               <NavDropdown.Item href="/ourmission">Our Mission and Values</NavDropdown.Item>
               <NavDropdown.Item href="/aboutus">All about SOULLIQO</NavDropdown.Item>
@@ -91,7 +91,7 @@ const Header = () => {
 
             <Nav.Link href="/contactus">CONTACT US</Nav.Link>
 
-              <Nav.Link href="/gallery">Gallery</Nav.Link>  
+              <Nav.Link href="/gallery">LOOKBOOK</Nav.Link>  
           </Nav>
 
           {/* Right side icons */}
@@ -132,7 +132,7 @@ const Header = () => {
             </NavDropdown>
 
             {/* Mobile BRAND JOURNEY */}
-            <NavDropdown title="BRAND JOURNEY" id="mobile-brand-dropdown" className="custom-dropdown">
+            <NavDropdown title="THE SOULLIQO STORY" id="mobile-brand-dropdown" className="custom-dropdown">
               <NavDropdown.Item href="/whoweare" onClick={() => setMenuOpen(false)}>Who we Are</NavDropdown.Item>
               <NavDropdown.Item href="/ourmission" onClick={() => setMenuOpen(false)}>Our Mission and Values</NavDropdown.Item>
               <NavDropdown.Item href="/aboutus" onClick={() => setMenuOpen(false)}>All about SOULLIQO</NavDropdown.Item>
@@ -142,7 +142,7 @@ const Header = () => {
 
             <Nav.Link href="/contactus" onClick={() => setMenuOpen(false)}>CONTACT US</Nav.Link>
 
-             <Nav.Link href="/gallery" onClick={() => setMenuOpen(false)}>Gallery</Nav.Link>
+             <Nav.Link href="/gallery" onClick={() => setMenuOpen(false)}>LOOKBOOK</Nav.Link>
           </Nav>
         </div>
       </Navbar>
@@ -156,7 +156,7 @@ const Header = () => {
               placeholder="Search products..."
               className="search-input"
             />
-            <button className="btn-search">Search</button>
+            <button className="btn-search figtree-font">Search</button>
             <FaTimes
               className="icon-btn close-search"
               onClick={() => setSearchOpen(false)}

@@ -39,13 +39,14 @@ const Otpvarification = () => {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-center"
         >
-          <h2
+          <h2 
+          className="text-uppercase"
             style={{
               fontWeight: "600",
               fontSize: "64px",
               marginBottom: "30px",
-              color: "#A58756",
-                fontFamily: "Tenor Sans",
+              color: "#e2905e",
+                fontFamily: "Montserrat, sans-serif",
             }}
           >
             OTP Verification
@@ -59,7 +60,7 @@ const Otpvarification = () => {
             style={{
               width: "80px",
               height: "80px",
-              border: "2px solid #A58756",
+              border: "2px solid #e2905e",
               borderRadius: "50%",  
               margin: "0 auto",
             }}
@@ -73,7 +74,7 @@ const Otpvarification = () => {
           <h5 className="fw-bold mb-2" style={{ color: "#000" }}>
             Success!
           </h5>
-          <p className="text-muted" style={{ fontSize: "16px", fontFamily: "Raleway" }}>
+          <p className="text-muted" style={{ fontSize: "16px", fontFamily: "Figtree" }}>
             Congratulations! You have been successfully authenticated.
           </p>
 
@@ -89,7 +90,7 @@ const Otpvarification = () => {
               style={{
                 maxWidth: "300px",
                 background:
-                  "linear-gradient(to right, #A58756, #C8A264, #8A7148)",
+                  "#e2905e",
                 color: "#fff",
                 fontWeight: "600",
                 borderRadius: "8px",

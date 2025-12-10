@@ -84,13 +84,13 @@ const Otppage = () => {
             style={{
               fontFamily: "Poppins, sans-serif",
               fontWeight: "600",
-              color: "#b68a4b",
+              color: "#e2905e",
             }}
           >
             Check your email
           </h2>
 
-          <p className="text-muted mb-4" style={{ fontSize: "14px", fontFamily: "Raleway" }}>
+          <p className="text-muted mb-4 figtree-font" style={{ fontSize: "14px" }}>
             Enter the code from the email we sent to <br />
             <strong>youremail@example.com</strong>
           </p>
@@ -127,7 +127,7 @@ const Otppage = () => {
             I didn’t receive any code.{" "}
             <span
               onClick={handleResend}
-              style={{ color: "#b68a4b", cursor: "pointer", fontWeight: "500" }}
+              style={{ color: "#e2905e", cursor: "pointer", fontWeight: "500" }}
             >
               RESEND
             </span>
@@ -137,7 +137,7 @@ const Otppage = () => {
           <Button
             className="w-100 border-0 py-2 mt-2"
             style={{
-              background: "linear-gradient(to right, #A58756, #C8A264, #8A7148)",
+              background: "#e2905e",
               fontWeight: "600",
             }}
             onClick={() => navigate("/otpvarification")}

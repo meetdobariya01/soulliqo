@@ -2,17 +2,26 @@
 @import url("https://fonts.googleapis.com/css2?family=Tenor+Sans&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=The+Nautigal:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
 /* Global Styles */
 body {
-  padding-top: 90px;
+  padding-top: 100px;
+}
+.figtree-font {
+  font-family: "Figtree", sans-serif;
+}
+.montserrat-font {
+  font-family: "Montserrat", sans-serif;
 }
 .custom-navbar {
-  background: #000;
+  background: #312526;
   padding: 10px 20px;
 }
 
 .logo {
-  height: 70px;
+  height: 100px;
 }
 
 .logo-text {
@@ -24,7 +33,7 @@ body {
 }
 
 .nav-link {
-  color: #c9a25f !important;
+  color: #f0dfc9 !important;
   margin: 0 15px;
   font-weight: 500;
   transition: color 0.3s ease;
@@ -36,7 +45,7 @@ body {
 
 .icon-btn {
   font-size: 18px;
-  color: #c9a25f;
+  color: #f0dfc9;
   cursor: pointer;
   transition: transform 0.3s ease, color 0.3s ease;
 }
@@ -50,7 +59,7 @@ body {
   position: absolute;
   top: -6px;
   right: -8px;
-  background: #c9a25f;
+  background: #f0dfc9;
   color: #000;
   font-size: 12px;
   font-weight: bold;
@@ -78,7 +87,7 @@ body {
 .mobile-menu .nav-link {
   padding: 15px;
   font-size: 18px;
-  color: #c9a25f !important;
+  color: #f0dfc9 !important;
   border-bottom: 1px solid #222;
 }
 
@@ -120,7 +129,8 @@ body {
   right: 50px;
   top: 5px;
   padding: 10px 20px;
-  background: #c9a25f;
+  background: #d8a97d;
+  color: #312526;
   border: none;
   border-radius: 25px;
   font-weight: 600;
@@ -132,7 +142,7 @@ body {
   right: 10px;
   top: 12px;
   font-size: 22px;
-  color: #c9a25f;
+  color: #d8a97d;
   cursor: pointer;
 }
 .navbar-font {
@@ -141,7 +151,7 @@ body {
 }
 /* Dropdown style */
 .custom-dropdown .dropdown-toggle {
-  color: #c9a25f !important;
+  color: #f0dfc9 !important;
   font-weight: 500;
   letter-spacing: 1px;
   transition: color 0.3s ease;
@@ -155,21 +165,21 @@ body {
 
 /* Dropdown menu */
 .custom-dropdown .dropdown-menu {
-  background: #000; /* Match header */
+  background: #f0dfc9; /* Match header */
   border: none;
   border-radius: 0;
   margin-top: 10px;
 }
 
 .custom-dropdown .dropdown-item {
-  color: #c9a25f !important;
+  color: #312526 !important;
   font-weight: 500;
   transition: background 0.3s ease, color 0.3s ease;
 }
 
 .custom-dropdown .dropdown-item:hover,
 .custom-dropdown .dropdown-item:focus {
-  background: #c9a25f;
+  /* background: #807475 !important; */
   color: #000 !important;
 }
 
@@ -213,10 +223,12 @@ body {
   bottom: 0;
   width: 100%;
   background: rgba(190, 158, 115, 0.92);
-  color: #fff;
+  color: #f0dfc9;
   text-align: center;
   padding: 10px 0 0 0;
-  font-family: "Poppins", sans-serif;
+}
+.slide-caption p {
+  color: #312526;
 }
 
 /* Text Animations */
@@ -261,10 +273,10 @@ body {
 
 /* Collection Component Styles */
 .font-collection {
-  font-family: "Tenor Sans", sans-serif;
   text-align: center;
   font-size: 60px;
-  font-weight: 400;
+  font-weight: 600;
+  color: #312526;
 }
 /* src/components/CollectionCarousel.css */
 .collection-card {
@@ -309,12 +321,14 @@ body {
 
 .our-story h2 {
   font-size: 60px;
-  font-weight: bold;
+  font-weight: 600;
+  color: #312526;
 }
 
 .story-text {
   max-width: 750px;
   font-size: 1.1rem;
+  color: #312526;
   line-height: 1.7;
 }
 
@@ -323,9 +337,7 @@ body {
   justify-content: center;
   margin-top: 2rem;
 }
-.story-font {
-  font-family: "Tenor Sans", sans-serif;
-}
+
 .story-video {
   width: 100%;
   max-width: 800px;
@@ -349,32 +361,29 @@ body {
 }
 
 .discover-title {
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: 2px;
-  font-family: "Tenor Sans", sans-serif;
   font-size: 60px;
-  color: #312625;
+  color: #312526;
 }
 
 .discover-subtitle {
   margin-top: 10px;
-  font-weight: 500;
-  color: #312625;
+  font-weight: 600;
+  color: #312526;
   font-size: 28px;
-  font-family: Tenor Sans, sans-serif;
 }
 
 .discover-text {
   margin: 20px 0;
   font-size: 22px;
   line-height: 1.6;
-  color: #444;
-  font-family: Tenor Sans, sans-serif;
+  color: #312526;
 }
 
 .discover-link {
-  color: #7b5b54;
-  font-weight: 500;
+  color: #7c5b54;
+  font-weight: 600;
   text-decoration: none;
   font-size: 20px;
 }
@@ -418,11 +427,37 @@ body {
 
 .swiper-pagination-bullet-active {
   opacity: 1;
+}.arch-image {
+  position: relative;
+  width: 100%;
+  height: 500px; /* adjust as per need */
+  overflow: hidden;
+  border-radius: 200px 200px 0 0; /* Creates perfect arch */
 }
-.discover-title-1 {
-  font-family: poppins, sans-serif;
-  color: #7b5b54;
+
+/* Image fills the arch smoothly */
+.arch-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
+
+/* Button stays at bottom */
+.discover-btn {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #f0e0ca;
+  color: #3d2b1f;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
 
 /* Make your own Box */
 .makebox-section {
@@ -433,26 +468,32 @@ body {
 
 .makebox-title {
   font-size: 60px;
-  font-weight: 400;
-  color: #3d2b1f;
+  font-weight: 600;
+  color: #312526;
   margin-bottom: 20px;
-  font-family: Tenor Sans, sans-serif;
 }
 
 .makebox-text {
   font-size: 22px;
   line-height: 1.6;
-  color: #444;
+  color: #312526;
   margin-bottom: 25px;
-  font-family: Tenor Sans, sans-serif;
 }
 
-.makebox-btn button {
-  background-color: #6b4a3a;
+.shop-now-btn {
+  background-color: #7b5b54;
+  color: #fff;
+  font-size: 16px;
+  padding: 10px 20px;
   border: none;
-  padding: 10px 25px;
+  text-decoration: none;
+  font-family: "Tenor Sans";
   border-radius: 6px;
-  font-weight: 500;
+}
+
+.shop-now-btn:hover {
+  background-color: #694b46;
+  color: #fff;
 }
 
 .makebox-btn:hover {
@@ -506,9 +547,8 @@ body {
 
 .customerlove-title {
   font-size: 2.2rem;
-  font-weight: 400;
-  color: #3d2b1f;
-  font-family: Tenor Sans;
+  font-weight: 600;
+  color: #312526;
   font-size: 60px;
 }
 
@@ -554,7 +594,6 @@ body {
   line-height: 1.5;
   color: #444;
   margin-top: 10px;
-  font-family: Poppins, sans-serif;
   font-weight: 400;
 }
 
@@ -570,7 +609,7 @@ body {
 
 /* Footer style */
 .footer {
-  background: #f2efea;
+  background: #312526;
   padding: 50px 20px 20px;
   color: #3d2b1f;
   position: relative;
@@ -584,16 +623,15 @@ body {
 }
 
 .footer-text {
-  font-family: Poppins;
   font-size: 16px;
   margin-bottom: 20px;
   font-weight: 400;
-  color: #010101;
+  color: #f0dfc9;
 }
 
 .footer-social a {
   font-size: 1.3rem;
-  color: #3d2b1f;
+  color: #d8a97d;
   margin-right: 15px;
   transition: all 0.3s ease;
 }
@@ -604,7 +642,7 @@ body {
 }
 .footer-contact a {
   text-decoration: none;
-  color: #a0522d;
+  color: #f0dfc9;
 }
 .footer-contact a:hover {
   text-decoration: underline;
@@ -614,11 +652,13 @@ body {
 .footer-contact h5 {
   font-weight: 600;
   margin-bottom: 15px;
+  color: #f0dfc9;
 }
 
 .footer-links ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .footer-links ul li {
@@ -626,7 +666,7 @@ body {
 }
 
 .footer-links ul li a {
-  color: #3d2b1f;
+  color: #f0dfc9;
   text-decoration: none;
   transition: color 0.3s ease;
 }
@@ -643,7 +683,7 @@ body {
 .footer-bottom {
   font-size: 0.9rem;
   margin-top: 20px;
-  color: #555;
+  color: #f0dfc9;
 }
 .terms-bg {
   background: linear-gradient(135deg, #fff4e6, #ffe9d6);
@@ -706,13 +746,12 @@ a:hover {
 
 /* Login Page Specific Styles */
 .Login-font {
-  font-family: "Tenor Sans", sans-serif;
-  font-weight: 400;
+  color: #e2905e;
+  font-weight: 600;
   font-size: 65px;
 }
 .form-font {
-  font-family: "Raleway", sans-serif;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 16px;
 }
 /* Minimal underline style */
@@ -737,6 +776,11 @@ a:hover {
 }
 
 /* Signup Page Specific Styles */
+.sign-heading {
+  color: #e2905e;
+  font-weight: 600;
+  font-size: 40px;
+}
 /* Underline style for input */
 .underline-input {
   border: none !important;
@@ -771,16 +815,16 @@ a:hover {
   font-family: "Poppins", sans-serif;
 }
 .who-title {
-  font-family: "Tenor Sans", sans-serif;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 50px;
+  color: #312526;
 }
 .who-subtitle,
 .who-text {
-  font-family: Tenor Sans;
   font-weight: 400;
   font-size: 20px;
   text-align: justify;
+  line-height: 26px;
 }
 @media (max-width: 768px) {
   .who-text {
@@ -827,16 +871,14 @@ a:hover {
 }
 
 .mission-title {
-  font-family: Tenor Sans;
   font-size: 50px;
-  font-weight: 400;
+  font-weight: 600;
   margin-bottom: 15px;
-  color: #312625;
+  color: #312526;
 }
 
 .mission-quote,
 .mission-text {
-  font-family: Tenor Sans;
   font-size: 20px;
   color: #312625;
   margin-bottom: 20px;
@@ -904,18 +946,16 @@ a:hover {
 }
 
 .about-title {
-  font-family: Tenor Sans;
   font-size: 50px;
-  font-weight: 400;
+  font-weight: 600;
   margin-bottom: 20px;
-  color: #000000;
+  color: #312526;
 }
 
 .about-text {
-  font-family: Tenor Sans;
   font-size: 20px;
   font-weight: 400;
-  color: #000000;
+  color: #312526;
   text-align: justify;
 }
 @media (max-width: 768px) {
@@ -959,14 +999,13 @@ a:hover {
 }
 
 .values-title {
-  font-family: Tenor Sans;
   font-size: 50px;
-  font-weight: 400;
+  font-weight: 600;
   margin-bottom: 20px;
+  color: #312526;
 }
 
 .values-text {
-  font-family: Tenor Sans;
   font-size: 20px;
   line-height: 1.8;
   text-align: justify;
@@ -993,21 +1032,20 @@ a:hover {
 }
 
 .ethos-heading {
-  font-family: Tenor Sans;
   font-size: 60px;
-  font-weight: 400;
+  font-weight: 600;
   text-align: left;
   margin-bottom: 40px;
   padding-left: 20px;
-  color: #312625;
+  color: #312526;
 }
 .title {
-  font-family: Tenor Sans;
+  color: #312526;
   font-weight: 400;
   font-size: 40px;
 }
 .text {
-  font-family: Tenor Sans;
+  color: #312526;
   font-weight: 400;
   font-size: 20px;
   line-height: 40px;
@@ -1031,16 +1069,34 @@ a:hover {
 }
 
 /* Contact Us Page Specific Styles */
+.social-icon {
+  width: 45px;
+  height: 45px;
+  border: 2px solid #d8a97d;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #d8a97d;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+/* Icon hover color */
+.social-icon:hover {
+  background-color: #312526;
+  color: #fff;
+  border-color: #312526;
+}
+
 .font {
-  font-family: "Raleway";
   font-weight: 600;
   font-size: 16px;
 }
 .contact-heading {
-  font-family: "Tenor Sans", sans-serif;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 60px;
-  color: #312625;
+  color: #312526;
 }
 @media (max-width: 768px) {
   .contact-heading {
@@ -1178,19 +1234,35 @@ a:hover {
   background: #fff;
   border: none;
   transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* This pushes button to bottom */
+  align-items: center;
+  padding-bottom: 20px; /* space below button */
 }
 
 .product-box:hover {
   transform: scale(1.02);
 }
 
-.product-label {
-  background: #f3f3f3;
-  padding: 10px;
-  font-size: 1.2rem;
+.shop-now-btn {
+  background-color: #7b5b54;
+  color: #ffffff;
+  padding: 8px 20px;
+  font-size: 16px;
   font-weight: 500;
-  color: #333;
+  border-radius: 10px;
+  display: inline-block;
+  font-family: "Figtree", sans-serif;
+  transition: all 0.3s ease;
+  margin-top: 20px; /* Keeps gap from image */
 }
+
+.shop-now-btn:hover {
+  transform: scale(1.05);
+  background-color: #6a4b45;
+}
+
 /* Product Grid */
 .product-card {
   position: relative;
@@ -1404,8 +1476,8 @@ a:hover {
 .gallery-title {
   text-align: center;
   font-size: 42px;
-  font-weight: 700;
-  color: #5a3e2b;
+  font-weight: 600;
+  color: #312526;
   margin-bottom: 50px;
 }
 
@@ -1476,7 +1548,7 @@ a:hover {
   .gallery-grid {
     grid-template-columns: repeat(1, 1fr);
   }
-  .gallery-title{
+  .gallery-title {
     font-size: 1.6rem;
   }
 }

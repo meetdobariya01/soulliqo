@@ -84,8 +84,8 @@ const AnimatedSection = ({ title, text, img, bg, reverse }) => (
           transition={{ duration: 1 }}
           viewport={{ once: true }}
         >
-          <h3 className="fw-bold mb-3 title">{title}</h3>
-          <p className="text">{text}</p>
+          <h3 className="fw-bold mb-3 title montserrat-font">{title}</h3>
+          <p className="text figtree-font ">{text}</p>
         </motion.div>
       </div>
     </div>
@@ -100,7 +100,7 @@ const Brandethos = () => {
 
       {/* Brand Ethos Section */}
 
-      <h2 className="ethos-heading mt-3">Brand Ethos</h2>
+      <h2 className="ethos-heading montserrat-font text-uppercase mt-5">Brand Ethos</h2>
       <div className="container-fluid">
         {sections.map((section, idx) => (
           <AnimatedSection key={idx} {...section} />

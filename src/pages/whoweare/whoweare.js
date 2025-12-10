@@ -29,9 +29,9 @@ const Whoweare = () => {
               md={6}
               className="order-2 order-md-1 animate_animated animate_fadeInLeft"
             >
-              <h2 className="who-title">Who we are</h2>
-              <p className="who-subtitle">" Chocolate is like poetry,</p>
-              <p className="who-text">
+              <h2 className="who-title montserrat-font text-uppercase">Who we are</h2>
+              <p className="who-subtitle figtree-font"><b>" Chocolate is like poetry,</b></p>
+              <p className="who-text figtree-font">
                 From the elegant rhythm of its making to the enchanting duet of
                 sharing it with loved ones. The essence of chocolate is a living
                 verse in every bite..."

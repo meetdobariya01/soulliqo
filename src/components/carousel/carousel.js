@@ -22,7 +22,7 @@ const Mycarousel = () => {
             />
 
             <div className="slide-caption">
-              <h2 className="fade-text">New in Ahmedabad</h2>
+              <h2 className="fade-text figtree-font">New in Ahmedabad</h2>
             </div>
           </Carousel.Item>
 
@@ -38,9 +38,9 @@ const Mycarousel = () => {
               <source src="./images/carousel-2.mp4" type="video/mp4" />
             </video>
 
-            <div className="slide-caption">
+            <div className="slide-caption figtree-font">
               <h2 className="fade-text">Delicious Experience</h2>
-              <p className="fade-text-small">
+              <p className="fade-text-small ">
                 Handcrafted Chocolates, Now Near You
               </p>
             </div>
@@ -54,7 +54,7 @@ const Mycarousel = () => {
               alt="Slide 3"
             />
 
-            <div className="slide-caption">
+            <div className="slide-caption figtree-font">
               <h2 className="fade-text">Sweet Moments</h2>
               <p className="fade-text-small">
                 Perfect Treats for Every Occasion

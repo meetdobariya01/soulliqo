@@ -9,7 +9,7 @@ const Contactus = () => {
     name: "",
     email: "",
     phone: "",
-    message: ""
+    message: "",
   });
   const [status, setStatus] = useState(""); // success/error message
   const handleChange = (e) => {
@@ -18,7 +18,10 @@ const Contactus = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/contact/", formData);
+      const response = await axios.post(
+        "http://localhost:5000/contact/",
+        formData
+      );
       setStatus(response.data.success);
       setFormData({ name: "", email: "", phone: "", message: "" }); // reset form
     } catch (err) {
@@ -33,7 +36,7 @@ const Contactus = () => {
       <div className="container-fluid p-0">
         <div className="position-relative bg-light py-5">
           <motion.h2
-            className="container fw-bold contact-heading"
+            className="container montserrat-font text-uppercase contact-heading"
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -41,16 +44,32 @@ const Contactus = () => {
             Get In Touch With Us. <br /> We're Here To Assist You.
           </motion.h2>
           {/* Social Media Icons */}
-          <div className="position-absolute top-50 end-0 translate-middle-y me-4 d-flex flex-column gap-3 text-dark">
-            <motion.a href="https://www.facebook.com/thesoulliqo" target="blank" whileHover={{ scale: 1.2 }} className="d-flex align-items-center justify-content-center border rounded-circle p-2 text-dark">
+          <div className="position-absolute top-50 end-0 translate-middle-y me-4 d-flex flex-column gap-3 text-dark mt-4">
+            <motion.a
+              href="https://www.facebook.com/thesoulliqo"
+              target="blank"
+              whileHover={{ scale: 1.2 }}
+              className="social-icon"
+            >
               <FaFacebookF />
             </motion.a>
-            <motion.a href="https://www.instagram.com/soulliqo/" target="blank" whileHover={{ scale: 1.2 }} className="d-flex align-items-center justify-content-center border rounded-circle p-2 text-dark">
+
+            <motion.a
+              href="https://www.instagram.com/soulliqo/"
+              target="blank"
+              whileHover={{ scale: 1.2 }}
+              className="social-icon"
+            >
               <FaInstagram />
             </motion.a>
-            <motion.a href="mailto:soulliqo@gmail.com" whileHover={{ scale: 1.2 }} className="d-flex align-items-center justify-content-center border rounded-circle p-2 text-dark">
+
+            <motion.a
+              href="mailto:soulliqo@gmail.com"
+              whileHover={{ scale: 1.2 }}
+              className="social-icon"
+            >
               <FaEnvelope />
-            </motion.a> 
+            </motion.a>
           </div>
         </div>
         {/* Contact Form */}
@@ -64,45 +83,45 @@ const Contactus = () => {
           >
             {status && <div className="col-12 alert alert-info">{status}</div>}
             <div className="col-md-4">
-              <label className="form-label">Your Name</label>
+              <label className="form-label figtree-font ">Your Name</label>
               <input
                 type="text"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="form-control underline-input"
+                className="form-control figtree-font underline-input"
                 placeholder="Enter your name"
               />
             </div>
             <div className="col-md-4">
-              <label className="form-label">Email</label>
+              <label className="form-label figtree-font figtree-font ">Email</label>
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="form-control underline-input"
+                className="form-control figtree-font underline-input"
                 placeholder="Enter your email"
               />
             </div>
             <div className="col-md-4">
-              <label className="form-label">Phone Number</label>
+              <label className="form-label figtree-font ">Phone Number</label>
               <input
                 type="text"
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className="form-control underline-input"
+                className="form-control figtree-font underline-input"
                 placeholder="Enter phone number"
               />
             </div>
             <div className="col-12">
-              <label className="form-label">Message</label>
+              <label className="form-label figtree-font">Message</label>
               <textarea
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
-                className="form-control underline-input"
+                className="form-control figtree-font underline-input"
                 rows="4"
                 placeholder="Enter your message"
               ></textarea>

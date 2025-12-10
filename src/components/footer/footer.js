@@ -28,9 +28,9 @@ const Footer = () => {
                   alt="Soulliqo"
                   className="footer-logo"
                 />
-                <p className="footer-text">
-                  A305, Aarohi Galleria, Opposite Gala Luxuria, South Bopal,
-                  Ahmedabad, Gujarat, 380058
+                <p className="footer-text figtree-font ">
+                  A305, Aarohi Galleria, Opposite Gala Luxuria,
+                  <br /> South Bopal, Ahmedabad, Gujarat, 380058
                 </p>
                 <div className="footer-social">
                   <a
@@ -68,8 +68,8 @@ const Footer = () => {
                 viewport={{ once: true }}
                 className="footer-links"
               >
-                <h5>Quick Links</h5>
-                <ul>
+                <h5 className="figtree-font ">Quick Links</h5>
+                <ul className="figtree-font ">
                   <li>
                     <Link to="/shiping">Shiping Policy</Link>
                   </li>
@@ -99,17 +99,17 @@ const Footer = () => {
                 viewport={{ once: true }}
                 className="footer-contact"
               >
-                <h5>Contact Us</h5>
+                <h5 className=" figtree-font">Contact Us</h5>
                 <p>
-                  <FaPhoneAlt className="me-2" />
+                  <FaPhoneAlt className="me-2  figtree-font" style={{ color: "#f0dfc9" }}/>
                   <a href="tel:9727716480">9727716480</a>
                 </p>
-                 <p>
-                  <FaPhoneAlt className="me-2" />
+                <p>
+                  <FaPhoneAlt className="me-2  figtree-font" style={{ color: "#f0dfc9" }}/>
                   <a href="tel:9925587624">9925587624</a>
                 </p>
                 <p>
-                  <FaEnvelope className="me-2" />
+                  <FaEnvelope className="me-2 figtree-font" style={{ color: "#f0dfc9" }}/>
                   <a href="mailto:soulliqo@gmail.com">soulliqo@gmail.com</a>
                 </p>
               </motion.div>
