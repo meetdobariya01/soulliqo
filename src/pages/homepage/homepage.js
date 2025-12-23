@@ -87,10 +87,11 @@ const Homepage = () => {
               </p>
 
               <div className="d-flex justify-content-lg-end justify-content-center mt-3">
-                <Button
-                  as={NavLink}
-                  to="/ownbox"
-                  style={{
+                {firstCollectionId ? (
+                  <Button
+                    as={NavLink}
+                    to={`/ownbox/${firstCollectionId}`}
+                    style={{
                     backgroundColor: "#7B5B54",
                     color: "#f0dfc9",
                     fontSize: "16px",
@@ -99,22 +100,6 @@ const Homepage = () => {
                     textDecoration: "none",
                     fontFamily: "Figtree, sans-serif",
                   }}
-                >
-                  Shop Now
-                </Button>
-                {firstCollectionId ? (
-                  <Button
-                    as={NavLink}
-                    to={`/ownbox/${firstCollectionId}`}
-                    style={{
-                      backgroundColor: "#7B5B54",
-                      color: "#fff",
-                      fontSize: "16px",
-                      padding: "10px 20px",
-                      border: "none",
-                      textDecoration: "none",
-                      fontFamily: "Tenor Sans",
-                    }}
                   >
                     Shop Now
                   </Button>
