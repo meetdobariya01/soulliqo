@@ -87,42 +87,42 @@ router.post("/reset-password", asyncHandler(async (req, res) => {
 }));
 
 
-router.post("/google-login", asyncHandler(async (req, res) => {
-  const { token } = req.body;
-  if (!token) return res.status(400).json({ message: "Google token is required." });
+// router.post("/google-login", asyncHandler(async (req, res) => {
+//   const { token } = req.body;
+//   if (!token) return res.status(400).json({ message: "Google token is required." });
 
-  // Verify token
-  const ticket = await client.verifyIdToken({
-    idToken: token,
-    audience: CLIENT_ID,
-  });
-  const payload = ticket.getPayload();
-  const { email, given_name, family_name, picture } = payload;
+//   // Verify token
+//   const ticket = await client.verifyIdToken({
+//     idToken: token,
+//     audience: CLIENT_ID,
+//   });
+//   const payload = ticket.getPayload();
+//   const { email, given_name, family_name, picture } = payload;
 
-  let user = await User.findOne({ email });
+//   let user = await User.findOne({ email });
 
-  if (!user) {
-    // Create new user if not exists
-    user = new User({
-      firstName: given_name,
-      lastName: family_name,
-      email,
-      password: "", // optional, since login is via Google
-      role: "user",
-      avatar: picture,
-    });
-    await user.save();
-  }
+//   if (!user) {
+//     // Create new user if not exists
+//     user = new User({
+//       firstName: given_name,
+//       lastName: family_name,
+//       email,
+//       password: "", // optional, since login is via Google
+//       role: "user",
+//       avatar: picture,
+//     });
+//     await user.save();
+//   }
 
-  // Generate JWT token
-  const jwtToken = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
+//   // Generate JWT token
+//   const jwtToken = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
-  res.json({
-    message: "Login successful via Google",
-    token: jwtToken,
-    role: user.role,
-    userId: user._id,
-  });
-}));
+//   res.json({
+//     message: "Login successful via Google",
+//     token: jwtToken,
+//     role: user.role,
+//     userId: user._id,
+//   });
+// }));
 
 module.exports = router;
