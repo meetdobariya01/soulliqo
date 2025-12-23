@@ -11,22 +11,22 @@ const Discover = () => {
     {
       title: "Bestsellers",
       img: "/images/discover1.png",
-      link: "/bestsellers",
+      link: "#",
     },
     {
       title: "Gifting",
       img: "/images/discover2.png",
-      link: "/gifting",
+      link: "#",
     },
     {
       title: "Recommended",
       img: "/images/discover3.png",
-      link: "/recommended",
+      link: "#",
     },
     {
       title: "Bestsellers",
       img: "/images/discover1.png",
-      link: "/bestsellers",
+      link: "#",
     },
   ];
   return (
@@ -50,7 +50,7 @@ const Discover = () => {
               and was first discovered by the Native American tribe called the
               Mayans.
             </p>
-            <a href="/bestsellers" className="discover-link figtree-font ">
+            <a href="#" className="discover-link figtree-font ">
               View more about Top Sellers →
             </a>
           </Col>

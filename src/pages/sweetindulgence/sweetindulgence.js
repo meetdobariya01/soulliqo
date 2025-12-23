@@ -12,7 +12,8 @@ const Sweetindulgence = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const placeholder = process.env.PUBLIC_URL + "/images/category-placeholder.png";
+  const placeholder =
+    process.env.PUBLIC_URL + "/images/category-placeholder.png";
 
   useEffect(() => {
     axios
@@ -34,20 +35,19 @@ const Sweetindulgence = () => {
       <Header />
 
       {/* Banner */}
-      <div
-        className="banner d-flex align-items-center justify-content-center text-center  mt-2"
-        style={{
-          backgroundImage: `url(${process.env.PUBLIC_URL + "/images/sweet.png"})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          height: "600px",
-          color: "white",
-          fontSize: "2.5rem",
-          fontWeight: "600",
-        }}
-      >
-        Sweet Indulgence
-      </div>
+    <NavLink to="" className="text-decoration-none">
+            <div className="chocolate-banner position-relative">
+              <img
+                src="./images/sweet.jpg" // replace with your banner image
+                alt="Chocolate block"
+                className="w-100 h-50"
+              />
+              <h1 className="banner-text text-uppercase figtree-font ">
+              sweet indulgence
+              </h1>
+            </div>
+          </NavLink>
+    
 
       <Container className="my-5">
         {loading && (
@@ -69,9 +69,7 @@ const Sweetindulgence = () => {
                 <Card.Img
                   variant="top"
                   src={
-                    category.img
-                      ? `${API_BASE}${category.img}`
-                      : placeholder
+                    category.img ? `${API_BASE}${category.img}` : placeholder
                   }
                   alt={category.title}
                   onError={(e) => (e.target.src = placeholder)}

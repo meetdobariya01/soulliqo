@@ -22,7 +22,7 @@ const Ourmission = () => {
                 best way to express appreciation.”
               </p>
               <p className="mission-text figtree-font ">
-                Our Mission is simple — to create the most delicious, bespoke
+                Our Mission is simple - to create the most delicious, bespoke
                 chocolate using only the finest ingredients sourced from across
                 the world, especially Europe, Africa & India to be enjoyed by
                 all.

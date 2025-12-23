@@ -14,7 +14,7 @@ const Chocoblock = () => {
       <NavLink to="" className="text-decoration-none">
         <div className="chocolate-banner position-relative">
           <img
-            src="./images/chocolate-block-Copy.png" // replace with your banner image
+            src="./images/chocolate-block.webp" // replace with your banner image
             alt="Chocolate block"
             className="w-100 h-50"
           />

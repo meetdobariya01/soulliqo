@@ -87,12 +87,12 @@ const Homepage = () => {
                   to="/ownbox"
                   style={{
                     backgroundColor: "#7B5B54",
-                    color: "#fff",
+                    color: "#f0dfc9",
                     fontSize: "16px",
                     padding: "10px 20px",
                     border: "none",
                     textDecoration: "none",
-                    fontFamily: "Tenor Sans",
+                    fontFamily: "Figtree, sans-serif",
                   }}
                 >
                   Shop Now
