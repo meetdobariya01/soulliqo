@@ -14,7 +14,7 @@ import axios from "axios";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
 
-const API_BASE_URL = "http://localhost:5000/api/store";
+const API_BASE_URL = "http://localhost:8000/api"; // ✅ corrected API base URL
 
 const Ownbox = () => {
   const { collectionId } = useParams();
@@ -35,9 +35,19 @@ const Ownbox = () => {
       try {
         const url = `${API_BASE_URL}/collections/${collectionId}/boxes`;
         const res = await axios.get(url);
+
         setCollectionData(res.data.category);
-        // ✅ ensure availableSizes is array of objects [{ size, image }]
-        setAvailableSizes(res.data.availableSizes || []);
+
+        // Map availableSizes to objects with size and image
+        const sizesWithImages = (res.data.availableSizes || []).map((size) => {
+          const box = res.data.boxes?.find((b) => b.size === size);
+          return {
+            size,
+            image: box?.image || "/images/product-grid.png",
+          };
+        });
+
+        setAvailableSizes(sizesWithImages);
         setError(null);
       } catch (err) {
         console.error("Error fetching box sizes:", err);
@@ -80,11 +90,16 @@ const Ownbox = () => {
             </NavLink>
           </li>
           <li className="breadcrumb-item box-title">
-            <NavLink to="/sweetindulgence" className="text-decoration-none">
-              {collectionData.name?.toUpperCase()}
+            <NavLink
+              to={`/ownbox/${collectionId}`}
+              className="text-decoration-none"
+            >
+              {collectionData?.name?.toUpperCase()}
             </NavLink>
           </li>
-          <li className="breadcrumb-item active box-header">CHOOSE BOX SIZE</li>
+          <li className="breadcrumb-item active box-header">
+            CHOOSE BOX SIZE
+          </li>
         </Breadcrumb>
 
         <h2 className="fw-bold text-center mb-2 box-main-header">
@@ -101,14 +116,12 @@ const Ownbox = () => {
                 viewport={{ once: true }}
               >
                 <Card className="h-100 border box-card text-center p-4">
-                <Card.Img
-  variant="top"
-  src={item.image}
-  alt={`${item.size} Pc Box`}
-
-  style={{ height: "180px", objectFit: "cover" }}
-/>
-
+                  <Card.Img
+                    variant="top"
+                    src={item.image || "/images/product-grid.png"}
+                    alt={`${item.size} Pc Box`}
+                    style={{ height: "180px", objectFit: "cover" }}
+                  />
                   <Card.Body>
                     <Card.Title className="fw-bold own-box-title fs-1">
                       {item.size}

@@ -83,6 +83,7 @@ root.render(
        <Route path="/shiping" element={<Shiping />} />
        <Route path="/gallery" element={<Gallery />} />
        <Route path="/orders" element={<Order />} />
+       <Route path="/ownbox" element={<Ownbox />} />
        <Route path="*" element={<h1>404 Not Found</h1>} />
     </Routes>
   </Router>

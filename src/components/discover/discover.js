@@ -12,6 +12,8 @@ const Discover = () => {
       title: "Bestsellers",
       img: "/images/discover1.png",
       link: "#",
+      img: "/images/default.png",
+      link: "/bestsellers",
     },
     {
       title: "Gifting",

@@ -353,7 +353,7 @@ import Reletedproduct from "../../components/reletedproduct/reletedproduct";
 
 const Productdetails = () => {
   const { id } = useParams();
-  const Api = "http://localhost:5000";
+  const Api = "http://localhost:8000";
   const [product, setProduct] = useState(null);
   const [qty, setQty] = useState(1);
   const [wishlist, setWishlist] = useState(false);

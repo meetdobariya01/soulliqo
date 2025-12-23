@@ -2,16 +2,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 const asyncHandler = require('../Middleware/asyncHandler');
 const { authenticate } = require('../Middleware/authenticate');
-const Collections = require('../Models/Classification');
+const Collections = require('../Models/Category');
 const Box = require('../Models/Box');
 const Chocolate = require('../Models/Chocolate');
 const Cart = require('../Models/Cart');
 
 const router = express.Router();
 
-/* ----------------- Step 1: Get all categories ----------------- */
-
-/* ----------------- Step 1: Get all categories ----------------- */
 router.get('/categories', asyncHandler(async (req, res) => {
   const categories = await Collections.find().select('COLLECTION description').lean();
   const formatted = categories.map(cat => ({
@@ -42,18 +39,8 @@ router.get('/collections/:collectionId/boxes', asyncHandler(async (req, res) => 
 
   if (!boxes.length) return res.status(404).json({ message: 'No boxes found for this collection' });
 
-  if (!size) {
-    const uniqueSizes = [...new Set(boxes.map(b => b.size))].sort((a, b) => a - b);
-    return res.json({
-      category: { id: collection._id, name: collectionName, description: collection.description || "" },
-      availableSizes: uniqueSizes,
-    });
-  }
-
-  const filteredBoxes = boxes.filter(b => b.size === Number(size));
-  if (!filteredBoxes.length) return res.status(404).json({ message: `No boxes found for size ${size}` });
-
-  const formatted = filteredBoxes.map(box => ({
+  // Always return boxes array
+  const formattedBoxes = boxes.map(box => ({
     _id: box._id,
     name: box.boxName || "",
     size: box.size,
@@ -66,15 +53,31 @@ router.get('/collections/:collectionId/boxes', asyncHandler(async (req, res) => 
     typeLimits: box.typeLimits || {},
   }));
 
+  // Get unique sizes
+  const uniqueSizes = [...new Set(boxes.map(b => b.size))].sort((a, b) => a - b);
+
+  if (!size) {
+    return res.json({
+      category: { id: collection._id, name: collectionName, description: collection.description || "" },
+      availableSizes: uniqueSizes,
+      boxes: formattedBoxes
+    });
+  }
+
+  const filteredBoxes = formattedBoxes.filter(b => b.size === Number(size));
+  if (!filteredBoxes.length) return res.status(404).json({ message: `No boxes found for size ${size}` });
+
   res.json({
     category: { id: collection._id, name: collectionName, description: collection.description || "" },
     size: Number(size),
-    boxes: formatted,
+    boxes: filteredBoxes,
+    availableSizes: uniqueSizes
   });
 }));
 
+
 /* ----------------- Step 3: Get chocolates for a box ----------------- */
-router.get('/chocolates/:categoryId/:boxId', asyncHandler(async (req, res) => {
+router.get('/chocolates/:boxId', asyncHandler(async (req, res) => {
   const { categoryId, boxId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(categoryId) || !mongoose.Types.ObjectId.isValid(boxId)) {

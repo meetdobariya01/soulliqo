@@ -5,7 +5,7 @@ import { Card, Spinner } from "react-bootstrap";
 import axios from "axios";
 
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:8000";
 
 const Collection = () => {
   const [collections, setCollections] = useState([]);
@@ -28,7 +28,7 @@ const Collection = () => {
   }, []);
 
   // ✅ Chunk into slides of 4
-  const chunkSize = 4;
+  const chunkSize = 3;
   const slides = [];
   for (let i = 0; i < collections.length; i += chunkSize) {
     slides.push(collections.slice(i, i + chunkSize));
@@ -38,25 +38,25 @@ const Collection = () => {
   const getCollectionImage = (title) => {
     switch (title.toUpperCase()) {
       case "BON BON":
-        return "/images/bonbon/Collage Bon Bon.png";
+        return "/images/bonbon/soulliqo/Collage_Bon_Bon.png";
       case "TRUFFLE":
-        return "/images/bonbon/STYLED TRUFFLE.jpg";
+        return "/images/bonbon/E-com/STYLED_TRUFFLE.jpg";
       case "PRALINE":
-        return "/images/bonbon/STYLED PRALINE.jpg";
+        return "/images/bonbon/E-com/STYLED_PRALINE.jpg";
       case "CENTERFILLED TABLET":
-        return "/images/bonbon/Colage Bar.png";
+        return "/images/bonbon/soulliqo/Colage_Bar.png";
       default:
         return "/images/bonbon/default.png";
       case "INDULGENCE TABLET":
-        return "/images/bonbon/Florentine Collage.png";
+        return "/images/bonbon/soulliqo/Florentine_Collage.png";
       case "BOXBON BON":
-        return "/images/bonbon/_MG_4598.jpg";
+        return "/images/bonbon/E-com/_MG_4598.jpg";
       case "BOXTRUFFLE":
-        return "/images/bonbon/_MG_4598.jpg";
+        return "/images/bonbon/E-com/_MG_4598.jpg";
       case "BOXPRALINE":
-        return "/images/bonbon/_MG_4598.jpg";
+        return "/images/bonbon/E-com/_MG_4598.jpg";
       case "DRAGEES":
-        return "/images/bonbon/SOULLIQO - Session 12917-Edit-Edit-Edit.jpg";
+        return "/images/dragees/SOULLIQO - Session 12926-Edit-Edit-Edit.jpg";
     }
   };
 
@@ -75,52 +75,53 @@ const Collection = () => {
         </div>
       ) : (
         <Carousel indicators={false} interval={4000}>
-          {slides.map((group, idx) => (
-            <Carousel.Item key={idx}>
-              <div className="d-flex flex-wrap justify-content-center">
-                {group.map((item) => (
-                  <Card
-                    key={item._id}
-                    className="collection-card m-2 shadow-sm border-0"
-                    style={{
-                      cursor: "pointer",
-                      width: "240px",
-                      borderRadius: "16px",
-                      overflow: "hidden",
-                      transition: "transform 0.3s ease"
-                    }}
-                    onClick={() =>
-                      navigate(`/products/${encodeURIComponent(item.title)}`)
-                    }
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.transform = "scale(1.05)")
-                    }
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.transform = "scale(1)")
-                    }
-                  >
-                    <Card.Img
-                      variant="top"
-                      src={getCollectionImage(item.title)}
-                      onError={(e) =>
-                        (e.target.src = "/images/bonbon/default.png")
-                      }
-                      style={{
-                        height: "180px",
-                        objectFit: "contain",
-                        padding: "15px",
-                        background: "#f7f7f7"
-                      }}
-                    />
+         {slides.map((group, slideIndex) => (
+  <Carousel.Item key={`slide-${slideIndex}`}>
+    <div className="d-flex flex-wrap justify-content-center">
+      {group.map((item, itemIndex) => (
+        <Card
+          key={item._id || `${item.title}-${itemIndex}`}
+          className="collection-card m-2 shadow-sm border-0"
+          style={{
+            cursor: "pointer",
+            width: "240px",
+            borderRadius: "16px",
+            overflow: "hidden",
+            transition: "transform 0.3s ease",
+          }}
+          onClick={() =>
+            navigate(`/products/${encodeURIComponent(item.title)}`)
+          }
+          onMouseEnter={(e) =>
+            (e.currentTarget.style.transform = "scale(1.05)")
+          }
+          onMouseLeave={(e) =>
+            (e.currentTarget.style.transform = "scale(1)")
+          }
+        >
+          <Card.Img
+            variant="top"
+            src={getCollectionImage(item.title)}
+            onError={(e) =>
+              (e.target.src = "/images/bonbon/default.png")
+            }
+            style={{
+              height: "180px",
+              objectFit: "contain",
+              padding: "15px",
+              background: "#f7f7f7",
+            }}
+          />
 
-                    <Card.Footer className="text-center fw-bold bg-white border-0">
-                      {item.title}
-                    </Card.Footer>
-                  </Card>
-                ))}
-              </div>
-            </Carousel.Item>
-          ))}
+          <Card.Footer className="text-center fw-bold bg-white border-0">
+            {item.title}
+          </Card.Footer>
+        </Card>
+      ))}
+    </div>
+  </Carousel.Item>
+))}
+
         </Carousel>
       )}
     </div>

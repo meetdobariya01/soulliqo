@@ -12,7 +12,7 @@ const Boxcollection = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/store/categories")
+      .get("http://localhost:8000/api/store/categories")
       .then((res) => setCollections(res.data))
       .catch((err) => console.error("Collection error:", err));
   }, []);

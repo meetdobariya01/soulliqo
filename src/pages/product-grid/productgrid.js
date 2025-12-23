@@ -9,8 +9,8 @@ const Productgrid = () => {
   const { category } = useParams();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:8000";
 
-  const API_BASE = "http://localhost:5000";
 
   useEffect(() => {
     const fetchProducts = async () => {
