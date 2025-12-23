@@ -1,0 +1,96 @@
+/* PAGE BACKGROUND */
+.error-wrapper {
+  height: 100vh;
+  width: 100%;
+  background: #3e2723; /* Dark chocolate */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+}
+
+/* CHOCOLATE DRIPPING EFFECT */
+.drip,
+.drip2,
+.drip3 {
+  position: absolute;
+  top: 0;
+  width: 120px;
+  height: 200px;
+  border-radius: 50%;
+  background: #5d4037;
+  animation: drip 4s ease-in-out infinite;
+}
+
+.drip { left: 10%; animation-delay: 0s; }
+.drip2 { left: 45%; animation-delay: 0.8s; }
+.drip3 { left: 75%; animation-delay: 1.4s; }
+
+@keyframes drip {
+  0% { transform: translateY(-120px); }
+  50% { transform: translateY(20px); }
+  100% { transform: translateY(-120px); }
+}
+
+/* MAIN CONTENT */
+.error-content {
+  text-align: center;
+  color: #fff5e1;
+  max-width: 600px;
+}
+
+.error-title {
+  font-size: 130px;
+  font-weight: 900;
+  color: #f8bb86;
+  text-shadow: 0px 5px 10px rgba(0,0,0,0.4);
+}
+
+.error-subtitle {
+  font-size: 28px;
+  margin-top: -20px;
+  color: #ffe0b2;
+}
+
+.error-text {
+  font-size: 18px;
+  margin: 15px 0 30px;
+  color: #ffccbc;
+}
+
+/* BUTTON */
+.error-btn {
+  background: #ff7043;
+  color: #fff;
+  padding: 14px 32px;
+  font-size: 16px;
+  border-radius: 40px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s ease;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.4);
+}
+
+.error-btn:hover {
+  background: #ff5722;
+  transform: translateY(-4px);
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .error-title {
+    font-size: 80px;
+  }
+  .error-subtitle {
+    font-size: 22px;
+  }
+  .error-text {
+    font-size: 16px;
+  }
+  .error-btn {
+    padding: 12px 28px;
+    font-size: 15px;
+  }
+}
