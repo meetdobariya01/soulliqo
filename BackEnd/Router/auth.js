@@ -5,6 +5,10 @@ const nodemailer = require("nodemailer");
 const asyncHandler = require("../Middleware/asyncHandler");
 const User = require("../Models/User");
 const router = express.Router();
+const { OAuth2Client } = require("google-auth-library");
+const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const client = new OAuth2Client(CLIENT_ID);
+
 
 // Mailer setup
 const mailer = nodemailer.createTransport({
@@ -80,6 +84,45 @@ router.post("/reset-password", asyncHandler(async (req, res) => {
   user.otpExpires = undefined;
   await user.save();
   res.json({ message: "Password reset successfully" });
+}));
+
+
+router.post("/google-login", asyncHandler(async (req, res) => {
+  const { token } = req.body;
+  if (!token) return res.status(400).json({ message: "Google token is required." });
+
+  // Verify token
+  const ticket = await client.verifyIdToken({
+    idToken: token,
+    audience: CLIENT_ID,
+  });
+  const payload = ticket.getPayload();
+  const { email, given_name, family_name, picture } = payload;
+
+  let user = await User.findOne({ email });
+
+  if (!user) {
+    // Create new user if not exists
+    user = new User({
+      firstName: given_name,
+      lastName: family_name,
+      email,
+      password: "", // optional, since login is via Google
+      role: "user",
+      avatar: picture,
+    });
+    await user.save();
+  }
+
+  // Generate JWT token
+  const jwtToken = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
+
+  res.json({
+    message: "Login successful via Google",
+    token: jwtToken,
+    role: user.role,
+    userId: user._id,
+  });
 }));
 
 module.exports = router;

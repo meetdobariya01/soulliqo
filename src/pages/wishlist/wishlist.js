@@ -394,7 +394,7 @@ import { motion } from "framer-motion";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = "http://localhost:8000";
 
 const Wishlist = () => {
   const navigate = useNavigate();

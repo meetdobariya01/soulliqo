@@ -457,27 +457,7 @@
 // app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
 
 
-const cluster = require("cluster");
-const os = require("os");
 
-const numCPUs = os.cpus().length;
-
-if (cluster.isMaster) {
-  console.log(`👑 Master ${process.pid} is running`);
-  console.log(`🚀 Forking ${numCPUs} workers...`);
-
-  // Create workers
-  for (let i = 0; i < numCPUs; i++) {
-    cluster.fork();
-  }
-
-  // Restart dead workers
-  cluster.on("exit", (worker) => {
-    console.log(`❌ Worker ${worker.process.pid} died - Restarting...`);
-    cluster.fork();
-  });
-
-} else {
 
   // ============================
   //  YOUR EXISTING CODE STARTS
@@ -562,6 +542,7 @@ app.use("/uploads", express.static(path.join(__dirname, "./Admin/uploads")));
   app.use("/orders", require("./Router/orders"));
   app.use("/wishlist", require("./Router/wishlist"));
   app.use("/contact", require("./Router/contact"));
+  app.use("/api",require("./Router/boxRoutes"));
 
   app.get("/ping", (_, res) => res.json({ message: "Pong" }));
 
@@ -572,9 +553,10 @@ app.use("/uploads", express.static(path.join(__dirname, "./Admin/uploads")));
     res.status(err.status || 500).json({ message: err.message || "Something went wrong." });
   });
 
-  const PORT = process.env.PORT || 5000;
+  const PORT = process.env.PORT || 8000;
   app.listen(PORT, () => {
-    console.log(`🚀 Worker ${process.pid} running on port ${PORT}`);
-  });
+  console.log(`🚀 Server running on port ${PORT}`);
+});
 
-}
+
+

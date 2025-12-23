@@ -7,6 +7,9 @@ const sendEmail = require("../utils/sendEmail");
 
 const router = express.Router();
 
+const ADMIN_EMAIL =
+  process.env.ADMIN_EMAIL || "vashishthaprajapati33.starlight@gmail.com";
+
 // 🟢 Place an order
 router.post(
   "/place",
@@ -15,8 +18,10 @@ router.post(
     const { address } = req.body;
     const userId = req.user._id;
 
-    if (!address?.city || !address?.pincode) {
-      return res.status(400).json({ message: "City and Pincode are required." });
+    if (!address?.city || !address?.pincode || !address?.email) {
+      return res
+        .status(400)
+        .json({ message: "City, Pincode and Email are required." });
     }
 
     const cart = await Cart.findOne({ user: userId })
@@ -27,26 +32,37 @@ router.post(
       return res.status(400).json({ message: "Cart is empty" });
     }
 
-    // ✅ Format items
-    const items = cart.items.map((item) => ({
-      type: item.product ? "product" : "box",
-      product: item.product || undefined,
-      box: item.box || undefined,
-      name: item.product?.name || item.box?.name || item.name || "Custom Box",
-      price: item.price || item.product?.price || 0,
-      quantity: item.quantity || 1,
-      products: item.products || [],
-    }));
+    // ✅ FORMAT ITEMS
+    const items = cart.items.map((item) => {
+      const isProduct = !!item.product;
 
+      return {
+        type: isProduct ? "product" : "box",
+        product: isProduct ? item.product : undefined,
+        box: !isProduct ? item.box : undefined,
+        name: isProduct
+          ? item.product.name
+          : item.box?.boxName || `Custom Box (${item.box?.size || ""})`,
+        price:
+          item.price ||
+          item.product?.price ||
+          item.box?.price ||
+          0,
+        quantity: item.quantity || 1,
+        products: item.products || [],
+      };
+    });
+
+    // ✅ TOTALS
     const subtotal = items.reduce(
-      (sum, item) => sum + (item.price || 0) * (item.quantity || 1),
+      (sum, item) => sum + item.price * item.quantity,
       0
     );
-
     const sgst = subtotal * 0.025;
     const cgst = subtotal * 0.025;
     const totalAmount = subtotal + sgst + cgst;
 
+    // ✅ CREATE ORDER
     const order = new Order({
       user: userId,
       cartId: cart._id,
@@ -60,63 +76,88 @@ router.post(
 
     await order.save();
 
-    // ✅ Clear cart
+    // ✅ CLEAR CART
     cart.items = [];
     await cart.save();
 
-    // 📨 Email confirmation
-    const itemListHTML = items
+    // 📨 ITEMS TABLE
+    const itemRows = items
       .map(
         (i) => `
         <tr>
           <td style="padding:8px;border:1px solid #ddd;">${i.name}</td>
           <td style="padding:8px;border:1px solid #ddd;">${i.quantity}</td>
-          <td style="padding:8px;border:1px solid #ddd;">₹${i.price.toFixed(2)}</td>
-        </tr>`
+          <td style="padding:8px;border:1px solid #ddd;">₹${i.price.toFixed(
+            2
+          )}</td>
+        </tr>
+      `
       )
       .join("");
 
-    const emailHTML = `
-      <div style="font-family:Arial,sans-serif;max-width:600px;margin:auto;border:1px solid #eee;padding:20px;border-radius:8px;">
+    // ✅ USER EMAIL
+    const userEmailHTML = `
+      <div style="font-family:Arial;max-width:600px;margin:auto;padding:20px;">
         <h2 style="color:#7B4B3A;">Order Confirmation</h2>
         <p>Hi ${address.firstName || "Customer"},</p>
-        <p>Thank you for your order! Here are your order details:</p>
+        <p>Thank you for your order.</p>
 
-        <table style="width:100%;border-collapse:collapse;margin-top:15px;">
-          <thead>
-            <tr style="background-color:#f5f5f5;">
-              <th style="padding:8px;border:1px solid #ddd;">Item</th>
-              <th style="padding:8px;border:1px solid #ddd;">Qty</th>
-              <th style="padding:8px;border:1px solid #ddd;">Price</th>
-            </tr>
-          </thead>
-          <tbody>${itemListHTML}</tbody>
+        <table width="100%" border="1" cellspacing="0" cellpadding="5">
+          <tr><th>Item</th><th>Qty</th><th>Price</th></tr>
+          ${itemRows}
         </table>
 
-        <p style="margin-top:10px;"><strong>Subtotal:</strong> ₹${subtotal.toFixed(2)}</p>
-        <p style="margin-top:10px;"><strong>SGST (2.5%):</strong> ₹${sgst.toFixed(2)}</p>
-        <p style="margin-top:10px;"><strong>CGST (2.5%):</strong> ₹${cgst.toFixed(2)}</p>
-        <p><strong>Total (incl. taxes):</strong> ₹${totalAmount.toFixed(2)}</p>
-
-        <h4 style="margin-top:20px;">Delivery Address:</h4>
-        <p>${address.street}, ${address.city}, ${address.state} - ${address.pincode}</p>
-
-        <p style="margin-top:20px;">We’ll notify you once your order is shipped.</p>
-        <p style="color:#555;">Thank you for shopping with us!<br/><strong>Your Store Team</strong></p>
+        <p><strong>Total:</strong> ₹${totalAmount.toFixed(2)}</p>
+        <p>Your order will be shipped soon.</p>
       </div>
     `;
 
+    // ✅ ADMIN EMAIL
+   // ✅ ADMIN EMAIL WITH FULL CUSTOMER DETAILS
+const adminEmailHTML = `
+  <div style="font-family:Arial;max-width:600px;margin:auto;padding:20px;">
+    <h2>🛒 New Order Received</h2>
+
+    <p><strong>Customer Name:</strong> ${address.firstName || ""} ${address.lastName || ""}</p>
+    <p><strong>Email:</strong> ${address.email}</p>
+    <p><strong>Phone:</strong> ${address.phone || "N/A"}</p>
+    <p><strong>Address:</strong> ${address.street || ""}, ${address.city || ""}, ${address.state || ""} - ${address.pincode || ""}</p>
+
+    <table width="100%" border="1" cellspacing="0" cellpadding="5">
+      <tr><th>Item</th><th>Qty</th><th>Price</th></tr>
+      ${itemRows}
+    </table>
+
+    <p><strong>Total Order Value:</strong> ₹${totalAmount.toFixed(2)}</p>
+  </div>
+`;
+
+
+    // ✅ SEND EMAILS
     try {
-      await sendEmail(address.email, "Order Confirmation - Your Store", emailHTML);
+      await sendEmail(
+        address.email,
+        "Order Confirmation - Your Store",
+        userEmailHTML
+      );
+
+      await sendEmail(
+        ADMIN_EMAIL,
+        "🛒 New Order Received",
+        adminEmailHTML
+      );
     } catch (err) {
-      console.error("❌ Email sending failed:", err.message);
+      console.error("❌ Email error:", err.message);
     }
 
-    res.status(201).json({ message: "✅ Order placed successfully", order });
+    res.status(201).json({
+      message: "✅ Order placed successfully",
+      order,
+    });
   })
 );
 
-// 🟢 Get all orders of logged-in user
+// 🟢 Get user orders
 router.get(
   "/",
   authenticate,
@@ -124,6 +165,7 @@ router.get(
     const orders = await Order.find({ user: req.user._id })
       .populate("items.product")
       .populate("items.box");
+
     res.json(orders);
   })
 );

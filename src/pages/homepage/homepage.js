@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import "../../index.css";
@@ -11,6 +11,24 @@ import Footer from "../../components/footer/footer";
 import Mycarousel from "../../components/carousel/carousel";
 
 const Homepage = () => {
+  const [collections, setCollections] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/api/categories")
+      .then((res) => res.json())
+      .then((data) => {
+        setCollections(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching collections:", err);
+        setLoading(false);
+      });
+  }, []);
+
+  const firstCollectionId = collections.length ? collections[0]._id : null;
+
   return (
     <div>
       {/* Header */}
@@ -43,7 +61,7 @@ const Homepage = () => {
               playsInline
               controls={false}
             >
-              <source src="./images/our-story.mp4" type="video/mp4" />
+              <source src="/images/our-story.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </div>
@@ -56,7 +74,6 @@ const Homepage = () => {
       {/* Make Your Own Box Section */}
       <Container fluid className="makebox-section py-5 container">
         <Row className="align-items-center">
-
           {/* Left Content */}
           <Col lg={6} md={12} className="text-center text-lg-start mb-4 mb-lg-0">
             <div className="flower-bg">
@@ -70,21 +87,25 @@ const Homepage = () => {
               </p>
 
               <div className="d-flex justify-content-lg-end justify-content-center mt-3">
-                <Button
-                  as={NavLink}
-                  to="/ownbox"  
-                  style={{
-                    backgroundColor: "#7B5B54",
-                    color: "#fff",
-                    fontSize: "16px",
-                    padding: "10px 20px",
-                    border: "none",
-                    textDecoration: "none",
-                    fontFamily: "Tenor Sans",
-                  }}
-                >
-                  Shop Now
-                </Button>
+                {firstCollectionId ? (
+                  <Button
+                    as={NavLink}
+                    to={`/ownbox/${firstCollectionId}`}
+                    style={{
+                      backgroundColor: "#7B5B54",
+                      color: "#fff",
+                      fontSize: "16px",
+                      padding: "10px 20px",
+                      border: "none",
+                      textDecoration: "none",
+                      fontFamily: "Tenor Sans",
+                    }}
+                  >
+                    Shop Now
+                  </Button>
+                ) : (
+                  <Button disabled>Loading...</Button>
+                )}
               </div>
             </div>
           </Col>
@@ -92,9 +113,9 @@ const Homepage = () => {
           {/* Right Image */}
           <Col lg={6} md={12} className="text-center">
             <img
-              src="./images/own-box.jpg"
+              src="/images/own-box.jpg"
               alt="Make your own Box"
-              className="img-fluid makebox-image h-25"
+              className="img-fluid makebox-image"
             />
           </Col>
         </Row>

@@ -5,7 +5,7 @@ import { Card, Spinner } from "react-bootstrap";
 import axios from "axios";
 
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:8000";
 
 const Collection = () => {
   const [collections, setCollections] = useState([]);
@@ -28,7 +28,7 @@ const Collection = () => {
   }, []);
 
   // ✅ Chunk into slides of 4
-  const chunkSize = 4;
+  const chunkSize = 3;
   const slides = [];
   for (let i = 0; i < collections.length; i += chunkSize) {
     slides.push(collections.slice(i, i + chunkSize));
@@ -38,25 +38,25 @@ const Collection = () => {
   const getCollectionImage = (title) => {
     switch (title.toUpperCase()) {
       case "BON BON":
-        return "/images/bonbon/Collage Bon Bon.png";
+        return "/images/bonbon/soulliqo/Collage_Bon_Bon.png";
       case "TRUFFLE":
-        return "/images/bonbon/STYLED TRUFFLE.jpg";
+        return "/images/bonbon/E-com/STYLED_TRUFFLE.jpg";
       case "PRALINE":
-        return "/images/bonbon/STYLED PRALINE.jpg";
+        return "/images/bonbon/E-com/STYLED_PRALINE.jpg";
       case "CENTERFILLED TABLET":
-        return "/images/bonbon/Colage Bar.png";
+        return "/images/bonbon/soulliqo/Colage_Bar.png";
       default:
         return "/images/bonbon/default.png";
       case "INDULGENCE TABLET":
-        return "/images/bonbon/Florentine Collage.png";
+        return "/images/bonbon/soulliqo/Florentine_Collage.png";
       case "BOXBON BON":
-        return "/images/bonbon/_MG_4598.jpg";
+        return "/images/bonbon/E-com/_MG_4598.jpg";
       case "BOXTRUFFLE":
-        return "/images/bonbon/_MG_4598.jpg";
+        return "/images/bonbon/E-com/_MG_4598.jpg";
       case "BOXPRALINE":
-        return "/images/bonbon/_MG_4598.jpg";
+        return "/images/bonbon/E-com/_MG_4598.jpg";
       case "DRAGEES":
-        return "/images/bonbon/SOULLIQO - Session 12917-Edit-Edit-Edit.jpg";
+        return "/images/dragees/SOULLIQO - Session 12926-Edit-Edit-Edit.jpg";
     }
   };
 

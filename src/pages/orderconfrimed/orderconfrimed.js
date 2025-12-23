@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col, Button, Card } from "react-bootstrap";
+import { Container, Button, Card } from "react-bootstrap";
 import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
 import Header from "../../components/header/header";
@@ -52,7 +52,7 @@ const Orderconfrimed = () => {
                   color: "#A58756",
                   fontFamily: "Poppins",
                   fontWeight: "400",
-                  fontFamily: "Tenor Sans",
+                  // fontFamily: "Tenor Sans",
                 }}
               >
                 Order Confirmed

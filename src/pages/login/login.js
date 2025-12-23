@@ -42,7 +42,7 @@ const Login = () => {
     setServerError("");
     try {
       const res = await axios.post(
-        "http://localhost:5000/user/login",
+        "http://localhost:8000/user/login",
         formData
       ); // adjust base URL if needed
       const { token, role, userId } = res.data;
@@ -60,7 +60,7 @@ const Login = () => {
     }
   };
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:5000/auth/google";
+    window.location.href = "http://localhost:8000/auth/google";
   };
   return (
     <div>
