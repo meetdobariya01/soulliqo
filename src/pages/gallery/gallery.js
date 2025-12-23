@@ -5,18 +5,18 @@ import Footer from "../../components/footer/footer";
 import '../../index.css';
 
 const products = [
-  { id: 1, name: "Chocolate Bar", img: "/images/gallery/1.jpg" },
-  { id: 2, name: "Dark Truffle", img: "/images/gallery/2.jpg" },
-  { id: 3, name: "Hazelnut Bliss", img: "/images/gallery/3.jpg" },
-  { id: 4, name: "Caramel Crisp", img: "/images/gallery/4.jpg" },
-  { id: 5, name: "Mint Delight", img: "/images/gallery/5.jpg" },
-  { id: 6, name: "Golden Mix", img: "/images/gallery/6.jpg" },
-  { id: 7, name: "Berry Fusion", img: "/images/gallery/7.jpg" },
-  { id: 8, name: "Coffee Crunch", img: "/images/gallery/8.jpg" },
-  { id: 9, name: "White Velvet", img: "/images/gallery/9.jpg" },
-  { id: 10, name: "Berry Fusion", img: "/images/gallery/10.jpg" },
-  { id: 11, name: "Coffee Crunch", img: "/images/gallery/11.jpeg" },
-  { id: 12, name: "White Velvet", img: "/images/gallery/12.jpeg" },
+  { id: 1, name: "Chocolate Bar", img: "/images/bonbon/E-com/_MG_4549.jpg" },
+  { id: 2, name: "Dark Truffle", img: "/images/bonbon/E-com/_MG_4530.jpg" },
+  { id: 3, name: "Hazelnut Bliss", img: "/images/bonbon/E-com/_MG_4549.jpg" },
+  { id: 4, name: "Caramel Crisp", img: "/images/bonbon/E-com/CREATIVE12.jpg" },
+  { id: 5, name: "Mint Delight", img: "/images/bonbon/E-com/CREATIVE16.jpg" },
+  { id: 6, name: "Golden Mix", img: "/images/bonbon/E-com/CREATIVE21.jpg" },
+  { id: 7, name: "Berry Fusion", img: "/images/bonbon/E-com/_MG_4808.jpg" },
+  { id: 8, name: "Coffee Crunch", img: "/images/bonbon/E-com/STYLED_PRALINE.jpg" },
+  { id: 9, name: "White Velvet", img: "/images/bonbon/E-com/BB7CLS.jpg" },
+  { id: 10, name: "Berry Fusion", img: "/images/bonbon/E-com/BB12FP.jpg" },
+  { id: 11, name: "Coffee Crunch", img: "/images/bonbon/E-com/BB12NN.jpg" },
+  { id: 12, name: "White Velvet", img: "/images/bonbon/E-com/BB12SUN.jpg" },
 ];
 
 const fadeUp = {

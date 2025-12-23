@@ -71,7 +71,7 @@ const Footer = () => {
                 <h5 className="figtree-font ">Quick Links</h5>
                 <ul className="figtree-font ">
                   <li>
-                    <Link to="/login">Login</Link>
+                    <Link to="/shiping">Shipping Policy</Link>
                   </li>
                   <li>
                     <Link to="/terms-and-condition">Terms & Conditions</Link>

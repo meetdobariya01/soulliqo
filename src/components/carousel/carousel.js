@@ -17,7 +17,7 @@ const Mycarousel = () => {
           <Carousel.Item className="slide">
             <img
               className="d-block w-100 slide-img"
-              src="./images/carousel-1.png"
+              src="./images/carousel-4.jpg"
               alt="Slide 1"
             />
 
