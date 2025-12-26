@@ -15,7 +15,7 @@ const Homepage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/categories")
+    fetch("https://api.soulliqo.com/api/categories")
       .then((res) => res.json())
       .then((data) => {
         setCollections(data);

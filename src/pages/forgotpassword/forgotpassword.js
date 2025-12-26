@@ -23,7 +23,7 @@ const Forgotpassword = () => {
 
     try {
       // 🔹 Replace with your actual backend endpoint
-      await axios.post("http://localhost:8000/send-otp", { email });
+      await axios.post("https://api.soulliqo.com/send-otp", { email });
 
       setMessage("OTP sent successfully! Check your email.");
     } catch (error) {

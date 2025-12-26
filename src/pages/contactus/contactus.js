@@ -19,7 +19,7 @@ const Contactus = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8000/contact/",
+        "https://api.soulliqo.com/contact/",
         formData
       );
       setStatus(response.data.success);

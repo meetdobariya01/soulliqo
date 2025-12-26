@@ -6,7 +6,7 @@ import axios from "axios";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
 
-const API_BASE = "http://localhost:8000/api";
+const API_BASE = "https://api.soulliqo.com/api";
 
 const BoxStyles = () => {
   const { collectionId, size } = useParams();
@@ -43,7 +43,7 @@ const BoxStyles = () => {
   const resolveImage = (img) => {
     if (!img) return "https://via.placeholder.com/300";
     if (img.startsWith("http")) return img;
-    return `http://localhost:8000${img}`;
+    return `https://api.soulliqo.com${img}`;
   };
 
   if (loading) {

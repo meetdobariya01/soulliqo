@@ -1,281 +1,246 @@
-import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import React, { useEffect, useState, useMemo } from "react";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { useLocation, useNavigate, NavLink } from "react-router-dom";
 import Footer from "../../components/footer/footer";
 import Header from "../../components/header/header";
 import axios from "axios";
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+const API_BASE_URL = process.env.REACT_APP_API_URL || "https://api.soulliqo.com";
 
 const Checkout = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [cart] = useState(
-    location.state?.cart ||
-      JSON.parse(localStorage.getItem("checkoutCart") || "{}")
-  );
+  // ✅ 1. Improved Data Detection (Fixes "No cart data found" from your image)
+  const cart = useMemo(() => {
+    // Check navigation state
+    if (location.state?.cart?.items?.length > 0) return location.state.cart;
+    if (Array.isArray(location.state?.cart)) return { items: location.state.cart };
+
+    // Check localStorage (guestCart)
+    const guestCart = localStorage.getItem("guestCart");
+    if (guestCart) {
+      try {
+        const parsed = JSON.parse(guestCart);
+        const items = Array.isArray(parsed) ? parsed : (parsed.items || []);
+        if (items.length > 0) return { items };
+      } catch (e) {
+        console.error("Error parsing guestCart", e);
+      }
+    }
+    return { items: [] };
+  }, [location.state]);
 
   const [address, setAddress] = useState({
-    country: "India",
-    firstName: "",
-    lastName: "",
-    street: "",
-    city: "",
-    state: "",
-    pincode: "",
-    email: "",
+    firstName: "", lastName: "", street: "", city: "", state: "", pincode: "", email: ""
   });
 
-  const [subtotal, setSubtotal] = useState(0);
-  const [sgst, setSgst] = useState(0);
-  const [cgst, setCgst] = useState(0);
-  const [totalAmount, setTotalAmount] = useState(0);
+  const [totals, setTotals] = useState({ subtotal: 0, sgst: 0, cgst: 0, total: 0 });
 
-  // ✅ Calculate totals
   useEffect(() => {
-    if (cart?.items?.length) {
+    if (cart?.items?.length > 0) {
       const sub = cart.items.reduce((sum, item) => {
-        const price =
-          Number(item.price) ||
-          Number(item.product?.price) ||
-          Number(item.box?.price) ||
-          0;
-        const qty = Number(item.quantity) || 1;
-        return sum + price * qty;
+        const price = Number(item.price || item.product?.price || 0);
+        const qty = Number(item.quantity || 1);
+        return sum + (price * qty);
       }, 0);
 
-      const sgstVal = sub * 0.025;
-      const cgstVal = sub * 0.025;
-
-      setSubtotal(sub);
-      setSgst(sgstVal);
-      setCgst(cgstVal);
-      setTotalAmount(sub + sgstVal + cgstVal);
+      setTotals({
+        subtotal: sub,
+        sgst: sub * 0.025,
+        cgst: sub * 0.025,
+        total: sub + (sub * 0.05)
+      });
     }
   }, [cart]);
 
-  if (!cart?.items?.length) {
-    return (
-      <Container className="py-5 text-center">
-        <p>No cart data found. Please add items first.</p>
-      </Container>
-    );
-  }
+  // ✅ 2. Image Fix (Fixes the broken image in image_e11da1.png)
+  const getSingleImage = (item) => {
+    const target = item.product || item;
+    const imageField = target.image || target.images || "";
+    
+    if (!imageField) return "";
 
-  // ✅ Image handler (product + box)
-  const getImageList = (item) => {
-    const rawImage =
-      item.product?.image ||
-      item.product?.images ||
-      item.box?.image ||
-      item.image;
-
-    if (!rawImage) {
-      return [`${API_BASE_URL}/images/product-grid.png`];
+    let rawPaths = [];
+    if (Array.isArray(imageField)) {
+      rawPaths = imageField.flatMap(img => typeof img === 'string' ? img.split(",") : img);
+    } else {
+      rawPaths = imageField.split(",");
     }
 
-    const images = Array.isArray(rawImage)
-      ? rawImage
-      : rawImage.split(",");
+    const firstPath = rawPaths.map(p => p.trim()).filter(Boolean)[0];
+    if (!firstPath) return "";
 
-    return images.map((img) =>
-      img.startsWith("http")
-        ? img
-        : `${API_BASE_URL}/${img.replace(/^\/+/, "")}`
-    );
+    return firstPath.startsWith("http") 
+      ? firstPath 
+      : `${API_BASE_URL}${firstPath.startsWith("/") ? "" : "/"}${firstPath}`;
   };
+  // const handlePlaceOrder = async () => {
+  //   if (!address.email || !address.city || !address.pincode) {
+  //     alert("Please fill in Email, City, and Pincode.");
+  //     return;
+  //   }
 
-  const handlePlaceOrder = async () => {
-    if (!address.city || !address.pincode || !address.email) {
-      alert("Please enter city, pincode, and email.");
+  //   const token = localStorage.getItem("token");
+  //   if (!token) {
+  //     alert("Please log in to complete order.");
+  //     navigate("/login", { state: { from: "/checkout", cart: cart } });
+  //     return;
+  //   }
+
+  //   try {
+  //     await axios.post(`${API_BASE_URL}/orders/place`, 
+  //       { address, items: cart.items, totalAmount: totals.total },
+  //       { headers: { Authorization: `Bearer ${token}` } }
+  //     );
+  //     alert("Order Placed!");
+  //     localStorage.removeItem("guestCart");
+  //     navigate("/orderconfrimed");
+  //   } catch (err) {
+  //     alert("Order failed. Please try again.");
+  //   }
+  // };
+const handlePlaceOrder = async () => {
+    // 1. Validation
+    if (!address.email || !address.city || !address.pincode || !address.firstName || !address.street) {
+      alert("Please fill in all required delivery details.");
+      return;
+    }
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Please log in to complete order.");
+      navigate("/login", { state: { from: "/checkout", cart: cart } });
       return;
     }
 
     try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        alert("Please log in first.");
-        navigate("/login");
-        return;
-      }
+      // 2. Prepare Payload
+      // Note: Make sure the keys (firstName, street, etc.) match exactly what your Backend expects
+      const orderPayload = {
+        address: address,
+        items: cart.items.map(item => ({
+          product: item.product?._id || item.productId,
+          name: item.product?.name || item.name,
+          price: item.price || item.product?.price,
+          quantity: item.quantity
+        })),
+        subtotal: totals.subtotal,
+        sgst: totals.sgst,
+        cgst: totals.cgst,
+        totalAmount: totals.total
+      };
 
-      await axios.post(
-        `${API_BASE_URL}/orders/place`,
-        { address },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
+      // 3. API Call
+      const res = await axios.post(`${API_BASE_URL}/orders/place`, 
+        orderPayload,
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      alert("✅ Order placed successfully!");
-      localStorage.removeItem("checkoutCart");
-      navigate("/");
+      // 4. Success Handling
+      if (res.status === 201 || res.status === 200) {
+        // Clear guest cart as order is successful
+        localStorage.removeItem("guestCart");
+
+        // ✅ IMPORTANT: Pass the server response (res.data) to the next page
+        navigate("/orderconfrimed", { state: { order: res.data } });
+      }
     } catch (err) {
-      console.error(err);
-      alert(err.response?.data?.message || "Order failed");
+      console.error("Order error:", err.response?.data || err.message);
+      alert(err.response?.data?.message || "Order failed. Please try again.");
     }
   };
+  // ✅ 3. Empty State UI
+  if (!cart.items || cart.items.length === 0) {
+    return (
+      <>
+        <Header />
+        <Container className="py-5 text-center" style={{ minHeight: "60vh" }}>
+          <h4 className="mt-5 text-muted">No cart data found. Please add items first.</h4>
+          <Button as={NavLink} to="/" className="mt-3" style={{backgroundColor: "#7B4B3A", border: "none"}}>
+            RETURN TO SHOP
+          </Button>
+        </Container>
+        <Footer />
+      </>
+    );
+  }
 
   return (
     <div>
       <Header />
-      <Container fluid className="py-4 px-3 container">
-        <h5 className="checkout-title mb-4">CHECKOUT</h5>
+      <Container className="py-5">
+        <h4 className="mb-5 fw-bold">CHECKOUT</h4>
         <Row>
-          {/* LEFT */}
           <Col md={7}>
-            <h6 className="mb-3">Contact</h6>
-            <Form.Control
-              type="email"
-              placeholder="Email"
-              className="mb-4"
-              value={address.email}
-              onChange={(e) =>
-                setAddress({ ...address, email: e.target.value })
-              }
-            />
-
-            <h6 className="mb-3">Delivery</h6>
-            <Row>
-              <Col md={6} className="mb-3">
-                <Form.Control
-                  placeholder="First Name"
-                  value={address.firstName}
-                  onChange={(e) =>
-                    setAddress({ ...address, firstName: e.target.value })
-                  }
-                />
-              </Col>
-              <Col md={6} className="mb-3">
-                <Form.Control
-                  placeholder="Last Name"
-                  value={address.lastName}
-                  onChange={(e) =>
-                    setAddress({ ...address, lastName: e.target.value })
-                  }
-                />
-              </Col>
-              <Col md={12} className="mb-3">
-                <Form.Control
-                  placeholder="Street"
-                  value={address.street}
-                  onChange={(e) =>
-                    setAddress({ ...address, street: e.target.value })
-                  }
-                />
-              </Col>
-              <Col md={6} className="mb-3">
-                <Form.Control
-                  placeholder="City"
-                  value={address.city}
-                  onChange={(e) =>
-                    setAddress({ ...address, city: e.target.value })
-                  }
-                />
-              </Col>
-              <Col md={3} className="mb-3">
-                <Form.Control
-                  placeholder="State"
-                  value={address.state}
-                  onChange={(e) =>
-                    setAddress({ ...address, state: e.target.value })
-                  }
-                />
-              </Col>
-              <Col md={3} className="mb-3">
-                <Form.Control
-                  placeholder="Pincode"
-                  value={address.pincode}
-                  onChange={(e) =>
-                    setAddress({ ...address, pincode: e.target.value })
-                  }
-                />
-              </Col>
-            </Row>
-
-            <Button
-              as={NavLink}
-              to="/orderconfrimed"
-              onClick={handlePlaceOrder}
-              style={{
-                backgroundColor: "#7B4B3A",
-                border: "none",
-                padding: "12px 40px",
-              }}
-            >
+            <div className="mb-4">
+              <h6 className="fw-bold text-uppercase small mb-3">Contact</h6>
+              <Form.Control 
+                type="email" 
+                placeholder="Email" 
+                onChange={e => setAddress({...address, email: e.target.value})} 
+              />
+            </div>
+            <div className="mb-4">
+              <h6 className="fw-bold text-uppercase small mb-3">Delivery</h6>
+              <Row>
+                <Col md={6} className="mb-3">
+                  <Form.Control placeholder="First Name" onChange={e => setAddress({...address, firstName: e.target.value})} />
+                </Col>
+                <Col md={6} className="mb-3">
+                  <Form.Control placeholder="Last Name" onChange={e => setAddress({...address, lastName: e.target.value})} />
+                </Col>
+                <Col md={12} className="mb-3">
+                  <Form.Control placeholder="Street" onChange={e => setAddress({...address, street: e.target.value})} />
+                </Col>
+                <Col md={6} className="mb-3">
+                  <Form.Control placeholder="City" onChange={e => setAddress({...address, city: e.target.value})} />
+                </Col>
+                <Col md={3} className="mb-3">
+                  <Form.Control placeholder="State" onChange={e => setAddress({...address, state: e.target.value})} />
+                </Col>
+                <Col md={3} className="mb-3">
+                  <Form.Control placeholder="Pincode" onChange={e => setAddress({...address, pincode: e.target.value})} />
+                </Col>
+              </Row>
+            </div>
+            <Button onClick={handlePlaceOrder} className="py-2 px-5 border-0" style={{ backgroundColor: "#7B4B3A" }}>
               PLACE ORDER
             </Button>
           </Col>
 
-          {/* RIGHT */}
-          <Col md={5}>
-            <h6 className="fw-semibold mb-3">ORDER SUMMARY</h6>
-
-            {cart.items.map((item, index) => {
-              const images = getImageList(item);
-              return (
-                <Card key={index} className="mb-2">
-                  <Card.Body className="d-flex">
-                    <img
-                      src={images[0]}
-                      alt={
-                        item.product?.name ||
-                        item.box?.boxName ||
-                        "Custom Box"
-                      }
-                      style={{
-                        width: "60px",
-                        height: "60px",
-                        objectFit: "cover",
-                        borderRadius: "4px",
-                      }}
-                    />
-
-                    <div className="ms-3 flex-grow-1">
-                      <p className="mb-1 fw-semibold small">
-                        {item.product?.name ||
-                          item.box?.boxName ||
-                          "Custom Box"}
-                      </p>
-                      <p className="small text-muted mb-1">
-                        Qty: {item.quantity || 1}
-                      </p>
-                      <p className="fw-semibold small">
-                        ₹
-                        {(
-                          item.price ||
-                          item.product?.price ||
-                          item.box?.price ||
-                          0
-                        ).toFixed(2)}
-                      </p>
-                    </div>
-                  </Card.Body>
-                </Card>
-              );
-            })}
-
-            <hr />
-            <div className="d-flex justify-content-between">
-              <span>Subtotal</span>
-              <span>₹{subtotal.toFixed(2)}</span>
+          <Col md={5} className="ps-md-5">
+            <h6 className="fw-bold text-uppercase small mb-4">Order Summary</h6>
+            <div className="pe-2" style={{ maxHeight: "400px", overflowY: "auto" }}>
+              {cart.items.map((item, idx) => (
+                <div key={idx} className="d-flex align-items-center mb-3 pb-3 border-bottom">
+                  <img 
+                    src={getSingleImage(item)} 
+                    alt="item" 
+                    style={{ width: "65px", height: "65px", objectFit: "cover", borderRadius: "8px" }} 
+                  />
+                  <div className="ms-3 flex-grow-1">
+                    <p className="mb-0 fw-bold small">{item.product?.name || item.name || "Item"}</p>
+                    <p className="mb-0 text-muted extra-small">Qty: {item.quantity}</p>
+                    <p className="mb-0 fw-bold small">₹{(Number(item.price || item.product?.price || 0)).toFixed(2)}</p>
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="d-flex justify-content-between">
-              <span>SGST</span>
-              <span>₹{sgst.toFixed(2)}</span>
-            </div>
-            <div className="d-flex justify-content-between">
-              <span>CGST</span>
-              <span>₹{cgst.toFixed(2)}</span>
-            </div>
-            <hr />
-            <div className="d-flex justify-content-between fw-bold">
-              <span>Total</span>
-              <span>₹{totalAmount.toFixed(2)}</span>
+            <div className="mt-4">
+              <div className="d-flex justify-content-between mb-2 small">
+                <span>Subtotal</span>
+                <span>₹{totals.subtotal.toFixed(2)}</span>
+              </div>
+              <div className="d-flex justify-content-between mb-2 small">
+                <span>GST (5%)</span>
+                <span>₹{(totals.sgst + totals.cgst).toFixed(2)}</span>
+              </div>
+              <hr />
+              <div className="d-flex justify-content-between align-items-center">
+                <span className="fw-bold">Total</span>
+                <span className="fw-bold fs-5">₹{totals.total.toFixed(2)}</span>
+              </div>
             </div>
           </Col>
         </Row>

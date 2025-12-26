@@ -5,22 +5,28 @@ import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
 import axios from "axios";
 
-const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:8000";
+const API_BASE = process.env.REACT_APP_API_URL || "https://api.soulliqo.com";
 
 const Sweetindulgence = () => {
-  const [categories, setCategories] = useState([]);
+  const [boxCollections, setBoxCollections] = useState([]);
+  const [productCategories, setProductCategories] = useState([]);
+  const [firstCollectionId, setFirstCollectionId] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const placeholder =
-    process.env.PUBLIC_URL + "/images/category-placeholder.png";
+  const placeholder = process.env.PUBLIC_URL + "/images/category-placeholder.png";
 
   useEffect(() => {
-    axios
-      .get(`${API_BASE}/products/categories`)
-      .then((res) => {
-        const lastThree = res.data.slice(-3); // ✅ only last 3
-        setCategories(lastThree);
+    Promise.all([
+      axios.get(`${API_BASE}/api/categories`),          // ✅ BOX COLLECTIONS
+      axios.get(`${API_BASE}/products/categories`)     // ✅ PRODUCT CATEGORIES
+    ])
+      .then(([boxRes, productRes]) => {
+        const boxes = boxRes.data || [];
+        setBoxCollections(boxes);
+        setFirstCollectionId(boxes[0]?._id || null);
+
+        setProductCategories(productRes.data.slice(-3) || []);
         setLoading(false);
       })
       .catch((err) => {
@@ -30,60 +36,67 @@ const Sweetindulgence = () => {
       });
   }, []);
 
+  if (loading) return (
+    <div className="text-center my-5">
+      <Spinner animation="border" />
+    </div>
+  );
+
+  if (error) return <Alert variant="danger">{error}</Alert>;
+
   return (
     <div>
       <Header />
 
       {/* Banner */}
-    <NavLink to="" className="text-decoration-none">
-            <div className="chocolate-banner position-relative">
-              <img
-                src="./images/sweet.jpg" // replace with your banner image
-                alt="Chocolate block"
-                className="w-100 h-50"
-              />
-              <h1 className="banner-text text-uppercase figtree-font ">
-              sweet indulgence
-              </h1>
-            </div>
-          </NavLink>
-    
+      <div className="chocolate-banner position-relative">
+        <img src="/images/sweet.jpg" alt="Sweet Indulgence" className="w-100 h-50" />
+        <h1 className="banner-text text-uppercase figtree-font">Sweet Indulgence</h1>
+      </div>
 
       <Container className="my-5">
-        {loading && (
-          <div className="text-center my-5">
-            <Spinner animation="border" />
-          </div>
-        )}
-
-        {error && <Alert variant="danger">{error}</Alert>}
-
         <Row>
-          {categories.map((category) => (
-            <Col key={category._id} xs={12} sm={6} md={4} className="mb-4">
+          {/* BOX COLLECTIONS */}
+          {firstCollectionId && boxCollections.map((box) => (
+            <Col key={box._id} xs={12} sm={6} md={4} className="mb-4">
               <Card
                 as={NavLink}
-                to={`/products/${encodeURIComponent(category.title)}`}
+                to={`/ownbox/${firstCollectionId}`}
                 className="h-100 text-center border-0 shadow-sm text-decoration-none"
               >
                 <Card.Img
                   variant="top"
-                  src={
-                    category.img ? `${API_BASE}${category.img}` : placeholder
-                  }
-                  alt={category.title}
+                  src={box.image ? `${API_BASE}${box.image}` : placeholder}
+                  alt={box.COLLECTION}
                   onError={(e) => (e.target.src = placeholder)}
                   style={{ height: "180px", objectFit: "cover" }}
                 />
+                <Card.Body>
+                  <Card.Title className="fs-6 text-dark">{box.COLLECTION}</Card.Title>
+                  <Card.Text className="text-muted small">Build Your Own Box</Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
 
-                <Card.Body className="p-3">
-                  <Card.Title className="fs-6 text-dark">
-                    {category.title}
-                  </Card.Title>
-
-                  <Card.Text className="text-muted small">
-                    View Collection
-                  </Card.Text>
+          {/* PRODUCT CATEGORIES */}
+          {productCategories.map((cat) => (
+            <Col key={cat.id} xs={12} sm={6} md={4} className="mb-4">
+              <Card
+                as={NavLink}
+                to={`/products/${encodeURIComponent(cat.title)}`}
+                className="h-100 text-center border-0 shadow-sm text-decoration-none"
+              >
+                <Card.Img
+                  variant="top"
+                  src={cat.img ? `${API_BASE}${cat.img}` : placeholder}
+                  alt={cat.title}
+                  onError={(e) => (e.target.src = placeholder)}
+                  style={{ height: "180px", objectFit: "cover" }}
+                />
+                <Card.Body>
+                  <Card.Title className="fs-6 text-dark">{cat.title}</Card.Title>
+                  <Card.Text className="text-muted small">View Collection</Card.Text>
                 </Card.Body>
               </Card>
             </Col>

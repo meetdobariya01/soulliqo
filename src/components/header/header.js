@@ -83,7 +83,7 @@ const Header = () => {
           {/* Right Icons */}
           <div className="d-flex align-items-center gap-3">
             <FaSearch className="icon-btn d-none d-lg-block" onClick={() => setSearchOpen(!searchOpen)} />
-            <Link to="/boxcheckout" className="icon-btn position-relative ms-3">
+            <Link to="/cart" className="icon-btn position-relative ms-3">
               <FaShoppingBag />
               <span className="cart-count">1</span>
             </Link>

@@ -125,7 +125,7 @@ router.get('/chocolates/:boxId', asyncHandler(async (req, res) => {
   res.json(formatted);
 }));
 /* ----------------- Step 4: Add custom box to cart ----------------- */
-router.post('/cart/add', authenticate, asyncHandler(async (req, res) => {
+router.post('/cart/add',asyncHandler(async (req, res) => {
   const { boxId, chocolates } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(boxId)) {
@@ -294,7 +294,7 @@ router.get('/boxes/:id', asyncHandler(async (req, res) => {
 
 
 /* ----------------- Step 6: Get user cart ----------------- */
-router.get('/cart', authenticate, asyncHandler(async (req, res) => {
+router.get('/cart', asyncHandler(async (req, res) => {
   const cart = await Cart.findOne({ user: req.user._id }).lean();
   if (!cart) return res.status(404).json({ message: 'Cart not found' });
   res.json({ cart });
@@ -303,21 +303,3 @@ router.get('/cart', authenticate, asyncHandler(async (req, res) => {
 module.exports = router;
 
 
-
-// PORT=8000
-// # MONGO_URI=mongodb://127.0.0.1:27017/soliquo
-
-// # JWT_SECRET=2b99f3132d213a400ab55196717650da0c2c8e24b36841d4825126bae0b102ca36e327673bf7a0442be5d9385258746f0a1bec6a125fced1eebda18c7c34838a
-// # MAIL_USER=prajapativashishtha33@gmail.com
-// # MAIL_PASS=xwdvvutdzimznftd
-// # EMAIL_USER=prajapativashishtha33@gmail.com
-// # EMAIL_PASS=xwdvvutdzimznftd
-
-// # SESSION_SECRET=037a313eb5104451a697053a31cde5da64c48097a9a21d56a46243324e7c43356144618ad822ec1e935f285eca6cb28715450526aea07b8335db49e8cc52ab3e
-// # FRONTEND_URL=http://localhost:3000
-// # CLIENT_URL=http://localhost:3000
-// # # Google
-
-
-// # ADMIN_EMAIL=vashishthaprajapati33.starlight@gmail.com
-// # SERVER_URL=http://localhost:8000

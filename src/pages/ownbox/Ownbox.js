@@ -14,7 +14,7 @@ import axios from "axios";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
 
-const API_BASE_URL = "http://localhost:8000/api"; // ✅ corrected API base URL
+const API_BASE_URL = "https://api.soulliqo.com/api"; // ✅ corrected API base URL
 
 const Ownbox = () => {
   const { collectionId } = useParams();

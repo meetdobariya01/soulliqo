@@ -24,7 +24,7 @@ const Boxproduct = () => {
   const resolveImage = (img) => {
     if (!img) return "/images/product-grid.png";
     if (/^(https?:)?\/\//i.test(img) || /^data:/i.test(img)) return img;
-    const base = process.env.REACT_APP_API_URL || "http://localhost:8000";
+    const base = process.env.REACT_APP_API_URL || "https://api.soulliqo.com";
     return img.startsWith("/") ? `${base}${img}` : `${base}/${img}`;
   };
 
@@ -34,7 +34,7 @@ const Boxproduct = () => {
       setError(null);
 
       try {
-        const base = process.env.REACT_APP_API_URL || "http://localhost:8000";
+        const base = process.env.REACT_APP_API_URL || "https://api.soulliqo.com";
         const url = `${base}/api/boxes/${boxId}`; // returns box + all products
         const res = await axios.get(url);
         const { box: fetchedBox, products: fetchedProducts } = res.data;

@@ -3,7 +3,7 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const API_BASE_URL =
-  process.env.REACT_APP_API_URL || "http://localhost:8000";
+  process.env.REACT_APP_API_URL || "https://api.soulliqo.com";
 
 const Reletedproduct = ({ category, currentProductId }) => {
   const navigate = useNavigate();

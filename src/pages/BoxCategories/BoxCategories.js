@@ -10,7 +10,7 @@ const BoxCategories = () => {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:8000/api/classifications/${collectionId}/sizes/${size}/categories`
+        `https://api.soulliqo.com/api/classifications/${collectionId}/sizes/${size}/categories`
       )
       .then((res) => setCategories(res.data))
       .catch((err) => console.error(err));
