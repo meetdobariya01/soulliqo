@@ -18,7 +18,7 @@ const Whoweare = () => {
               className="order-1 order-md-2 text-center animate_animated animate_fadeInRight"
             >
               <img
-                src="./images/brandjourney.png" // ✅ Put image inside public/images/
+                src="./images/brandjourney.webp" // ✅ Put image inside public/images/
                 alt="Chocolate Chef"
                 className="img-fluid rounded who-image"
               />
@@ -27,15 +27,12 @@ const Whoweare = () => {
             <Col
               xs={12}
               md={6}
-              className="order-2 order-md-1 animate_animated animate_fadeInLeft"
+              className="order-2 order-md-1 animate_animated animate_fadeInLeft values-box"
             >
               <h2 className="who-title montserrat-font text-uppercase">Who we are</h2>
-              <p className="who-subtitle figtree-font"><b>" Chocolate is like poetry,</b></p>
-              <p className="who-text figtree-font">
-                From the elegant rhythm of its making to the enchanting duet of
+              <p className="who-subtitle figtree-font"><b>" Chocolate is like poetry,</b><i> From the elegant rhythm of its making to the enchanting duet of
                 sharing it with loved ones. The essence of chocolate is a living
-                verse in every bite..."
-              </p>
+                verse in every bite..."</i></p>
               <p className="who-text">
                 Immersed in a world of art and music, our chocolates are a
                 reflection of our inspiration. Crafted with traditional European

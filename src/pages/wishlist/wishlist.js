@@ -551,8 +551,8 @@ const Wishlist = () => {
                       onClick={() => handleProductClick(item._id)}
                     />
 
-                    <Card.Body onClick={() => handleProductClick(item._id)}>
-                      <Card.Title className="fs-6 wishlist-title">
+                    <Card.Body className="figtree-font" onClick={() => handleProductClick(item._id)}>
+                      <Card.Title className="fs-6 wishlist-title montserrat-font">
                         {item.name}
                       </Card.Title>
                       <Card.Text className="text-muted wishlist-weight">
@@ -586,7 +586,7 @@ const Wishlist = () => {
                       <Button
                         className="w-100 rounded-pill wishlist-remove"
                         style={{
-                          background: "#ff6b6b",
+                          background: "#312526",
                           border: "none",
                           color: "#fff",
                         }}

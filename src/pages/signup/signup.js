@@ -352,6 +352,17 @@ const Signup = () => {
             <h2 className="text-center mb-4 sign-heading montserrat-font text-uppercase">
               Create an account
             </h2>
+            <Button
+              variant="outline-dark"
+              className="w-100 mb-2 d-flex align-items-center justify-content-center"
+              onClick={handleGoogleLogin}
+            >
+              <FcGoogle className="me-2" /> Continue with Google
+            </Button>
+
+            <div className="text-center my-3">
+              <span className="text-muted">──────── or ────────</span>
+            </div>
 
             {serverError && <Alert variant="danger" className="text-center">{serverError}</Alert>}
 
@@ -430,11 +441,9 @@ const Signup = () => {
                 {loading ? <Spinner animation="border" size="sm" /> : "Continue"}
               </Button>
             </Form>
-
             <div className="text-center my-3">
               <span className="text-muted">──────── or ────────</span>
             </div>
-
             <Button
               variant="outline-secondary"
               className="w-100 mb-2 d-flex align-items-center justify-content-center"
@@ -442,14 +451,21 @@ const Signup = () => {
             >
               <FcGoogle className="me-2" /> Continue with Google
             </Button>
-
-            <Button variant="outline-secondary" className="w-100 mb-3 d-flex align-items-center justify-content-center">
+            <Button
+              variant="outline-secondary"
+              className="w-100 mb-3 d-flex align-items-center justify-content-center"
+            >
               <FaApple className="me-2" /> Continue with Apple
             </Button>
-
             <p className="text-center mt-3">
               Already have an account?{" "}
-              <a href="/login" style={{ color: "#e2905e" }}>Sign in</a>
+              <a
+                href="/login"
+                className="text-decoration-none"
+                style={{ color: "#e2905e", fontFamily: 'Figtree' }}
+              >
+                Sign in
+              </a>
             </p>
           </Col>
         </Row>

@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
-import '../../index.css';
+import { FaFilePdf, FaDownload } from "react-icons/fa";
+import "../../index.css";
 
 const products = [
   { id: 1, name: "Chocolate Bar", img: "/images/bonbon/E-com/_MG_4549.jpg" },
@@ -12,7 +13,11 @@ const products = [
   { id: 5, name: "Mint Delight", img: "/images/bonbon/E-com/CREATIVE16.jpg" },
   { id: 6, name: "Golden Mix", img: "/images/bonbon/E-com/CREATIVE21.jpg" },
   { id: 7, name: "Berry Fusion", img: "/images/bonbon/E-com/_MG_4808.jpg" },
-  { id: 8, name: "Coffee Crunch", img: "/images/bonbon/E-com/STYLED_PRALINE.jpg" },
+  {
+    id: 8,
+    name: "Coffee Crunch",
+    img: "/images/bonbon/E-com/STYLED_PRALINE.jpg",
+  },
   { id: 9, name: "White Velvet", img: "/images/bonbon/E-com/BB7CLS.jpg" },
   { id: 10, name: "Berry Fusion", img: "/images/bonbon/E-com/BB12FP.jpg" },
   { id: 11, name: "Coffee Crunch", img: "/images/bonbon/E-com/BB12NN.jpg" },
@@ -26,12 +31,51 @@ const fadeUp = {
 
 const Gallery = () => {
   const [selectedImg, setSelectedImg] = useState(null);
+  const downloadPdf = () => {
+    const link = document.createElement("a");
+    link.href = "/images/bon-bon-pdf.pdf"; // put pdf inside public folder
+    link.download = "Bon-Bon.pdf";
+    link.click();
+  };
   return (
     <div>
       {/* Header Component */}
       <Header />
 
       <div className="gallery-container">
+        <button
+          onClick={downloadPdf}
+          style={{
+            display: "flex",
+            margin: "20px auto",
+            alignItems: "center",
+            gap: "10px",
+            padding: "14px 26px",
+            borderRadius: "14px",
+            background: "#312625",
+            color: "#fff",
+            fontSize: "16px",
+            fontWeight: "600",
+            border: "none",
+            cursor: "pointer",
+            boxShadow: "0 10px 30px rgba(255,77,77,0.4)",
+            transition: "all 0.3s ease",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = "translateY(-2px) scale(1.05)";
+            e.currentTarget.style.boxShadow =
+              "0 14px 40px rgba(255,77,77,0.55)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = "none";
+            e.currentTarget.style.boxShadow = "0 10px 30px rgba(255,77,77,0.4)";
+          }}
+        >
+          <FaFilePdf size={20} />
+          Our Catalogue
+          <FaDownload />
+        </button>
+
         <motion.h1
           className="gallery-title montserrat-font text-uppercase"
           initial={{ opacity: 0, y: -30 }}

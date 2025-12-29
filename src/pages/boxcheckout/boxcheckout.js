@@ -129,15 +129,15 @@ const Boxcheckout = () => {
   return (
     <div>
       <Header />
-      <Container className="py-4">
-        <h5 className="fw-semibold mb-3" style={{ color: "#8B6F4E" }}>
+      <Container className="py-4 my-5">
+        <h5 className="fw-semibold mb-3 montserrat-font" style={{ color: "#312526" }}>
           Review Your Box – Chocolates
         </h5>
 
-        <p className="fw-semibold small">{box.size}-PIECE BOX</p>
+        <p className="fw-semibold small figtree-font">{box.size}-PIECE BOX</p>
 
         {selectedChocolates.map((item) => (
-          <Row key={item.id} className="align-items-center mb-3">
+          <Row key={item.id} className="align-items-center mb-3 figtree-font">
             <Col xs={3} sm={2}>
               <img
                 src={item.img}
@@ -168,9 +168,9 @@ const Boxcheckout = () => {
         </Row>
 
         <div className="text-end mt-4">
-          <Button
+          <Button className="montserrat-font"
             style={{
-              backgroundColor: "#7B4B3A",
+              backgroundColor: "#312526",
               border: "none",
               borderRadius: "6px",
               padding: "10px 30px",

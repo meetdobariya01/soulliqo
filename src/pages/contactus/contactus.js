@@ -137,19 +137,7 @@ const Contactus = () => {
               </motion.button>
             </div>
           </motion.form>
-        </div>
-        {/* Google Map */}
-        <div className="mt-4">
-          <iframe
-            title="Live Map"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d36147.613086163736!2d72.43188067431639!3d23.018687399999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e9b75dc2923c9%3A0xea4ace8cca4d7738!2sAarohi%20galleria!5e1!3m2!1sen!2sin!4v1757329162566!5m2!1sen!2sin"
-            width="100%"
-            height="400"
-            style={{ border: 0 }}
-            allowFullScreen=""
-            loading="lazy"
-          ></iframe>
-        </div>
+        </div> 
       </div>
       <Footer />
     </div>

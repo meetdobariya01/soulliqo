@@ -10,24 +10,22 @@ const Discover = () => {
   const discoverItems = [
     {
       title: "Bestsellers",
-      img: "/images/discover1.png",
-      link: "#",
-      img: "/images/default.png",
+      img: "/images/bestseller.webp",
       link: "/bestsellers",
     },
     {
       title: "Gifting",
-      img: "/images/discover2.png",
+      img: "/images/gifting.webp",
       link: "#",
     },
     {
       title: "Recommended",
-      img: "/images/discover3.png",
+      img: "/images/recommended.webp  ",
       link: "#",
     },
     {
-      title: "Bestsellers",
-      img: "/images/discover1.png",
+      title: "Chocolate Blocks",
+      img: "/images/chocolate-block.webp",
       link: "#",
     },
   ];

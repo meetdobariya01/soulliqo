@@ -9,52 +9,55 @@ const Ourmission = () => {
     <div>
       {/* Header */}
       <Header />
+
       {/* Our Mission Section */}
-      <section className="our-mission-section py-5">
-        <Container>
-          <Row className="align-items-center">
-            {/* left side content */}
-            <Col md={6} className="position-relative">
-              <div className="floral-bg-right"></div>
-              <h2 className="mission-title montserrat-font text-uppercase">Our Mission</h2>
-              <p className="mission-quote figtree-font">
-                “We believe passionately that a gift of indulgence is one of the
-                best way to express appreciation.”
-              </p>
-              <p className="mission-text figtree-font ">
-                Our Mission is simple - to create the most delicious, bespoke
-                chocolate using only the finest ingredients sourced from across
-                the world, especially Europe, Africa & India to be enjoyed by
-                all.
-                <br />
-                <br />
-                We are passionate about the art of chocolate making and
-                continuously strive to create premium chocolate and moments of
-                delight that put smiles on our customer’s face…
-              </p>
+      <section className="values-section container py-5">
+        <Container fluid className="p-0">
+          <Row className="g-0 align-items-stretch">
+            {/* Left Side - Image */}
+
+            {/* Right Side - Content */}
+            <Col md={6} className="d-flex align-items-center">
+              <div className="values-box">
+                <h2 className="mission-title montserrat-font text-uppercase">
+                  Our Mission
+                </h2>
+                <p className="mission-quote figtree-font">
+                  “We believe passionately that a gift of indulgence is one of
+                  the best way to express appreciation.”
+                </p>
+                <p className="mission-text figtree-font ">
+                  Our Mission is simple - to create the most delicious, bespoke
+                  chocolate using only the finest ingredients sourced from
+                  across the world, especially Europe, Africa & India to be
+                  enjoyed by all.
+                  <br />
+                  <br />
+                  We are passionate about the art of chocolate making and
+                  continuously strive to create premium chocolate and moments of
+                  delight that put smiles on our customer’s face…
+                </p>
+              </div>
             </Col>
-            {/* Right side image */}
-            <Col
-              md={6}
-              className="mb-4 mb-md-0 d-flex justify-content-center align-items-center"
-            >
+            <Col md={6} className="values-img-col">
               <img
-                src="./images/mission.jpg"
-                alt="Our Mission"
-                className="img-fluid rounded shadow"
+                src="./images/mission.webp" // change to your image path
+                alt="Our Values"
+                className="values-img"
               />
             </Col>
           </Row>
         </Container>
       </section>
 
+      {/* Our Values Section */}
       <section className="values-section container py-5">
         <Container fluid className="p-0">
           <Row className="g-0 align-items-stretch">
             {/* Left Side - Image */}
             <Col md={6} className="values-img-col">
               <img
-                src="./images/value.jpg" // change to your image path
+                src="./images/vision.webp"
                 alt="Our Values"
                 className="values-img"
               />
@@ -63,7 +66,9 @@ const Ourmission = () => {
             {/* Right Side - Content */}
             <Col md={6} className="d-flex align-items-center">
               <div className="values-box">
-                <h2 className="values-title montserrat-font text-uppercase">Our Values</h2>
+                <h2 className="values-title montserrat-font text-uppercase">
+                  Our Values
+                </h2>
                 <p className="values-text figtree-font">
                   All our chocolates are hand crafted in India with more Cocoa &
                   Chocolate and negligible to no added sugar and 100% pure Cocoa

@@ -6,17 +6,19 @@ import axios from "axios";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || "https://api.soulliqo.com";
+const API_BASE_URL =
+  process.env.REACT_APP_API_URL || "https://api.soulliqo.com";
 
 const Cart = () => {
   const navigate = useNavigate();
-  const [cart, setCart] = useState(null);
+  const [cart, setCart] = useState({ items: [] });
   const [loading, setLoading] = useState(true);
 
-  // Fetch cart
+  /* ================= FETCH CART ================= */
   useEffect(() => {
     const fetchCart = async () => {
       const token = localStorage.getItem("token");
+
       if (!token) {
         const cookieCart = Cookies.get("guestCart");
         setCart(cookieCart ? JSON.parse(cookieCart) : { items: [] });
@@ -36,123 +38,157 @@ const Cart = () => {
         setLoading(false);
       }
     };
+
     fetchCart();
   }, []);
 
-  // Get image
+  /* ================= HELPERS ================= */
   const getImageUrl = (item) => {
     const target = item.product || item;
-    const imageField = target.image || target.images || item.image || "";
+    const imageField = target.image || target.images || "";
     if (!imageField) return `${API_BASE_URL}/images/product-grid.png`;
+
     const first = Array.isArray(imageField)
-      ? imageField.flatMap(img => typeof img === "string" ? img.split(",") : img)[0]
+      ? imageField[0]
       : imageField.split(",")[0];
-    return first.startsWith("http") ? first : `${API_BASE_URL}${first.startsWith("/") ? "" : "/"}${first}`;
+
+    return first.startsWith("http")
+      ? first
+      : `${API_BASE_URL}${first.startsWith("/") ? "" : "/"}${first}`;
   };
 
-  // Total
   const calculateTotal = () =>
-    cart?.items?.reduce((acc, i) => {
+    cart.items.reduce((acc, i) => {
       const price = Number(i.price || i.product?.price || 0);
       const qty = Number(i.quantity || 1);
       return acc + price * qty;
-    }, 0) || 0;
+    }, 0);
 
-  // Update quantity
-  const updateQuantity = async (index, delta) => {
+  const updateQuantity = (index, delta) => {
     const newCart = { ...cart };
     const newQty = (newCart.items[index].quantity || 1) + delta;
     if (newQty < 1) return;
+
     newCart.items[index].quantity = newQty;
     setCart(newCart);
 
     const token = localStorage.getItem("token");
     if (!token) {
       Cookies.set("guestCart", JSON.stringify(newCart), { expires: 7 });
-    } else if (newCart.items[index]._id) {
-      try {
-        const item = newCart.items[index];
-        await axios.put(`${API_BASE_URL}/cart/update`, {
-          productId: item.product?._id,
-          quantity: newQty,
-        }, { headers: { Authorization: `Bearer ${token}` } });
-      } catch (err) { console.error(err); }
     }
   };
 
-  // Remove item
-  const removeItem = async (index) => {
+  const removeItem = (index) => {
     const newCart = { ...cart };
-    const removedItem = newCart.items.splice(index, 1)[0];
+    newCart.items.splice(index, 1);
     setCart(newCart);
 
     const token = localStorage.getItem("token");
     if (!token) {
       Cookies.set("guestCart", JSON.stringify(newCart), { expires: 7 });
-    } else if (removedItem._id) {
-      try {
-        await axios.delete(`${API_BASE_URL}/cart/remove/${removedItem._id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-      } catch (err) { console.error(err); }
     }
   };
 
-  // Checkout
   const handleCheckout = () => {
     const token = localStorage.getItem("token");
     if (!token) navigate("/login", { state: { redirectTo: "/checkout" } });
     else navigate("/checkout", { state: { cart } });
   };
 
-  if (loading) return (
-    <div className="d-flex justify-content-center align-items-center" style={{ height: "80vh" }}>
-      <Spinner animation="border" variant="secondary" />
-    </div>
-  );
+  /* ================= LOADING ================= */
+  if (loading) {
+    return (
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "80vh" }}
+      >
+        <Spinner animation="border" />
+      </div>
+    );
+  }
 
-  if (!cart?.items?.length) return (
-    <div>
-      <Header />
-      <Container className="py-5 text-center" style={{ minHeight: "50vh" }}>
-        <p className="fs-5 text-muted mt-5">Your cart is empty.</p>
-        <NavLink to="/" className="btn btn-outline-dark px-4 py-2 mt-2">Go Shopping</NavLink>
-      </Container>
-      <Footer />
-    </div>
-  );
+  /* ================= EMPTY CART ================= */
+  if (!cart.items.length) {
+    return (
+      <div>
+        <Header />
+        <Container className="py-5 text-center" style={{ minHeight: "60vh" }}>
+          <p className="fs-5 text-muted">Your cart is empty.</p>
+          <NavLink to="/" className="btn btn-outline-dark mt-3">
+            Go Shopping
+          </NavLink>
+        </Container>
+        <Footer />
+      </div>
+    );
+  }
 
+  /* ================= MAIN CART ================= */
   return (
     <div>
       <Header />
+
       <Container className="py-4" style={{ minHeight: "70vh" }}>
         <h5 className="fw-semibold mb-4" style={{ color: "#7B4B3A" }}>
           Your Cart {!localStorage.getItem("token") && "(Guest Mode)"}
         </h5>
 
         {cart.items.map((item, index) => (
-          <Row key={index} className="align-items-center mb-4 border-bottom pb-3">
-            <Col xs={4} sm={2}>
+          <Row
+            key={index}
+            className="align-items-center mb-3 border-bottom pb-3"
+          >
+            <Col xs={3} sm={2}>
               <img
                 src={getImageUrl(item)}
-                alt={item.product?.name || item.name || "Product"}
+                alt="product"
                 className="img-fluid rounded border"
-                onError={(e) => e.target.src = `${API_BASE_URL}/images/product-grid.png`}
+                onError={(e) =>
+                  (e.target.src = `${API_BASE_URL}/images/product-grid.png`)
+                }
               />
             </Col>
-            <Col xs={8} sm={10}>
-              <div className="d-flex justify-content-between align-items-start">
+
+            <Col xs={9} sm={10}>
+              <div className="d-flex justify-content-between">
                 <div>
-                  <p className="fw-bold mb-1">{item.product?.name || item.name || "Item"}</p>
+                  <p className="fw-bold mb-1">
+                    {item.product?.name || item.name}
+                  </p>
+
                   <div className="d-flex align-items-center gap-2 mb-2">
-                    <Button size="sm" variant="outline-secondary" onClick={() => updateQuantity(index, -1)}>-</Button>
+                    <Button
+                      size="sm"
+                      variant="outline-secondary"
+                      onClick={() => updateQuantity(index, -1)}
+                    >
+                      -
+                    </Button>
                     <span>{item.quantity}</span>
-                    <Button size="sm" variant="outline-secondary" onClick={() => updateQuantity(index, 1)}>+</Button>
+                    <Button
+                      size="sm"
+                      variant="outline-secondary"
+                      onClick={() => updateQuantity(index, 1)}
+                    >
+                      +
+                    </Button>
                   </div>
-                  <Button size="sm" variant="danger" onClick={() => removeItem(index)}>Remove</Button>
+
+                  <Button
+                    size="sm"
+                    variant="danger"
+                    onClick={() => removeItem(index)}
+                  >
+                    Remove
+                  </Button>
                 </div>
-                <div className="text-end">
-                  <p className="fw-bold">₹{(Number(item.price || item.product?.price || 0) * item.quantity).toFixed(2)}</p>
+
+                <div className="fw-bold">
+                  ₹
+                  {(
+                    Number(item.price || item.product?.price || 0) *
+                    item.quantity
+                  ).toFixed(2)}
                 </div>
               </div>
             </Col>
@@ -160,18 +196,27 @@ const Cart = () => {
         ))}
 
         <Row className="mt-4">
-          <Col md={{ span: 4, offset: 8 }} className="text-end">
-            <div className="d-flex justify-content-between mb-3 border-top pt-3">
+          <Col md={{ span: 4, offset: 8 }}>
+            <div className="d-flex justify-content-between border-top pt-3 mb-3">
               <span className="fw-semibold">Subtotal</span>
-              <span className="fw-bold fs-5">₹{calculateTotal().toFixed(2)}</span>
+              <span className="fw-bold fs-5">
+                ₹{calculateTotal().toFixed(2)}
+              </span>
             </div>
-            <Button onClick={handleCheckout} className="w-100 py-2 fw-bold" style={{ backgroundColor: "#7B4B3A", border: "none", letterSpacing: "1px" }}>
-              {localStorage.getItem("token") ? "PROCEED TO CHECKOUT" : "LOGIN TO CHECKOUT"}
+
+            <Button
+              className="w-100 py-2 fw-bold"
+              style={{ backgroundColor: "#7B4B3A", border: "none" }}
+              onClick={handleCheckout}
+            >
+              {localStorage.getItem("token")
+                ? "PROCEED TO CHECKOUT"
+                : "LOGIN TO CHECKOUT"}
             </Button>
-            {!localStorage.getItem("token") && <p className="small text-muted mt-2 text-center">Log in to sync your guest cart and finalize your order.</p>}
           </Col>
         </Row>
       </Container>
+
       <Footer />
     </div>
   );

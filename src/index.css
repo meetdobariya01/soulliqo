@@ -54,7 +54,22 @@ body {
   transform: scale(1.1);
   color: #fff;
 }
+.user-dropdown {
+  border-radius: 14px;
+  padding: 8px;
+  animation: fadeUp 0.25s ease-in-out;
+}
 
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 .cart-count {
   position: absolute;
   top: -6px;
@@ -731,9 +746,9 @@ a:hover {
 }
 
 @media (max-width: 768px) {
-  .card {
+  /* .card {
     padding: 1.5rem;
-  }
+  } */
 
   h1 {
     font-size: 1.8rem;
@@ -1095,7 +1110,7 @@ a:hover {
 }
 .contact-heading {
   font-weight: 600;
-  font-size: 60px;
+  font-size: 45px;
   color: #312526;
 }
 @media (max-width: 768px) {
@@ -1112,7 +1127,6 @@ a:hover {
 /* Wishlist Page Specific Styles */
 .wishlist-title,
 .wishlist-weight {
-  font-family: Tenor Sans;
   font-weight: 400;
   font-size: 16px;
 }
@@ -1129,7 +1143,7 @@ a:hover {
 }
 /*Own Box Page Specific Styles */
 .box-title {
-  font-family: Tenor Sans;
+  /* font-family: Tenor Sans; */
   font-weight: 400;
   font-size: 30px;
   color: #000 !important; /* Set text color (black or your theme color) */
@@ -1137,16 +1151,16 @@ a:hover {
   cursor: pointer;
 }
 .box-header {
-  font-family: Tenor Sans;
   font-weight: 400;
   font-size: 30px;
   color: #312625;
 }
 .box-main-header {
-  font-family: Tenor Sans;
   font-weight: 400;
   font-size: 40px;
-  margin-top: 100px;
+  font-weight: 600;
+  /* margin-top: 100px; */
+  color: #312625;
 }
 .box-main-subheader {
   font-family: Tenor Sans;
@@ -1172,13 +1186,10 @@ a:hover {
 }
 /* Box Product Page Specific Styles */
 .boxproduct-title {
-  font-family: Poppins;
   font-weight: 500;
   font-size: 25px;
-  margin-top: 100px;
 }
 .boxproduct-name {
-  font-family: Tenor Sans;
   font-weight: 400;
   font-size: 14px;
 }
@@ -1196,7 +1207,6 @@ a:hover {
 }
 /* checkout Page Specific Styles */
 .checkout-title {
-  font-family: Tenor Sans;
   font-weight: 400;
   font-size: 28px;
   margin-top: 50px;
@@ -1237,6 +1247,9 @@ a:hover {
 @media (max-width: 576px) {
   .banner-text {
     font-size: 1.5rem;
+  }
+  .box-main-header {
+    font-size: 15px;
   }
 }
 /* Product Box */
@@ -1454,9 +1467,9 @@ a:hover {
   border-top-right-radius: 12px;
 }
 .releted-title {
-  font-family: Tenor Sans;
+  /* font-family: Tenor Sans; */
   font-weight: 400;
-  font-size: 24px;
+  font-size: 34px;
 }
 .product-details {
   font-family: Tenor Sans;
@@ -1472,7 +1485,6 @@ a:hover {
 }
 /* confirmation page */
 .oreder-confirm-text {
-  font-family: Tenor Sans;
   font-weight: 400;
   font-size: 21px;
 }
@@ -1562,5 +1574,146 @@ a:hover {
   }
   .gallery-title {
     font-size: 1.6rem;
+  }
+  .premium-title {
+    font-size: 2rem;
+  } 
+}
+
+/* FAQs Page Specific Styles */
+.premium-faq {
+  padding: 110px 0;
+  color: #f6f1eb;
+  min-height: 100vh;
+}
+
+/* Headings */
+.premium-title {
+  font-size: 52px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  background: linear-gradient(90deg, #312526);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.premium-subtitle {
+  max-width: 620px;
+  margin: auto;
+  color: #312526;
+}
+
+.faq-section-title {
+  margin-bottom: 22px;
+  font-size: 28px;
+  font-weight: 600;
+  color: #312526;
+}
+
+/* Glass Accordion */
+.accordion-item {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 16px;
+  margin-bottom: 18px;
+  overflow: hidden;
+  transition: all 0.45s ease;
+}
+
+.accordion-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 60px #312526;
+}
+
+/* Header */
+.accordion-button {
+  background: transparent;
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 22px;
+}
+
+.accordion-button:not(.collapsed) {
+  background: rgba(212, 175, 55, 0.1);
+  color: #ffefc2;
+}
+
+.accordion-button::after {
+  filter: invert(1);
+}
+.accordion-body {
+  font-size: 15px;
+  line-height: 1.9;
+  padding: 25px;
+}
+
+.accordion-body ul {
+  padding-left: 20px;
+  margin-top: 12px;
+}
+
+.accordion-body li {
+  margin-bottom: 6px;
+}
+.faq-link {
+  color: #312526;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.faq-link:hover {
+  color: #d4af37;
+  text-decoration: underline;
+}
+@media (max-width: 600px) {
+  .premium-title {
+    font-size: 22px;
+  } 
+}
+/* own box category page specific styles */
+.category-box {
+  height: 700px;
+  border: 1px solid #ddd;
+  padding: 16px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.category-title {
+  text-align: center;
+  color: #312526;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 8px;
+}
+
+.category-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Scrollbar */
+.category-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.category-scroll::-webkit-scrollbar-thumb {
+  background: #312526;
+  border-radius: 10px;
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .category-box {
+    height: auto;
+    max-height: 520px;
+    margin-bottom: 20px;
   }
 }

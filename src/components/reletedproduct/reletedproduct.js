@@ -37,7 +37,7 @@ const Reletedproduct = ({ category, currentProductId }) => {
   return (
     <section className="py-5">
       <Container>
-        <h5 className="mb-4 mt-5 releted-title">Related Products</h5>
+        <h5 className="mb-4 mt-5 releted-title figtree-font ">Related Products</h5>
         <Row>
           {products.map((product) => {
             const imageUrl = Array.isArray(product.image)

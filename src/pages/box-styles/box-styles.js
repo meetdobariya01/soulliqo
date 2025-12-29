@@ -75,7 +75,7 @@ const BoxStyles = () => {
     <div>
       <Header />
       <Container className="py-5">
-        <h2 className="text-center mb-4 text-uppercase">
+        <h2 className="text-center mb-4 text-uppercase montserrat-font">
           {category?.name || "Collection"} - {size} Pc Boxes
         </h2>
 
@@ -93,31 +93,35 @@ const BoxStyles = () => {
                   <Card.Img
                     variant="top"
                     src={resolveImage(box.image)}
-                    style={{ height: "200px", objectFit: "contain" }}
+                    // style={{ height: "200px", objectFit: "contain" }}
                   />
 
                   <Card.Body className="text-center">
-                    <Card.Title>{box.name}</Card.Title>
-                    <p className="small text-muted">{box.description}</p>
-                    <p className="fw-bold">₹{box.price}</p>
-
+                    <Card.Title className="figtree-font">{box.name}</Card.Title>
+                    <p className="small text-muted figtree-font">
+                      {box.description}
+                    </p>
+                    <p className="fw-bold fs-3 figtree-font">₹{box.price}</p>
 
                     <Button
                       variant="dark"
-                      className="w-100"
+                      className="w-100 montserrat-font"
+                      style={{
+                        backgroundColor: "#312526",
+                        border: "none",
+                      }}
                       onClick={() =>
                         navigate(`/boxproduct/${box.category}/${box._id}`, {
                           state: {
                             categoryId: box.category,
                             box: box,
-                            category: category
-                          }
+                            category: category,
+                          },
                         })
                       }
                     >
                       Build This Box
                     </Button>
-
                   </Card.Body>
                 </Card>
               </Col>

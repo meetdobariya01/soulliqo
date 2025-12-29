@@ -56,27 +56,27 @@ const API_BASE = process.env.REACT_APP_API_URL || "https://api.soulliqo.com";
     <div>
       <Header />
       <Container className="py-5">
-        <h2 className="mb-4 text-center text-uppercase">
+        <h2 className="mb-4 figtree-font fs-2 fw-bold text-uppercase">
           {category || "All Products"}
         </h2>
 
         {loading ? (
           <div className="text-center my-5">
-            <Spinner animation="border" />
+            <Spinner animation="border figtree-font" />
             <p>Loading products...</p>
           </div>
         ) : products.length === 0 ? (
-          <div className="text-center my-5">
+          <div className="text-center my-5 figtree-font">
             <p>No products found.</p>
           </div>
         ) : (
           <Row className="g-4">
             {products.map((product) => (
               <Col key={product._id} xs={6} sm={6} md={4} lg={3}>
-                <Card className="h-100 shadow-sm position-relative border-0">
-                  <div className="wishlist-icon position-absolute top-0 end-0 p-2">
+                <Card className=" shadow-sm position-relative border-0">
+                  {/* <div className="wishlist-icon position-absolute top-0 end-0 p-2">
                     <Heart color="#7B4B3A" />
-                  </div>
+                  </div> */}
 
                   <NavLink
                     to={`/product/${product._id}`}
@@ -94,17 +94,16 @@ const API_BASE = process.env.REACT_APP_API_URL || "https://api.soulliqo.com";
                         height: "200px",
                         width: "100%",
                         objectFit: "contain",
-                        padding: "10px",
                         borderRadius: "12px",
                       }}
                     />
-                    <Card.Body className="text-center">
+                    <Card.Body className="text-center montserrat-font">
                       <Card.Title className="fs-6 text-truncate mb-1">
                         {product.name}
                       </Card.Title>
-                      <p className="text-muted small mb-1">
+                      {/* <p className="text-muted small mb-1">
                         {product.weight || "Weight not specified"}
-                      </p>
+                      </p> */}
                       <p className="fw-bold mb-0">₹{product.price}</p>
                     </Card.Body>
                   </NavLink>

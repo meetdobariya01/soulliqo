@@ -3,6 +3,7 @@ import { Container, Button, Card } from "react-bootstrap";
 import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
 import Header from "../../components/header/header";
+
 import Footer from "../../components/footer/footer";
 
 const Orderconfrimed = () => {
@@ -47,24 +48,22 @@ const Orderconfrimed = () => {
                 </div>
               </motion.div>
               <h3
-                className="fw-semibold"
+                className="fw-semibold montserrat-font"
                 style={{
                   color: "#A58756",
-                  fontFamily: "Poppins",
                   fontWeight: "400",
-                  // fontFamily: "Tenor Sans",
                 }}
               >
                 Order Confirmed
               </h3>
-              <p className="text-muted oreder-confirm-text">
+              <p className="text-muted oreder-confirm-text figtree-font">
                 You will get an order confirmation mail/SMS shortly with the
                 expected delivery date for your items.
               </p>
             </div>
 
             <motion.div
-              className="border rounded-4 p-3 d-flex align-items-center justify-content-between"
+              className="border rounded-4 p-3 d-flex align-items-center justify-content-between figtree-font"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
@@ -83,14 +82,14 @@ const Orderconfrimed = () => {
                 src="https://www.emoji.co.uk/files/phantom-open-emojis/travel-places-phantom/12675-racing-motorcycle.png"
                 alt="delivery"
                 className="ms-3"
-                style={{ width: "80px", height: "80px" }}
+                style={{ width: "110px", height: "110px" }}
               />
             </motion.div>
 
             <div className="text-center mt-4">
               <Button
                 as={NavLink}
-                to="/" // 👉 replace with your actual route
+                to="/orders" // 👉 replace with your actual route
                 variant="dark"
                 style={{
                   backgroundColor: "#7B4B3A",

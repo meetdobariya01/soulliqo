@@ -7,24 +7,24 @@ import "swiper/css/pagination";
 const Custmerlove = () => {
       const reviews = [
     {
-      name: "Ananya Desai",
+      name: "Srushti Parate",
       image: "/images/review-1.jpg", // profile image
       stars: 4,
-      text: "Every bite feels like a luxury dessert. Smooth, bold, and perfectly balanced.I ordered once, and now it’s a weekly ritual.",
+      text: "Tried Soulliqo for the first time and I’m hooked.Super smooth, and literally melts in your mouth",
       product: "./images/custmer-love.png", // product image
     },
     {
-      name: "Rohit Mehra",
+      name: "Yashaswani Agarwal",
       image: "/images/review-2.jpg",
       stars: 5,
-      text: "The caramel crunch is addictive. My kids keep fighting for the last piece! Delivery was super fast and the packaging felt soooo premium.",
+      text: "From Ahmedabad to my heart (and tummy) 🍫, half the box gone in a day -that says it all! 💌 ",
       product: "./images/custmer-love-2.jpg",
     },
     {
-      name: "Diya Shah",
+      name: "Maps & Mimosas",
       image: "/images/review-3.jpg",
       stars: 4,
-      text: "The hazelnuts are fresh, the chocolate is silky, and the aroma is unforgettable. Opens like a luxury gift tastes even better.",
+      text: "⁠Loving this colour and flavour bombs!!",
       product: "./images/custmer-love-3.jpg",
     },
   ];

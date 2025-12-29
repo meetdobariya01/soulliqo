@@ -17,7 +17,7 @@ const Aboutus = () => {
             {/* Left Side - Image */}
             <Col md={6} className=" position-relative">
               <img
-                src="./images/aboutus.jpg"
+                src="./images/aboutus.webp"
                 alt="Chocolate Chef"
                 className="img-fluid h-100 w-100 object-cover"
               />

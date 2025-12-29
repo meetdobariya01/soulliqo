@@ -29,8 +29,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = validate();
-    if (Object.keys(newErrors).length > 0) return setErrors(newErrors);
-
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    } 
     setErrors({});
     setLoading(true);
     setServerError("");
@@ -78,11 +80,19 @@ const Login = () => {
       <Container fluid className="d-flex align-items-center justify-content-center min-vh-100">
         <Row className="w-100">
           <Col xs={12} md={6} lg={4} className="mx-auto p-4 rounded bg-white">
-            <h2 className="text-center mb-4">Login</h2>
-            {serverError && <Alert variant="danger" className="text-center">{serverError}</Alert>}
+            <h2
+              className="text-center mb-4 Login-font montserrat-font text-uppercase"
+            >
+              Login
+            </h2>
+            {serverError && (
+              <Alert variant="danger" className="text-center">
+                {serverError}
+              </Alert>
+            )}
             <Form onSubmit={handleSubmit}>
-              <Form.Group className="mb-3">
-                <Form.Label>Email</Form.Label>
+              <Form.Group controlId="formEmail" className="mb-3">
+                <Form.Label className="form-font figtree-font ">Email</Form.Label>
                 <Form.Control
                   type="email"
                   name="email"
@@ -93,8 +103,8 @@ const Login = () => {
                 />
                 <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
               </Form.Group>
-              <Form.Group className="mb-4">
-                <Form.Label>Password</Form.Label>
+              <Form.Group controlId="formPassword" className="mb-4">
+                <Form.Label className="form-font figtree-font">Password</Form.Label>
                 <Form.Control
                   type="password"
                   name="password"
@@ -105,14 +115,36 @@ const Login = () => {
                 />
                 <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
               </Form.Group>
-              <Button type="submit" className="w-100 mb-3">
-                {loading ? <Spinner animation="border" size="sm" /> : "Continue"}
+              <Button
+                type="submit"
+                className="w-100 mb-3 figtree-font "
+                style={{
+                  background: "#e2905e",
+                  border: "none",
+                  fontWeight: "600",
+                  fontFamily: 'Figtree',
+                }}
+              >
+                {loading ? (
+                  <Spinner animation="border" size="sm" />
+                ) : (
+                  "Continue"
+                )}
               </Button>
             </Form>
             <div className="text-center mb-3">
-              <a href="/forgotpassword" className="text-decoration-none text-danger">Forgot Password</a>
+              <a
+                href="/forgotpassword" // change to your route
+                className="text-decoration-none text-danger"
+                style={{fontWeight: "500" }}
+              >
+                Forgot Password
+              </a>
             </div>
-            <div className="text-center my-3"><span className="text-muted">or</span></div>
+
+            <div className="text-center my-3">
+              <span className="text-muted">or</span>
+            </div>
             <Button
               variant="outline-secondary"
               className="w-100 mb-2 d-flex align-items-center justify-content-center"
@@ -127,7 +159,14 @@ const Login = () => {
               <FaApple className="me-2" /> Continue with Apple
             </Button>
             <p className="text-center mt-3">
-              Don’t have an account? <a href="/signup" className="text-decoration-none" style={{ color: "#e2905e" }}>Create one</a>
+              Don’t have an account?{" "}
+              <a
+                href="/signup"
+                className="text-decoration-none"
+                style={{ color: "#e2905e", fontFamily: 'Figtree' }}
+              >
+                Create one
+              </a>
             </p>
           </Col>
         </Row>

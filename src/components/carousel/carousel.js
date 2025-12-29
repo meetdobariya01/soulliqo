@@ -26,8 +26,23 @@ const Mycarousel = () => {
             </div>
           </Carousel.Item>
 
-          {/* Slide 2 */}
           <Carousel.Item className="slide">
+            <img
+              className="d-block w-100 slide-img"
+              src="./images/carousel.webp"
+              alt="Slide 1"
+            />
+
+            <div className="slide-caption figtree-font">
+              <h2 className="fade-text">Delicious Experience</h2>
+              <p className="fade-text-small ">
+                Handcrafted Chocolates, Now Near You
+              </p>
+            </div>
+          </Carousel.Item>
+
+          {/* Slide 2 */}
+          {/* <Carousel.Item className="slide">
             <video
               className="d-block w-100 slide-img"
               autoPlay
@@ -44,7 +59,7 @@ const Mycarousel = () => {
                 Handcrafted Chocolates, Now Near You
               </p>
             </div>
-          </Carousel.Item>
+          </Carousel.Item> */}
 
           {/* Slide 3 */}
           <Carousel.Item className="slide">

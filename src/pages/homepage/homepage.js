@@ -45,11 +45,11 @@ const Homepage = () => {
         <div className="container text-center">
           <h2 className="mb-4 montserrat-font text-uppercase">Our Story</h2>
           <p className="mx-auto mb-4 story-text figtree-font">
-            We are farmers, fermenters, chocolate makers, chocolatiers and
-            storytellers from India, in search of a distinct identity for
-            chocolate that we can proudly call our own. In our pursuit, we are
-            expressing the true flavours of Indian Cacao in endless
-            interpretations of chocolate, like never before.
+            What started as a simple love for rich cocoa and timeless flavors
+            soon turned into a journey of creating chocolates that speak to the
+            soul. We believed chocolate should be more than just a treat; it
+            should be an experience - one that melts slowly, lingers gently, and
+            leaves behind a memory worth savoring.
           </p>
 
           <div className="video-container">
@@ -75,7 +75,11 @@ const Homepage = () => {
       <Container fluid className="makebox-section py-5 container">
         <Row className="align-items-center">
           {/* Left Content */}
-          <Col lg={6} md={12} className="text-center text-lg-start mb-4 mb-lg-0">
+          <Col
+            lg={6}
+            md={12}
+            className="text-center text-lg-start mb-4 mb-lg-0"
+          >
             <div className="flower-bg">
               <h2 className="makebox-title montserrat-font text-uppercase text-center text-lg-end mb-4 mb-lg-0">
                 Make your own Box
@@ -92,14 +96,14 @@ const Homepage = () => {
                     as={NavLink}
                     to={`/ownbox/${firstCollectionId}`}
                     style={{
-                    backgroundColor: "#7B5B54",
-                    color: "#f0dfc9",
-                    fontSize: "16px",
-                    padding: "10px 20px",
-                    border: "none",
-                    textDecoration: "none",
-                    fontFamily: "Figtree, sans-serif",
-                  }}
+                      backgroundColor: "#7B5B54",
+                      color: "#f0dfc9",
+                      fontSize: "16px",
+                      padding: "10px 20px",
+                      border: "none",
+                      textDecoration: "none",
+                      fontFamily: "Figtree, sans-serif",
+                    }}
                   >
                     Shop Now
                   </Button>

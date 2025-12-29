@@ -72,8 +72,9 @@ const Order = () => {
   return (
     <div>
       <Header />
+
       <div className="dashboard-container">
-        {/* NAVBAR */}
+        {/* ---------------- NAVBAR ---------------- */}
         <div className="dashboard-nav">
           <span
             className={screen === "orders" ? "active" : ""}

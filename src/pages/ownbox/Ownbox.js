@@ -83,7 +83,7 @@ const Ownbox = () => {
     <div>
       <Header />
       <Container className="py-5">
-        <Breadcrumb className="mb-4">
+        {/* <Breadcrumb className="mb-4 montserrat-font ">
           <li className="breadcrumb-item box-title">
             <NavLink to="/" className="text-decoration-none">
               HOME
@@ -100,40 +100,47 @@ const Ownbox = () => {
           <li className="breadcrumb-item active box-header">
             CHOOSE BOX SIZE
           </li>
-        </Breadcrumb>
+        </Breadcrumb> */}
 
-        <h2 className="fw-bold text-center mb-2 box-main-header">
+        <h2 className="text-center my-5 box-main-header montserrat-font">
           CHOOSE YOUR CUSTOM CHOCOLATE BOX SIZE
         </h2>
 
         <Row className="g-4 justify-content-center">
           {availableSizes.map((item) => (
-            <Col xs={12} sm={6} md={3} key={item.size}>
+            <Col
+              xs={6} // ✅ 2 boxes per row on mobile
+              sm={6} // 2 per row on small devices
+              md={3} // 4 per row on desktop
+              key={item.size}
+            >
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
                 viewport={{ once: true }}
               >
-                <Card className="h-100 border box-card text-center p-4">
+                <Card className="h-100 border box-card text-center">
                   <Card.Img
                     variant="top"
                     src={item.image || "/images/product-grid.png"}
                     alt={`${item.size} Pc Box`}
-                    style={{ height: "180px", objectFit: "cover" }}
+                    // style={{ height: "180px", objectFit: "cover" }}
                   />
                   <Card.Body>
-                    <Card.Title className="fw-bold own-box-title fs-1">
+                    <Card.Title className="fw-bold own-box-title fs-1 figtree-font">
                       {item.size}
                     </Card.Title>
-                    <Card.Text className="text-muted mb-4">Chocolates</Card.Text>
+                    <Card.Text className="text-muted mb-4 figtree-font">
+                      Chocolates
+                    </Card.Text>
                     <Button
                       onClick={() =>
                         navigate(`/box-styles/${collectionId}/${item.size}`)
                       }
-                      className="w-100 fw-semibold py-2 select-item-btn"
+                      className="w-100 fw-semibold py-2 select-item-btn montserrat-font"
                       style={{
-                        backgroundColor: "#7B4B3A",
+                        backgroundColor: "#312526",
                         border: "none",
                         borderRadius: "8px",
                       }}
