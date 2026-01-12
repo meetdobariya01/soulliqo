@@ -8,21 +8,21 @@ const Custmerlove = () => {
       const reviews = [
     {
       name: "Srushti Parate",
-      image: "/images/review-1.jpg", // profile image
+      image: "/images/review-1.webp", // profile image
       stars: 4,
       text: "Tried Soulliqo for the first time and I’m hooked.Super smooth, and literally melts in your mouth",
       product: "./images/custmer-love.png", // product image
     },
     {
       name: "Yashaswani Agarwal",
-      image: "/images/review-2.jpg",
+      image: "/images/review-2.webp",
       stars: 5,
       text: "From Ahmedabad to my heart (and tummy) 🍫, half the box gone in a day -that says it all! 💌 ",
       product: "./images/custmer-love-2.jpg",
     },
     {
       name: "Maps & Mimosas",
-      image: "/images/review-3.jpg",
+      image: "/images/review-3.webp",
       stars: 4,
       text: "⁠Loving this colour and flavour bombs!!",
       product: "./images/custmer-love-3.jpg",

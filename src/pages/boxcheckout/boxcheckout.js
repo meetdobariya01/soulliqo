@@ -25,15 +25,15 @@ const Boxcheckout = () => {
   const [orderTotal, setOrderTotal] = useState(0);
 
   // ✅ Image helper (FIXED)
-  const getImageUrl = (image) => {
-    if (!image) return `${API_BASE_URL}/images/product-grid.png`;
+  // const getImageUrl = (image) => {
+  //   if (!image) return `${API_BASE_URL}/images/product-grid.png`;
 
-    const img = Array.isArray(image) ? image[0] : image.split(",")[0];
+  //   const img = Array.isArray(image) ? image[0] : image.split(",")[0];
 
-    return img.startsWith("http")
-      ? img
-      : `${API_BASE_URL}/${img.replace(/^\/+/, "")}`;
-  };
+  //   return img.startsWith("http")
+  //     ? img
+  //     : `${API_BASE_URL}/${img.replace(/^\/+/, "")}`;
+  // };
 
   // ✅ Build selected chocolates with real images
   useEffect(() => {
@@ -43,7 +43,7 @@ const Boxcheckout = () => {
         .map((p) => ({
           id: p._id,
           name: p.name || p.chocolateName,
-          img: getImageUrl(p.image || p.images),
+          // img: getImageUrl(p.image || p.images),
           qty: cart[p._id],
         }));
 
@@ -64,38 +64,33 @@ const Boxcheckout = () => {
     setOrderTotal(total);
   }, [box]);
 
-  const handleCheckout = async () => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      alert("Please log in to continue.");
-      navigate("/login");
-      return;
-    }
+const handleCheckout = async () => {
+  const token = localStorage.getItem("token");
 
-    if (!box?._id) {
-      alert("Box details missing.");
-      return;
-    }
+  if (!box?._id) {
+    alert("Box details missing.");
+    return;
+  }
 
-    const payload = {
-      categoryId: box?.category?._id || products[0]?.category?._id,
-      boxId: box._id,
-      price: orderTotal,
-      selectedChocolates: selectedChocolates.map((i) => ({
-        chocolateId: i.id,
-        quantity: i.qty,
-      })),
-    };
+  const payload = {
+    categoryId: box?.category?._id || products[0]?.category?._id,
+    boxId: box._id,
+    price: orderTotal,
+    selectedChocolates: selectedChocolates.map((i) => ({
+      chocolateId: i.id,
+      quantity: i.qty,
+    })),
+  };
 
-    try {
-      const res = await axios.post(
-        `${API_BASE_URL}/cart/custom-box`,
-        payload,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-
-      alert(res.data.message || "Box added to cart successfully!");
-
+  try {
+    let res;
+    if (token) {
+      // Logged-in user
+      res = await axios.post(`${API_BASE_URL}/cart/custom-box`, payload, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    } else {
+      // Guest user: save cart locally
       const existingBoxes = JSON.parse(localStorage.getItem("boxes") || "[]");
       const newBox = {
         _id: box._id,
@@ -103,20 +98,23 @@ const Boxcheckout = () => {
         price: orderTotal,
         selectedChocolates,
       };
-
       const updatedBoxes = [
         ...existingBoxes.filter((b) => b.size !== box.size),
         newBox,
       ];
-
       localStorage.setItem("boxes", JSON.stringify(updatedBoxes));
 
-      navigate("/cart");
-    } catch (err) {
-      console.error("Checkout error:", err.response || err);
-      alert(err.response?.data?.message || "Checkout failed.");
+      res = { data: { message: "Box added to guest cart!" } };
     }
-  };
+
+    alert(res.data.message);
+    navigate("/cart");
+  } catch (err) {
+    console.error("Checkout error:", err.response || err);
+    alert(err.response?.data?.message || "Checkout failed.");
+  }
+};
+
 
   if (!box?._id || !selectedChocolates.length) {
     return (
@@ -129,17 +127,17 @@ const Boxcheckout = () => {
   return (
     <div>
       <Header />
-      <Container className="py-4 my-5">
-        <h5 className="fw-semibold mb-3 montserrat-font" style={{ color: "#312526" }}>
+      <Container className="py-4">
+        <h5 className="fw-semibold mb-3" style={{ color: "#8B6F4E" }}>
           Review Your Box – Chocolates
         </h5>
 
-        <p className="fw-semibold small figtree-font">{box.size}-PIECE BOX</p>
+        <p className="fw-semibold small">{box.size}-PIECE BOX</p>
 
         {selectedChocolates.map((item) => (
-          <Row key={item.id} className="align-items-center mb-3 figtree-font">
+          <Row key={item.id} className="align-items-center mb-3">
             <Col xs={3} sm={2}>
-              <img
+              {/* <img
                 src={item.img}
                 alt={item.name}
                 className="img-fluid border w-50"
@@ -147,7 +145,7 @@ const Boxcheckout = () => {
                 onError={(e) => {
                   e.target.src = `${API_BASE_URL}/images/product-grid.png`;
                 }}
-              />
+              /> */}
             </Col>
             <Col xs={9} sm={10}>
               <p className="mb-0 fw-semibold small">{item.name}</p>
@@ -168,9 +166,9 @@ const Boxcheckout = () => {
         </Row>
 
         <div className="text-end mt-4">
-          <Button className="montserrat-font"
+          <Button
             style={{
-              backgroundColor: "#312526",
+              backgroundColor: "#7B4B3A",
               border: "none",
               borderRadius: "6px",
               padding: "10px 30px",

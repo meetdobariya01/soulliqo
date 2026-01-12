@@ -43,7 +43,7 @@ const BoxStyles = () => {
   const resolveImage = (img) => {
     if (!img) return "https://via.placeholder.com/300";
     if (img.startsWith("http")) return img;
-    return `https://api.soulliqo.com${img}`;
+    return `${img}`;
   };
 
   if (loading) {

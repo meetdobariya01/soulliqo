@@ -57,7 +57,7 @@ const Ourmission = () => {
             {/* Left Side - Image */}
             <Col md={6} className="values-img-col">
               <img
-                src="./images/vision.webp"
+                src="./images/Vision.webp"
                 alt="Our Values"
                 className="values-img"
               />

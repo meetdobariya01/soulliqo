@@ -48,27 +48,21 @@ const Collection = () => {
   // ✅ Custom image selector
   const getCollectionImage = (item) => {
     if (item.type === "box") {
-      return item.image ? `${API_BASE}${item.image}` : "/images/category-placeholder.png";
+      return item.image ? `${item.image}` : "/images/own-box.jpg";
     }
     switch (item.title.toUpperCase()) {
-      case "BON BON":
-        return "/images/bonbon/soulliqo/Collage_Bon_Bon.png";
+      case "BONBON":
+        return "/images/bonbon/soulliqo/BonBonCoverPic.webp";
       case "TRUFFLE":
-        return "/images/bonbon/E-com/STYLED_TRUFFLE.jpg";
+        return "/images/bonbon/E-com/STYLEDTRUFFLE.webp";
       case "PRALINE":
-        return "/images/bonbon/E-com/STYLED_PRALINE.jpg";
+        return "/images/bonbon/E-com/STYLED_PRALINE.webp";
       case "CENTERFILLED TABLET":
-        return "/images/bonbon/soulliqo/Colage_Bar.png";
-      case "INDULGENCE TABLET":
-        return "/images/bonbon/soulliqo/Florentine_Collage.png";
-      case "BOXBON BON":
-      case "BOXTRUFFLE":
-      case "BOXPRALINE":
-        return "/images/bonbon/E-com/_MG_4598.jpg";
-      case "DRAGEES":
-        return "/images/dragees/SOULLIQO - Session 12926-Edit-Edit-Edit.jpg";
+        return "/images/bonbon/soulliqo/Colage-Bar.webp";
+      case "MELT IN MOUTH":
+        return "/images/bonbon/soulliqo/melt-in-mouth-3.webp";
       default:
-        return "/images/bonbon/default.png";
+        return "/images/bonbon/soulliqo/Zesty-Lime & Orange.webp";
     }
   };
 
@@ -118,67 +112,20 @@ const Collection = () => {
                       src={getCollectionImage(item)}
                       onError={(e) => (e.target.src = "/images/bonbon/default.png")}
                       style={{
-                        height: "180px",
+                        height: "170px",
                         objectFit: "contain",
-                        padding: "15px",
                         background: "#f7f7f7",
                       }}
                     />
                     <Card.Footer className="text-center fw-bold bg-white border-0">
-                      {item.title || item.COLLECTION}
+                      {item.title || item.name || item.COLLECTION}
                     </Card.Footer>
+
                   </Card>
                 ))}
               </div>
             </Carousel.Item>
           ))}
-         {slides.map((group, slideIndex) => (
-  <Carousel.Item key={`slide-${slideIndex}`}>
-    <div className="d-flex flex-wrap justify-content-center">
-      {group.map((item, itemIndex) => (
-        <Card
-          key={item._id || `${item.title}-${itemIndex}`}
-          className="collection-card m-2 shadow-sm border-0"
-          style={{
-            cursor: "pointer",
-            width: "240px",
-            borderRadius: "16px",
-            overflow: "hidden",
-            transition: "transform 0.3s ease",
-          }}
-          onClick={() =>
-            navigate(`/products/${encodeURIComponent(item.title)}`)
-          }
-          onMouseEnter={(e) =>
-            (e.currentTarget.style.transform = "scale(1.05)")
-          }
-          onMouseLeave={(e) =>
-            (e.currentTarget.style.transform = "scale(1)")
-          }
-        >
-          <Card.Img
-            variant="top"
-            src={getCollectionImage(item.title)}
-            onError={(e) =>
-              (e.target.src = "/images/bonbon/default.png")
-            }
-            style={{
-              height: "180px",
-              objectFit: "contain",
-              // padding: "15px",
-              background: "#f7f7f7",
-            }}
-          />
-
-          <Card.Footer className="text-center fw-bold bg-white border-0">
-            {item.title}
-          </Card.Footer>
-        </Card>
-      ))}
-    </div>
-  </Carousel.Item>
-))}
-
         </Carousel>
       )}
     </div>

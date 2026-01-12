@@ -14,7 +14,7 @@ const Chocoblock = () => {
       <NavLink to="" className="text-decoration-none">
         <div className="chocolate-banner position-relative">
           <img
-            src="./images/chocolate-block.webp" // replace with your banner image
+            src="./images/ColageBar_imresizer.webp" // replace with your banner image
             alt="Chocolate block"
             className="w-100 h-50"
           />
@@ -28,7 +28,10 @@ const Chocoblock = () => {
       <Container fluid className="p-0 container">
         <Row className="m-0 p-4 justify-content-center">
           <Col md={6} sm={12} className="text-center border">
-            <NavLink to="/product" className="text-decoration-none">
+            <NavLink
+              to={`/products/${encodeURIComponent("CENTERFILLED TABLET")}`}
+              className="text-decoration-none"
+            >
               <div className="product-box">
                 <img
                   src="./images/chocolate-block-product.png"
@@ -38,6 +41,7 @@ const Chocoblock = () => {
                 <div className="shop-now-btn">Shop Now</div>
               </div>
             </NavLink>
+
           </Col>
         </Row>
       </Container>

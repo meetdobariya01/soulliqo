@@ -6,22 +6,22 @@ import { FaFilePdf, FaDownload } from "react-icons/fa";
 import "../../index.css";
 
 const products = [
-  { id: 1, name: "Chocolate Bar", img: "/images/bonbon/E-com/_MG_4549.jpg" },
-  { id: 2, name: "Dark Truffle", img: "/images/bonbon/E-com/_MG_4530.jpg" },
-  { id: 3, name: "Hazelnut Bliss", img: "/images/bonbon/E-com/_MG_4549.jpg" },
-  { id: 4, name: "Caramel Crisp", img: "/images/bonbon/E-com/CREATIVE12.jpg" },
-  { id: 5, name: "Mint Delight", img: "/images/bonbon/E-com/CREATIVE16.jpg" },
-  { id: 6, name: "Golden Mix", img: "/images/bonbon/E-com/CREATIVE21.jpg" },
-  { id: 7, name: "Berry Fusion", img: "/images/bonbon/E-com/_MG_4808.jpg" },
+  { id: 1, name: "Chocolate Bar", img: "/images/bonbon/E-com/_MG_4549.webp" },
+  { id: 2, name: "Dark Truffle", img: "/images/bonbon/E-com/_MG_4530.webp" },
+  { id: 3, name: "Hazelnut Bliss", img: "/images/bonbon/E-com/_MG_4549.webp" },
+  { id: 4, name: "Caramel Crisp", img: "/images/bonbon/E-com/CREATIVE12.webp" },
+  { id: 5, name: "Mint Delight", img: "/images/bonbon/E-com/CREATIVE16.webp" },
+  { id: 6, name: "Golden Mix", img: "/images/bonbon/E-com/CREATIVE21.webp" },
+  { id: 7, name: "Berry Fusion", img: "/images/bonbon/E-com/_MG_4808.webp" },
   {
     id: 8,
     name: "Coffee Crunch",
-    img: "/images/bonbon/E-com/STYLED_PRALINE.jpg",
+    img: "/images/bonbon/E-com/STYLED_PRALINE.webp",
   },
-  { id: 9, name: "White Velvet", img: "/images/bonbon/E-com/BB7CLS.jpg" },
-  { id: 10, name: "Berry Fusion", img: "/images/bonbon/E-com/BB12FP.jpg" },
-  { id: 11, name: "Coffee Crunch", img: "/images/bonbon/E-com/BB12NN.jpg" },
-  { id: 12, name: "White Velvet", img: "/images/bonbon/E-com/BB12SUN.jpg" },
+  { id: 9, name: "White Velvet", img: "/images/bonbon/E-com/BB7CLS.webp" },
+  { id: 10, name: "Berry Fusion", img: "/images/bonbon/E-com/BB12FP.webp" },
+  { id: 11, name: "Coffee Crunch", img: "/images/bonbon/E-com/BB12NN.webp" },
+  { id: 12, name: "White Velvet", img: "/images/bonbon/E-com/BB12SUN.webp" },
 ];
 
 const fadeUp = {

@@ -54,22 +54,7 @@ body {
   transform: scale(1.1);
   color: #fff;
 }
-.user-dropdown {
-  border-radius: 14px;
-  padding: 8px;
-  animation: fadeUp 0.25s ease-in-out;
-}
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 .cart-count {
   position: absolute;
   top: -6px;
@@ -99,11 +84,11 @@ body {
   left: 0;
 }
 
-.mobile-menu .nav-link {
-  padding: 15px;
-  font-size: 18px;
-  color: #f0dfc9 !important;
-  border-bottom: 1px solid #222;
+.mobile-menu .mobile-nav-link {
+  /* padding: 15px; */
+  /* font-size: 18px; */
+  color:#312526 !important;
+  /* border-bottom: 1px solid #222; */
 }
 
 /* Search Overlay */
@@ -476,7 +461,7 @@ body {
 
 /* Make your own Box */
 .makebox-section {
-  background: #fdfcfb;
+
   position: relative;
   overflow: hidden;
 }
@@ -530,7 +515,7 @@ body {
 
 .flower-bg::before {
   content: "";
-  background: url("../public/images/flover-opp.png") no-repeat center center;
+  /* background: url("../public/images/flower-2.png") no-repeat center center; */
   background-size: contain;
   position: absolute;
   top: -40px;
@@ -543,13 +528,12 @@ body {
 
 /* custmer love section */
 .customerlove-section {
-  background: #fdfcfb;
   position: relative;
 }
 
 .customerlove-section::after {
   content: "";
-  background: url("../public/images/flover-opp.png") no-repeat center center;
+  /* background: url("../public/images/flower-2.png") no-repeat center center; */
   background-size: 180px;
   position: absolute;
   top: 20%;
@@ -820,7 +804,7 @@ a:hover {
 
 /* Brand journey page specific styles */
 .who-we-are-section {
-  background: url("../public/images/flover-opp.png") no-repeat left center;
+  /* background: url("../public/images/flower-2.png") no-repeat left center; */
   background-size: 150px;
   padding: 60px 0;
 }
@@ -918,7 +902,7 @@ a:hover {
 
 /* Floral background on right */
 .floral-bg-right {
-  background: url("../public/images/flover-opp.png") no-repeat right center;
+  /* background: url("../public/images/flower-2.png") no-repeat right center; */
   background-size: contain;
   position: absolute;
   top: 0;
@@ -942,7 +926,7 @@ a:hover {
 
 /* Floral decoration */
 .floral-bg-left {
-  background: url("../public/images/flower.png") no-repeat left center;
+  /* background: url("../public/images/flower-1.png") no-repeat left center; */
   background-size: contain;
   position: absolute;
   top: 0;
@@ -1110,7 +1094,7 @@ a:hover {
 }
 .contact-heading {
   font-weight: 600;
-  font-size: 45px;
+  font-size: 60px;
   color: #312526;
 }
 @media (max-width: 768px) {
@@ -1132,12 +1116,10 @@ a:hover {
 }
 .wishlist-oldprice,
 .wishlist-price {
-  font-family: Poppins;
   font-weight: 600;
   font-size: 20px;
 }
 .wishlist-movetobag {
-  font-family: Poppins;
   font-weight: 600;
   font-size: 16px;
 }
@@ -1151,73 +1133,77 @@ a:hover {
   cursor: pointer;
 }
 .box-header {
+  /* font-family: Tenor Sans; */
   font-weight: 400;
   font-size: 30px;
   color: #312625;
 }
 .box-main-header {
+  /* font-family: Tenor Sans; */
   font-weight: 400;
   font-size: 40px;
-  font-weight: 600;
-  /* margin-top: 100px; */
-  color: #312625;
+  margin-top: 100px;
 }
 .box-main-subheader {
-  font-family: Tenor Sans;
+  /* font-family: Tenor Sans; */
   font-weight: 400;
   font-size: 18px;
 }
 .own-box-title {
-  font-family: Tenor Sans;
+  /* font-family: Tenor Sans; */
   font-weight: 400;
   font-size: 18px;
 }
 .own-box-price {
-  font-family: Poppins;
+  /* font-family: Poppins; */
   font-weight: 600;
   font-size: 20px;
   color: #7b5b54;
 }
 .select-item-btn {
-  font-family: Poppins;
+  /* font-family: Poppins; */
   font-weight: 400;
   font-size: 14px;
   color: red;
 }
 /* Box Product Page Specific Styles */
 .boxproduct-title {
+  /* font-family: Poppins; */
   font-weight: 500;
   font-size: 25px;
+  margin-top: 100px;
 }
 .boxproduct-name {
+  /* font-family: Tenor Sans; */
   font-weight: 400;
   font-size: 14px;
 }
 /* Box Checkout Page Specific Styles */
 .boxcheckout-title {
-  font-family: Poppins;
+  /* font-family: Poppins; */
   font-weight: 500;
   font-size: 25px;
   margin-top: 100px;
 }
 .boxcheckout-total {
-  font-family: Poppins;
+  /* font-family: Poppins; */
   font-weight: 400;
   font-size: 16px;
 }
 /* checkout Page Specific Styles */
 .checkout-title {
+  /* font-family: Tenor Sans; */
   font-weight: 400;
   font-size: 28px;
   margin-top: 50px;
 }
 .checkout-form {
-  font-family: Poppins;
+  /* font-family: Poppins; */
   font-weight: 600;
   font-size: 23px;
 }
 .checkout-main-font {
-  font-family: Tenor Sans;
+  /* font-family: Tenor Sans; */
   font-weight: 400;
   font-size: 15px;
 }
@@ -1247,9 +1233,10 @@ a:hover {
 @media (max-width: 576px) {
   .banner-text {
     font-size: 1.5rem;
+    
   }
-  .box-main-header {
-    font-size: 15px;
+  .box-main-header{
+    font-size: 20px;
   }
 }
 /* Product Box */
@@ -1445,7 +1432,6 @@ a:hover {
   font-size: 24px;
 }
 .tab-content {
-  font-family: Tenor Sans;
   font-weight: 400;
   font-size: 20px;
 }
@@ -1467,9 +1453,9 @@ a:hover {
   border-top-right-radius: 12px;
 }
 .releted-title {
-  /* font-family: Tenor Sans; */
+  font-family: Tenor Sans;
   font-weight: 400;
-  font-size: 34px;
+  font-size: 24px;
 }
 .product-details {
   font-family: Tenor Sans;
@@ -1485,6 +1471,7 @@ a:hover {
 }
 /* confirmation page */
 .oreder-confirm-text {
+  font-family: Tenor Sans;
   font-weight: 400;
   font-size: 21px;
 }
@@ -1575,11 +1562,7 @@ a:hover {
   .gallery-title {
     font-size: 1.6rem;
   }
-  .premium-title {
-    font-size: 2rem;
-  } 
 }
-
 /* FAQs Page Specific Styles */
 .premium-faq {
   padding: 110px 0;
@@ -1717,3 +1700,4 @@ a:hover {
     margin-bottom: 20px;
   }
 }
+

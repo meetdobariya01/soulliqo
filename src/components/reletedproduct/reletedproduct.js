@@ -41,9 +41,9 @@ const Reletedproduct = ({ category, currentProductId }) => {
         <Row>
           {products.map((product) => {
             const imageUrl = Array.isArray(product.image)
-              ? `${API_BASE_URL}${product.image[0]}`
+              ? `${product.image[0]}`
               : typeof product.image === "string"
-              ? `${API_BASE_URL}${product.image.split(",")[0].trim()}`
+              ? `${product.image.split(",")[0].trim()}`
               : "/placeholder.jpg";
 
             return (

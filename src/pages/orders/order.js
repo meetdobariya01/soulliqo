@@ -13,22 +13,39 @@ const Order = () => {
   const [selectedOrder, setSelectedOrder] = useState(null); // for tracking
 
   // Fetch orders on component mount
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const token = localStorage.getItem("token");
+useEffect(() => {
+  const fetchOrders = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      if (token) {
+        // 🔐 Logged-in user orders
         const res = await axios.get(`${API_BASE}/orders`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setOrders(res.data || []);
-      } catch (err) {
-        console.error("❌ Failed to fetch orders:", err.message);
-      } finally {
-        setLoading(false);
+      } else {
+        // 👤 Guest orders (email from localStorage or prompt)
+        const guestEmail = localStorage.getItem("guestEmail");
+
+        if (!guestEmail) return;
+
+        const res = await axios.post(`${API_BASE}/orders/guest`, {
+          email: guestEmail,
+        });
+
+        setOrders(res.data || []);
       }
-    };
-    fetchOrders();
-  }, []);
+    } catch (err) {
+      console.error("❌ Failed to fetch orders:", err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchOrders();
+}, []);
+
 
   const handleCancel = async (order) => {
     const token = localStorage.getItem("token");
@@ -54,19 +71,42 @@ const Order = () => {
         prev.map((o) =>
           o._id === order._id
             ? {
-                ...o,
-                status: "Cancelled",
-                trackingHistory: [
-                  ...o.trackingHistory,
-                  { status: "Cancelled", message: "Order cancelled by user", date: new Date() },
-                ],
-              }
+              ...o,
+              status: "Cancelled",
+              trackingHistory: [
+                ...o.trackingHistory,
+                { status: "Cancelled", message: "Order cancelled by user", date: new Date() },
+              ],
+            }
             : o
         )
       );
     } catch (err) {
       alert(err.response?.data?.message || "Failed to cancel order");
     }
+  };
+  // ✅ Image resolver (same logic as Checkout)
+  const getSingleImage = (item) => {
+    const target = item.product || item.box || item;
+    const imageField = target?.image || target?.images || "";
+
+    if (!imageField) return "/images/item.png";
+
+    let rawPaths = [];
+    if (Array.isArray(imageField)) {
+      rawPaths = imageField.flatMap(img =>
+        typeof img === "string" ? img.split(",") : img
+      );
+    } else if (typeof imageField === "string") {
+      rawPaths = imageField.split(",");
+    }
+
+    const firstPath = rawPaths.map(p => p.trim()).filter(Boolean)[0];
+    if (!firstPath) return "/images/item.png";
+
+    return firstPath.startsWith("http")
+      ? firstPath
+      : `${firstPath.startsWith("/") ? "" : "/"}${firstPath}`;
   };
 
   return (
@@ -137,13 +177,12 @@ const Order = () => {
                 return (
                   <div key={order._id} className="order-card">
                     <div
-                      className={`order-status ${
-                        order.status === "Delivered"
+                      className={`order-status ${order.status === "Delivered"
                           ? "delivered"
                           : order.status === "Cancelled"
-                          ? "cancelled"
-                          : "in-transit"
-                      }`}
+                            ? "cancelled"
+                            : "in-transit"
+                        }`}
                     >
                       {order.status}
                     </div>
@@ -154,14 +193,11 @@ const Order = () => {
                     {order.items.map((item, idx) => (
                       <div key={idx} className="order-row">
                         <img
-                          src={
-                            item.type === "box"
-                              ? item.box?.image || "/images/item.png"
-                              : item.product?.image || "/images/item.png"
-                          }
+                          src={getSingleImage(item)}
                           className="item-img"
-                          alt={item.name}
+                          alt={item.name || "Item"}
                         />
+
                         <div>
                           <h5 className="item-title">{item.name}</h5>
                           <p>Qty: {item.quantity}</p>

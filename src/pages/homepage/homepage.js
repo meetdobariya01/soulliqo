@@ -13,7 +13,7 @@ import Mycarousel from "../../components/carousel/carousel";
 const Homepage = () => {
   const [collections, setCollections] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  
   useEffect(() => {
     fetch("https://api.soulliqo.com/api/categories")
       .then((res) => res.json())
