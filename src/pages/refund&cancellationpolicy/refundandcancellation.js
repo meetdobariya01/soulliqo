@@ -1,10 +1,20 @@
-import React from "react";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { motion } from "framer-motion";
 import Footer from "../../components/footer/footer";
 import Header from "../../components/header/header";
 
 const Refundandcancellation = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant", // or "smooth"
+    });
+  }, [pathname]);
   return (
     <div>
       {/* Header can be added here if needed */}

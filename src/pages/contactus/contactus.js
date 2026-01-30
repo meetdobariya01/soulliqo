@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
 import { motion } from "framer-motion";
@@ -20,7 +21,7 @@ const Contactus = () => {
     try {
       const response = await axios.post(
         "https://api.soulliqo.com/contact/",
-        formData
+        formData,
       );
       setStatus(response.data.success);
       setFormData({ name: "", email: "", phone: "", message: "" }); // reset form
@@ -29,6 +30,15 @@ const Contactus = () => {
       setStatus(err.response?.data?.error || "Server error, try again later.");
     }
   };
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant", // or "smooth"
+    });
+  }, [pathname]);
   return (
     <div>
       <Header />
@@ -94,7 +104,9 @@ const Contactus = () => {
               />
             </div>
             <div className="col-md-4">
-              <label className="form-label figtree-font figtree-font ">Email</label>
+              <label className="form-label figtree-font figtree-font ">
+                Email
+              </label>
               <input
                 type="email"
                 name="email"
@@ -137,7 +149,7 @@ const Contactus = () => {
               </motion.button>
             </div>
           </motion.form>
-        </div> 
+        </div>
       </div>
       <Footer />
     </div>

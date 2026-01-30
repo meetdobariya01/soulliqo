@@ -126,7 +126,7 @@
 
 // export default Productgrid;
 import React, { useEffect, useState } from "react";
-import { useParams, NavLink } from "react-router-dom";
+import { useParams, NavLink, useLocation  } from "react-router-dom";
 import { Container, Row, Col, Card, Spinner } from "react-bootstrap";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
@@ -184,6 +184,15 @@ const Productgrid = () => {
     };
     fetchProducts();
   }, [category]);
+const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant", // or "smooth"
+    });
+  }, [pathname]);
 
   return (
     <div>
