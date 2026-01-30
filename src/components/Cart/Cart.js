@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Button, Spinner } from "react-bootstrap";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation} from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
 import Header from "../../components/header/header";
@@ -15,6 +15,15 @@ const Cart = () => {
   const [cart, setCart] = useState({ items: [] });
   const [boxes, setBoxes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant", // or "smooth"
+    });
+  }, [pathname]);
 
   // ================= FETCH CART & BOXES =================
   useEffect(() => {
