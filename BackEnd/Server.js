@@ -44,7 +44,7 @@
   // Serve images
 app.use("/images", express.static(path.join(__dirname, "../public/images")));
 
-app.use("/uploads", express.static(path.join(__dirname, "./Admin/uploads")));
+app.use("/uploads", express.static(path.join(__dirname, "../public/images/uploads")));
 
 
   app.use(

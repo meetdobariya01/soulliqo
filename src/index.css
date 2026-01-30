@@ -1701,3 +1701,68 @@ a:hover {
   }
 }
 
+/* ===== Carousel Wrapper ===== */
+.collection-carousel-wrapper {
+  position: relative;
+}
+
+/* ===== Navigation Buttons ===== */
+.carousel-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  /* background: #312526; */
+  color: #000;
+  font-size: 32px;
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35); */
+  cursor: pointer;
+  transition: all 0.35s ease;
+  backdrop-filter: blur(6px);
+}
+
+/* Hover Animation */
+.carousel-nav-btn:hover {
+  transform: translateY(-50%) scale(1.15);
+  background: #312526;
+  color: #fff;
+}
+
+/* Click Effect */
+.carousel-nav-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+/* Positioning */
+.prev-btn {
+  left: -28px;
+}
+
+.next-btn {
+  right: -28px;
+}
+
+/* ===== Mobile Responsive ===== */
+@media (max-width: 768px) {
+  .carousel-nav-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 26px;
+  }
+
+  .prev-btn {
+    left: 5px;
+  }
+
+  .next-btn {
+    right: 5px;
+  }
+}

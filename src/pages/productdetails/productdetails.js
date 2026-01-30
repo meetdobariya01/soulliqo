@@ -22,6 +22,7 @@ const Productdetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const Api = process.env.REACT_APP_API_URL || "https://api.soulliqo.com"; // backend base URL
+  const ADMIN_API_BASE = "https://admin.soulliqo.com";
 
   const [product, setProduct] = useState(null);
   const [qty, setQty] = useState(1);
@@ -104,25 +105,31 @@ const Productdetails = () => {
   };
 
   // Images handling (same logic as Cart page)
-  const images = (() => {
-    const imageField = product?.image || product?.images || "";
-    if (!imageField) return [];
+const images = (() => {
+  const imageField = product?.image || product?.images || "";
+  if (!imageField) return [];
 
-    const rawImages = Array.isArray(imageField)
-      ? imageField.flatMap((img) =>
+  const rawImages = Array.isArray(imageField)
+    ? imageField.flatMap((img) =>
         typeof img === "string" ? img.split(",") : img
       )
-      : imageField.split(",");
+    : imageField.split(",");
 
-    return rawImages
-      .filter(Boolean)
-      .map((img) =>
-        img.startsWith("http")
-          ? img
-          : `${img.startsWith("/") ? "" : "/"}${img}`
-      );
-  })();
+  return rawImages
+    .filter(Boolean)
+    .map((img) => {
+      const path = img.trim().startsWith("/") ? img.trim() : "/" + img.trim();
 
+      // If uploaded via admin panel
+      if (path.startsWith("/uploads")) return `${ADMIN_API_BASE}${path}`;
+
+      // If already full URL
+      if (path.startsWith("http")) return path;
+
+      // Fallback: API base path
+      return `${path}`;
+    });
+})();
   // Add to cart (guest + logged-in backend)
   const handleAddToCart = async () => {
     setLoadingCart(true);

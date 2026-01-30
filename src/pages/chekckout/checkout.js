@@ -6,6 +6,7 @@ import Header from "../../components/header/header";
 import axios from "axios";
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || "https://api.soulliqo.com";
+const ADMIN_API_BASE = "https://admin.soulliqo.com";
 
 const Checkout = () => {
   const location = useLocation();
@@ -41,7 +42,7 @@ const Checkout = () => {
   // Address and subtotal state
   // -----------------------------
   const [address, setAddress] = useState({
-    firstName: "", lastName: "", street: "", city: "", state: "", pincode: "", email: ""
+    firstName: "", lastName: "", street: "", city: "", state: "", pincode: "", email: "" ,mobile: ""
   });
 
   const [subtotal, setSubtotal] = useState(0);
@@ -62,31 +63,35 @@ const Checkout = () => {
   }, [cart, boxes]);
 
   // -----------------------------
-  // Image helper
+  // Admin Image resolver
   // -----------------------------
-  const getSingleImage = (item) => {
-    const target = item.product || item;
-    const imageField = target.image || target.images || "";
+  const resolveImageUrl = (imgField) => {
+    if (!imgField || (Array.isArray(imgField) && imgField.length === 0)) return "/images/product-grid.png";
 
-    if (!imageField) return "";
+    let imagePath = Array.isArray(imgField) ? imgField[0] : imgField;
 
-    let rawPaths = [];
-    if (Array.isArray(imageField)) {
-      rawPaths = imageField.flatMap(img => typeof img === 'string' ? img.split(",") : img);
-    } else {
-      rawPaths = imageField.split(",");
+    if (typeof imagePath === "string" && imagePath.includes(",")) {
+      imagePath = imagePath.split(",")[0].trim();
     }
 
-    const firstPath = rawPaths.map(p => p.trim()).filter(Boolean)[0];
-    if (!firstPath) return "";
+    if (typeof imagePath !== "string") return "/images/product-grid.png";
 
-    return firstPath.startsWith("http")
-      ? firstPath
-      : `${firstPath.startsWith("/") ? "" : "/"}${firstPath}`;
+    const normalizedPath = imagePath.startsWith("/") ? imagePath : "/" + imagePath;
+
+    if (normalizedPath.startsWith("/uploads")) return `${ADMIN_API_BASE}${normalizedPath}`;
+    if (normalizedPath.startsWith("/images")) return `${normalizedPath}`;
+
+    return imagePath;
+  };
+
+  const getItemImage = (item) => {
+    if (item.product) return resolveImageUrl(item.product.image || item.product.images);
+    if (item.image) return resolveImageUrl(item.image);
+    return "/images/product-grid.png";
   };
 
   // -----------------------------
-  // Place order
+  // Place order with Razorpay
   // -----------------------------
   const handlePlaceOrder = async () => {
     if (!address.email || !address.city || !address.pincode) {
@@ -132,9 +137,7 @@ const Checkout = () => {
                   razorpaySignature: response.razorpay_signature,
                 },
               },
-              token
-                ? { headers: { Authorization: `Bearer ${token}` } }
-                : {}
+              token ? { headers: { Authorization: `Bearer ${token}` } } : {}
             );
 
             // 4️⃣ Clear localStorage and state
@@ -159,7 +162,7 @@ const Checkout = () => {
   };
 
   // -----------------------------
-  // Empty cart/boxes handling
+  // Empty cart handling
   // -----------------------------
   if ((!cart.items || cart.items.length === 0) && boxes.length === 0) {
     return (
@@ -194,6 +197,12 @@ const Checkout = () => {
                 type="email"
                 placeholder="Email"
                 onChange={e => setAddress({ ...address, email: e.target.value })}
+              />
+              <Form.Control
+                className="figtree-font mt-2"
+                type="tel"
+                placeholder="Mobile"
+                onChange={e => setAddress({ ...address, mobile: e.target.value })}
               />
             </div>
 
@@ -238,8 +247,8 @@ const Checkout = () => {
               {cart.items.map((item, idx) => (
                 <div key={`item-${idx}`} className="d-flex align-items-center mb-3 pb-3 border-bottom">
                   <img
-                    src={getSingleImage(item)}
-                    alt="item"
+                    src={getItemImage(item)}
+                    alt={item.product?.name || "Item"}
                     style={{ width: "65px", height: "65px", objectFit: "cover", borderRadius: "8px" }}
                   />
                   <div className="ms-3 flex-grow-1">
@@ -253,7 +262,7 @@ const Checkout = () => {
               {boxes.length > 0 && boxes.map((box, idx) => (
                 <div key={`box-${idx}`} className="d-flex align-items-center mb-3 pb-3 border-bottom">
                   <img
-                    src={box.selectedChocolates[0]?.img || `${API_BASE_URL}/images/product-grid.png`}
+                    src={resolveImageUrl(box.selectedChocolates[0]?.img)}
                     alt={box.size + " Box"}
                     style={{ width: "65px", height: "65px", objectFit: "cover", borderRadius: "8px" }}
                   />

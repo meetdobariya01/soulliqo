@@ -62,6 +62,7 @@ const orderSchema = new mongoose.Schema(
       city: { type: String, required: true },
       pincode: { type: String, required: true },
       email: String,
+      mobile: String,
     },
 
     // 🔹 Order Tracking
